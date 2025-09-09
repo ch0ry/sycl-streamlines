@@ -1,0 +1,26 @@
+\newpage
+\section{\ Conclusiones y Trabajo Futuro} \label{sec:future}
+
+El presente trabajo buscaba realizar la implementación de mecanismos de adaptación de arquitecturas a la plataforma Smart Campus UIS, que permitiera alterar el estado de una aplicación hacia un estado de referencia, de manera autonómica.
+
+Para ello, se desarrolló e implementó un metamodelo capaz representar dichas arquitecturas, al igual que una manera de declararla tomando como foco los datos requeridos para su correcto funcionamiento; el cual cumple con el objetivo de establecer un estado de referencia.
+
+También se diseño, e implementó, un servicio capaz de interpretar los mensajes de los dispositivos y evaluar el estado de la aplicación; al igual que una proceso de identificar los problemas y definir las acciones a tomar; cumpliendo con el objetivo de determinar una manera por la cual se pudieran realizar dichas comparaciones.
+
+Así mismo, se diseñaron mecanismos que dieran la capacidad de modificar la arquitectura, hacia el estado de referencia definido; cumpliendo con el objetivo de reducir la cantidad de diferencias entre el estado observado, y el deseado.
+
+Finalmente, se validaron las implementaciones realizadas, al igual que se identificaron las falencias de las mismas, dando paso a un nuevo foco de trabajo, ajustando, afinando y extendiendo las maneras en las que se pueden adaptar las arquitecturas de manera autonómica, al igual que estandarizando y simplificando la manera en la que se trabajan con estas herramientas.
+
+De esta primera implementación, rara vez se sale de una línea de comando, por lo que el desarrollo de interfases para los diversos servicios implementados, con el fin de facilitar la accesibilidad a la plataforma.
+
+Así mismo, la extensión de manera de evaluar los estados del sistema, a partir de diferentes datos definidos por el usuario, como uso de promedios para flexibilizar las fallas o contadores, antes de tomar acciones para ignorar fallos temporales, son puntos importantes a mejorar en futuras versiones.
+
+También se ha de considerar la reimplementación de algunos de los mecanismos, con el fin de aumentar su eficacia en modificar los estados. Al igual que la expansión de la base de conocimiento, con el fin de aprovechar todos los recursos disponibles, independiente del estado de algunos componentes.
+
+Se recomienda el buscar formas de permitir, al usuario, definir procesamientos de datos extra para la evaluación de el estado de referencia. Idealmente de manera agnóstica al lenguaje de programación usado. Lo cual daría un valor extra a la flexibilidad de la plataforma.
+
+Finalmente, se recomienda la realización de pruebas más extensas, con dispositivos no simulados, que permitan evolucionar este primer prototipo de plugin para Smart Campus UIS, a algo que se pueda desplegar con relativa facilidad, independientemente del la aplicación que se esté desarrollando.
+
+% 1. Implementar Lexical como algo más gráfico, 
+% 2. Looker custom comparators
+% 3. Live Update the desired state

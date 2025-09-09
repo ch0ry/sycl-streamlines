@@ -1,0 +1,46 @@
+<mxfile host="Electron" modified="2023-08-03T06:06:38.777Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.5 Chrome/114.0.5735.243 Electron/25.3.1 Safari/537.36" etag="UoUASf-ROh5nW0J57OBH" version="21.6.5" type="device">
+  <diagram name="Page-1" id="E2HfZgLQ0aBpHrKSDCNp">
+    <mxGraphModel dx="847" dy="517" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;strokeColor=#A8201A;fontColor=default;" edge="1" parent="1" source="G9ytSWsEkII0sHoNXR3A-1" target="G9ytSWsEkII0sHoNXR3A-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;strokeColor=#A8201A;fontColor=default;" edge="1" parent="1" source="G9ytSWsEkII0sHoNXR3A-1" target="G9ytSWsEkII0sHoNXR3A-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-1" value="Looker" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="1">
+          <mxGeometry x="240" y="140" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;labelBackgroundColor=none;strokeColor=#A8201A;fontColor=default;" edge="1" parent="1" source="G9ytSWsEkII0sHoNXR3A-2" target="G9ytSWsEkII0sHoNXR3A-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-2" value="Bran" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="1">
+          <mxGeometry x="240" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;strokeColor=#A8201A;fontColor=default;" edge="1" parent="1" source="G9ytSWsEkII0sHoNXR3A-3" target="G9ytSWsEkII0sHoNXR3A-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-3" value="Lexical" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="1">
+          <mxGeometry x="240" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#A8201A;fontColor=#143642;fillColor=#FAE5C7;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="G9ytSWsEkII0sHoNXR3A-4" target="G9ytSWsEkII0sHoNXR3A-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-4" value="Adaption Plugs" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="1">
+          <mxGeometry x="400" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-10" value="Self-Description&lt;br&gt;Adaptors" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="1">
+          <mxGeometry x="400" y="140" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#A8201A;fontColor=#143642;fillColor=#FAE5C7;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="G9ytSWsEkII0sHoNXR3A-12" target="G9ytSWsEkII0sHoNXR3A-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="G9ytSWsEkII0sHoNXR3A-12" value="Smart Campus UIS" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#0F8B8D;fontColor=#143642;fillColor=#FAE5C7;" vertex="1" parent="1">
+          <mxGeometry x="560" y="190" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,102 @@
+%% Creator: Inkscape 1.2.2 (b0a8486541, 2022-12-01), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'Patent documents by Published, Filed and Granted Date_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{716.77650006bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.41723257)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{Patent documents by Published, Filed and Granted Date_svg-tex.pdf}}%
+    \put(0.04625082,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}2002\end{tabular}}}}%
+    \put(0.09385336,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2003\end{tabular}}}}%
+    \put(0.14145589,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2004\end{tabular}}}}%
+    \put(0.18918885,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2005\end{tabular}}}}%
+    \put(0.23679138,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2006\end{tabular}}}}%
+    \put(0.28439392,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2007\end{tabular}}}}%
+    \put(0.33199646,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2008\end{tabular}}}}%
+    \put(0.37972941,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2009\end{tabular}}}}%
+    \put(0.42733195,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2010\end{tabular}}}}%
+    \put(0.47493449,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2011\end{tabular}}}}%
+    \put(0.52253702,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2012\end{tabular}}}}%
+    \put(0.57026998,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2013\end{tabular}}}}%
+    \put(0.61787252,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2014\end{tabular}}}}%
+    \put(0.66547505,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2015\end{tabular}}}}%
+    \put(0.71307759,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2016\end{tabular}}}}%
+    \put(0.76081055,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2017\end{tabular}}}}%
+    \put(0.80841308,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2018\end{tabular}}}}%
+    \put(0.85601562,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2019\end{tabular}}}}%
+    \put(0.90361816,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2020\end{tabular}}}}%
+    \put(0.95135111,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2021\end{tabular}}}}%
+    \put(0.99895365,0.08737033){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}2022\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Patent documents by Published, Filed and Granted Date_svg-tex.pdf}}%
+    \put(0.52260223,0.0643506){\color[rgb]{0.07843137,0.34901961,0.47843137}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Year\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{Patent documents by Published, Filed and Granted Date_svg-tex.pdf}}%
+    \put(0.03892636,0.09992655){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}0\end{tabular}}}}%
+    \put(0.03892636,0.13089854){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}10\end{tabular}}}}%
+    \put(0.03892636,0.16187054){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}20\end{tabular}}}}%
+    \put(0.03892636,0.19284254){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}30\end{tabular}}}}%
+    \put(0.03892636,0.22381454){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}40\end{tabular}}}}%
+    \put(0.03892636,0.25478653){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}50\end{tabular}}}}%
+    \put(0.03892636,0.28575853){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}60\end{tabular}}}}%
+    \put(0.03892636,0.31673053){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}70\end{tabular}}}}%
+    \put(0.03892636,0.34770253){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}80\end{tabular}}}}%
+    \put(0.03892636,0.37867452){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}90\end{tabular}}}}%
+    \put(0.03892636,0.40964652){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}100\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{Patent documents by Published, Filed and Granted Date_svg-tex.pdf}}%
+    \put(0.00971223,0.25792559){\color[rgb]{0.07843137,0.34901961,0.47843137}\rotatebox{90}{\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Patents\end{tabular}}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{Patent documents by Published, Filed and Granted Date_svg-tex.pdf}}%
+    \put(0.06246926,0.00287747){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Filed\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{Patent documents by Published, Filed and Granted Date_svg-tex.pdf}}%
+    \put(0.11687953,0.00287747){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Granted\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{Patent documents by Published, Filed and Granted Date_svg-tex.pdf}}%
+    \put(0.18803142,0.00287747){\color[rgb]{0.3372549,0.37254902,0.41176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Published\end{tabular}}}}%
+    \put(0.04572764,0.03243689){\color[rgb]{0.07843137,0.34901961,0.47843137}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Action\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

@@ -1,0 +1,25 @@
+application:
+  name: Patio
+  description: "Patio App"
+
+locations:
+  greenhouse:
+    name: "Greenhouse"
+    data-requirements:
+      temperature:
+        output: number
+        required: true
+        count: 1
+        timeout: 30
+      co2:
+        output: number
+        required: true
+        count: 1
+        timeout: 120
+      humidity:
+        output: number
+        required: true
+        count: 1
+        timeout: 120
+
+            

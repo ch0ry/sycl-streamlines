@@ -1,0 +1,22 @@
+application:
+  name: Chip
+  description: "Test App"
+
+locations:
+  campus-central:
+    name: "Campus Central"
+    locations:
+      laboratorios-pesados:
+        name: "Laboratorios Pesados"
+        data-requirements:
+          temperature:
+            output: number
+            required: true
+            count: 1
+            timeout: 30
+          co2:
+            output: number
+            required: false
+            count: 1
+
+            

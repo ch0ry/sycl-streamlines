@@ -1,0 +1,44 @@
+application:
+  name: Malaga
+  description: "Test Scenario A"
+
+locations:
+  malaga:
+    name: "Sede Malaga"
+    locations:
+      north-sector:
+        name: "Sector Norte"
+        data-requirements: 
+          temperature:
+            output: number
+            required: true
+            count: 1
+            timeout: 30
+          wind-speed:
+            output: number
+            required: true
+            count: 3
+            timeout: 60
+          particulate-matter:
+            output: number
+            required: false
+            count: 2
+            timeout: 120
+      south-sector:
+        name: "Sector Sur"
+        data-requirements:
+          wind-speed:
+            output: number
+            required: true
+            count: 3
+            timeout: 60
+          particulate-matter:
+            output: number
+            required: false
+            count: 2
+            timeout: 120
+          temperature:
+            output: number
+            required: true
+            count: 1
+            timeout: 30

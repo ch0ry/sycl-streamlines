@@ -1,0 +1,434 @@
+\documentclass[12pt]{article}
+
+% Importando Config
+\input{"Sections/config.tex"}
+
+\bibliographystyle{apacite}
+
+% Definiendo constantes
+\Universidad{Universidad Industrial de Santander}
+\Facultad{Facultad De Ingenierías Fisicomecánicas}
+\Escuela{Escuela De Ingeniería De Sistemas E Informática}
+\Titulo{Estudio experimental sobre el impacto del uso de SYCL en el cálculo de Streamlines, Streaklines y Pathlines}
+\Modalidad{Trabajo de investigación}
+\Autor{Juan Pablo Cerinza Zaraza}{2190081}
+\Director{Sergio Augusto Gélvez Cortes}{Escuela De Ingeniería De Sistemas e Informática}
+\EntidadInt{Universidad Industrial de Santander}
+
+% En el caso de no tener codirector, quitar la linea `\textbf{CODIRECTOR: } \TCDir\ \CDir, \ECDir` de 'Sections/title.tex'
+
+\begin{document}
+
+% maketitle page
+\input{Sections/title.tex}
+
+\justifying
+
+\section{Introducción}
+
+% 1. Origen de la computación autonómica (Citation needed for industry tendencies)
+El desarrollo de la computación de alto rendimiento (High Performance Computing, HPC) ha permitido abordar problemas científicos y de ingeniería que requieren un procesamiento intensivo de datos. Dentro de este ámbito, la programación paralela constituye una estrategia esencial para aprovechar de manera eficiente las arquitecturas modernas de cómputo, particularmente aquellas basadas en unidades de procesamiento gráfico (GPU). Este enfoque resulta especialmente relevante en áreas como la dinámica de fluidos computacional (CFD, por sus siglas en inglés), en la cual el cálculo de trayectorias de partículas —representadas mediante Streamlines, Streaklines y Pathlines— demanda una elevada capacidad de cómputo y optimización en la gestión de recursos.
+
+
+Entre las tecnologías predominantes en este campo, CUDA (Compute Unified Device Architecture) se ha consolidado como una herramienta de referencia debido a su estrecha integración con hardware de NVIDIA y a la madurez de su ecosistema de desarrollo. No obstante, la dependencia de un único proveedor limita su portabilidad y dificulta la adaptación a entornos heterogéneos. En respuesta a esta necesidad, ha emergido SYCL, un estándar desarrollado por el consorcio Khronos, que ofrece un modelo de programación en C++ para la ejecución paralela en dispositivos diversos (CPU, GPU, FPGA, entre otros). SYCL promueve la portabilidad y la interoperabilidad, características de creciente relevancia en la investigación y la industria, al tiempo que busca mantener un alto nivel de rendimiento.
+
+
+El presente trabajo tiene como propósito realizar un estudio experimental sobre el impacto del uso de SYCL en el cálculo de Streamlines, Streaklines y Pathlines, comparando su rendimiento con una implementación equivalente desarrollada en CUDA. El análisis se centrará en métricas de tiempo de ejecución, utilización de memoria y eficiencia de cómputo, con el fin de establecer una comparación objetiva entre ambos enfoques. Para garantizar condiciones homogéneas, se emplearán herramientas de perfilamiento como NVIDIA Nsight Systems/Compute y entornos controlados mediante Docker, lo que permitirá asegurar la reproducibilidad de los experimentos.
+
+
+Con ello, la investigación busca contribuir al conocimiento sobre la aplicabilidad de modelos de programación portables en escenarios de alto costo computacional, aportando evidencia que permita valorar la pertinencia de SYCL como alternativa a CUDA en el ámbito de la dinámica de fluidos y, en general, en el desarrollo de software científico de alto rendimiento.
+
+% En la última década, el interés de la computación autonómica ha ido en 2 direcciones. Aunque la investigación y la cantidad de artículos ha ido bajando (Ver figura \ref{fig:scopus}), es posible ver el cómo las patentes se han ido manteniendo relativamente estables (Ver figura \ref{fig:lens}). Aunque esto puede representar un interés más hacia el desarrollo de productos derivados de los estudios de la computación autonómica, sugiere que aún existe un atractivo dentro de la investigación en pro del desarrollo de productos. 
+
+% Con el fin de establecer la pertinencia e importancia de la computación autonómica se realizó la consulta en las bases de datos Scopus \cite{scopus} con la cual se define la actividad científica (artículos científicos) y la base de datos Lens patent (Version 8.7.1, Australia, Copyright © 2023, License CC:BY-NC), para determinar la actividad inventiva (patentes).  Se determinó el periodo de búsqueda entre el  2011 – a la fecha (9 de enero de 2023).
+
+% \begin{figure}[ht]
+%     \centering
+%     \includesvg[inkscapelatex=false, scale=0.5]{Images/Tabla.svg}
+%     \caption{Documentos publicados sobre computación autonómica desde 2011 hasta 2023} \cite{scopus} 
+%     \label{fig:scopus}
+% \end{figure}
+
+% \begin{figure}[ht]
+%     \centering
+%     \includesvg[inkscapelatex=false, scale=0.5]{Images/lens.svg}
+%     \caption{Patentes sobre computación autonómica desde 2011 hasta 2023} \cite{lens} 
+%     \label{fig:lens}
+% \end{figure}
+
+% 2. Relación y utilidad para las otras ramas de la computación (¿Qué ramas?, ¿Por qué les es útil?)
+
+
+% 4. Presentar el objetivo final del proyecto (¿Qué se espera obtener?)
+
+
+% 5. Presentar de manera general la metodología a seguir
+
+\section{Planteamiento Y Justificación Del Problema}
+
+% La complejidad de los sistemas software ha ido en aumento \cite[pp.~4-5]{horn_2001}. A medida que se hace la transición a arquitecturas orientadas a microservicios \cite{forrester_research_2019}; la computación distribuida es más común gracias a las soluciones \textit{cloud} \cite{the_cloud_in_2021} y la computación embebida se hace más presente en la industria y el día a día \cite{deichmann_2022}; la administración y gestión de estos requiere de una mayor cantidad de recursos en términos técnicos y humanos con el fin de mantenerlos en los estados más óptimos respecto a los requerimientos del negocio. La búsqueda de reducir o abstraer la complejidad de la gerencia de estos sistemas se ha convertido en una necesidad \cite{lalanda_diaconescu_mccann_2014}.
+La visualización de campos de flujo, mediante técnicas como Streamlines, Streaklines y Pathlines, es fundamental en diversas áreas de la ciencia e ingeniería, incluyendo la dinámica de fluidos computacional (CFD), la meteorología, y el modelado de procesos físicos. Estos métodos permiten representar de forma intuitiva el comportamiento de partículas en movimiento dentro de un campo vectorial, lo cual facilita el análisis y la interpretación de fenómenos complejos.
+
+
+
+Sin embargo, la simulación precisa y eficiente de estas trayectorias implica un alto costo computacional, especialmente cuando se trabaja con volúmenes de datos grandes o se requieren resoluciones espaciales y temporales finas. En este contexto, la programación tradicional en C/C++, aunque eficiente, puede resultar insuficiente para explotar de manera óptima las capacidades de cómputo de los sistemas modernos, en especial aquellos que cuentan con aceleradores como GPUs.
+
+
+
+En respuesta a esta necesidad, han surgido enfoques como la programación heterogénea, que busca distribuir la carga computacional entre distintos dispositivos de procesamiento, permitiendo una ejecución más rápida y eficiente. En particular, el estándar SYCL, basado en C/C++, ofrece una solución portable y flexible para desarrollar aplicaciones que aprovechen arquitecturas heterogéneas sin perder la expresividad y control del lenguaje de bajo nivel.
+
+
+A pesar de sus beneficios teóricos, existe una brecha de conocimiento práctico respecto al impacto real del uso de SYCL en problemas computacionalmente intensivos como el cálculo de líneas de flujo. No se cuenta con suficiente evidencia comparativa que cuantifique su desempeño frente a enfoques tradicionales en términos de tiempo de ejecución, consumo de memoria y escalabilidad.
+% Una de las posibles soluciones se encuentra en la computación autonómica. Desde este enfoque, se tiene como objetivo sistemas con la capacidad de auto-gestión, es decir, sistemas con la capacidad de manejarse a ellos mismos dependiendo de las necesidades y las metas establecidas por los administradores del sistema \cite{evaluation_2004}. 
+% El crecimiento de las capacidades de los sistemas de software en términos de la escala, tienen como consecuencia el aumento en la complejidad, heterogeneidad e incertidumbre. El manejo de una gran cantidad de estos componentes es un reto en términos de recursos técnicos y humanos \cite[pp.~4-5]{horn_2001}. 
+% La propuesta de IBM, responsables de los primeros acercamientos a la computación autonómica, es especialmente interesante en los casos de las arquitecturas de software orientadas a microservicios, uno de los patrones de diseño más usados \cite{forrester_research_2019}; al igual los sistemas embebidos se hacen más presentes en la industria \cite{deichmann_2022}; los cuales afrontan una gran cantidad de incertidumbre. 
+% Dicho esto, y con la intención de dar continuidad con los esfuerzos de desarrollo realizados en la plataforma, se plantea como caso de estudio la implementación de mecanismos de adaptación con los cuales se pueda alterar el estado de la plataforma a partir de un objetivo establecido.  
+
+\section{Objetivos}
+\subsection{Objetivo General}
+\begin{itemize}
+
+	\item Comparar el desempeño computacional de un algoritmo para la visualización de campos de flujo (Streamlines, Streaklines y Pathlines), implementado en lenguaje C/C++, mediante métodos tradicionales de cómputo y mediante programación heterogénea con SYCL, evaluando métricas como el tiempo de ejecución, uso de memoria y escalabilidad.
+\end{itemize}
+
+\subsection{Objetivos Específicos}
+
+\begin{itemize}
+	\item Diseñar e implementar un algoritmo en C/C++ para el cálculo de Streamlines, Streaklines y Pathlines.
+	\item Desarrollar una versión del algoritmo optimizada para ejecución en arquitecturas heterogéneas utilizando SYCL.
+	\item Definir y aplicar un conjunto de métricas de evaluación del desempeño, tales como tiempo de ejecución, uso de memoria y eficiencia computacional.
+	\item Realizar pruebas experimentales con distintos tamaños de entrada y escenarios de flujo, registrando el comportamiento de ambas implementaciones.
+	\item Analizar los resultados obtenidos para identificar ventajas, limitaciones y condiciones óptimas de uso de SYCL frente al enfoque tradicional.
+\end{itemize}
+
+
+\section{Marco De Referencia}
+
+Como base para el desarrollo del proyecto es necesario establecer los fundamentos para la selección de los mecanismos de adaptación, por lo cual es indispensable conocer los principios de la computación autonómica, las aplicaciones de la misma en la industria y las partes requeridas para la integración, las cuales se describen a continuación.
+
+\subsection{Computación Autonómica}
+
+% Definir qué es la computación autonómica y qué es lo que propone
+
+El concepto de computación autonómica, definido inicialmente por IBM \citeyear{horn_2001}, se refiere a un conjunto de características que presenta un sistema computacional el cual le permite actuar de manera autónoma, o auto-gobernarse, con el fin de alcanzar algún objetivo establecido por los administradores del sistema \cite{lalanda_diaconescu_mccann_2014}.
+
+
+Los 8 elementos clave, definidos por IBM, que deberían presentar este tipo de sistemas son:
+% \begin{multicols}{2}
+\begin{enumerate}
+	\item Auto-conocimiento: habilidad de conocer su estado actual, las interacciones del sistema.
+	\item Auto-configuración: capacidad de reconfigurarse frente a los constantes cambios en el entorno.
+	\item Auto-optimización: búsqueda constante de optimizar el funcionamiento de sí mismo.
+	\item Auto-sanación: aptitud de restaurar el sistema en el caso de que se presenten fallas.
+	\item Auto-protección: facultad de protegerse a sí mismo de ataques externos.
+	\item Auto-conciencia: posibilidad de conocer el ambiente en el que el sistema se encuentra.
+	\item Heterogeneidad: capacidad de interactuar con otros sistemas de manera cooperativa.
+	\item Abstracción: ocultar la complejidad a los administradores del sistema con objetivos de alto nivel de abstracción.
+\end{enumerate}
+% \end{multicols}
+
+En el caso de que un sistema tenga una implementación parcial de estas características, este podría considerarse autonómico. En este sentido debería tener la capacidad de lidiar con los problemas como la complejidad, heterogeneidad e incertidumbre \cite{emerging_2005} al igual que reducir la cantidad de recursos tanto técnicos como humanos requeridos para mantener los sistemas en funcionamiento.
+
+\subsubsection*{MAPE-K}
+
+% Explicar como funciona el modelo de management y los pasos que se aplican dentro de lo que se tiene
+% Más que todo es desarrollar que es el ciclo MAPE-K
+
+IBM, en cuanto a la implementación de las características, propone una modelo de ciclo auto-adaptativo, denominado MAPE-K \cite{Krikava2013}. Este acercamiento, compuesto de cinco fases, es uno de ciclos de control más usado en implementaciones de sistemas auto-adaptativos y computación autonómica \cite{Arcaini_2015}. En la figura \ref{fig:mapek}, se presentan las fases que \textit{manejador} debe desarrollar para así administrar cada uno de los elementos del sistema computacional basado en una base de conocimiento común \cite{alessandra_2010}.
+
+\begin{figure}[H]
+	\centering
+	\includesvg[inkscapelatex=false]{Images/Mape-k.svg}
+	\caption{El ciclo auto-adaptativo MAPE-K.} \cite{alessandra_2010}
+	\label{fig:mapek}
+\end{figure}
+
+Cada una de estas fases son:
+
+\begin{itemize}
+	\item Monitorear (M): Esta fase se compone de la recolección, filtración y reportar la información adquirida sobre el estado del elemento a manejar.
+	\item Analizar (A): La fase de análisis se encarga del interpretar el entorno en el cual se encuentra, el predecir posibles situaciones comunes y diagnosticar el estado del sistema.
+	\item Planear (P): Durante la planificación se determina las acciones a tomar con el fin de llegar a un objetivo establecido a partir de una serie de reglas o estrategias.
+	\item Ejecutar (E): Finalmente, se ejecuta lo planeado usando los mecanismos disponibles para el manejo del sistema.
+\end{itemize}
+
+Es de resaltar que este modelo, aunque útil para el desarrollo de este tipo de sistemas, es bastante general en cuanto a la estructura y no usan modelos de diseño establecidos \cite{Ouareth_2018}.
+
+\subsubsection*{Mecanismos de Descripción}
+
+% Esta parte está más que todo para introducir el concepto de la base de conocimiento de la aplicación.
+% Es decir, está orientado a dar como un ejemplo de esa base de conocimiento que tiene el "manejador" sobre la 
+% plataforma
+
+La fase de monitoreo dentro del ciclo MAPE-K es vital para el funcionamiento del manejador autonómico pues es a partir de la información que se construirá la base de conocimiento requerida por las demás partes del ciclo. Parte de esta, está compuesta por el \textit{estado del sistema} el cual incluye la descripción del sistema en un momento dado \cite{Weiss_2011}.
+
+Existen varias maneras de realizar implementaciones de mecanismos de auto-descripción y la utilidad de cada uno de estos varía dependiendo en el tipo de sistema de software que se esté usando. Para el marco del proyecto, nos interesan aquellos que estén orientados a los sistemas embebidos e  IoT, algunos de estos son:
+
+\begin{itemize}
+	\item \textbf{JSON Messaging}: Iancu y Gatea \citeyear{Iancu_2022} plantean un protocolo que emplea mensajería entre \textit{gateways} con el fin de recibir información sobre estas. En términos simples, estas funcionan como un \textit{ping} hacia el nodo que luego retorna sus datos, al igual que los dispositivos conectados a ella, al encargado de recolectar toda esta información con el fin de construir una descripción del sistema.-
+
+	\item \textbf{IoT Service Description Model}: O IoT-LMsDM, es un servicio de descripción desarrollado por Zhen y Aiello \citeyear{Wang_2021} el cual está orientado al contexto, servicios e interfaz de un sistema IoT. De este se espera poder contar no solo con descripciones del estado del sistema en términos del ambiente, pero la funcionalidad (es decir, los \textit{endpoints} a usar) al igual que las estructuras de datos que estos consumen.
+
+	\item \textbf{Adaptadores de Auto-descripción}: En este acercamiento a los mecanismos de auto-descripción, se tienen adaptadores los cuales emplean los datos generados por los sensores del componente gestionado con el fin de realizar la determinación de la arquitectura desplegada. De igual manera, este acercamiento permite realizar modificaciones a la descripción de manera manual en caso de que se detecten problemas \cite{msc_henry_2022}.
+
+\end{itemize}
+
+De esto podemos ver no solo las diferentes maneras en las que las implementaciones realizan las descripciones de los sistemas asociados, sino que también el alcance de estos en cuanto a lo que pueden describir.
+
+\subsubsection*{Mecanismos de Adaptación}
+
+% Ya aquí es como definir de manera general qué es eso de los mecanismos de adaptación, qué hacen y qué características
+% tienen. 
+% No sé si meter ejemplos, creo que eso sería más para un estado del arte en este caso.
+
+La adaptación, en el contexto de la computación autonómica, es la parte más importante en cuanto a la auto-gestión de un sistema de software se refiere. Así mismo, presenta el mayor reto debido a la necesidad de modificar código de bajo nivel, tener que afrontarse a incertidumbre de los efectos que pueden tener dichas alteraciones al sistema al igual que lidiar con esto en \textit{runtime} debido a los problemas que el \textit{downtime} tendría en los negocios \cite{lalanda_diaconescu_mccann_2014}.
+
+Esta adaptabilidad puede exponerse en múltiples puntos dentro de un sistema de software. Pueden realizarse adaptaciones en sistema operativo, lenguaje de programación, arquitectura e incluso datos \cite{lalanda_diaconescu_mccann_2014}.
+
+Manteniéndose en el marco del proyecto, son las implementaciones relacionadas con la modificación de la arquitectura los cuales nos interesan. Siendo así, nos centraremos en los mecanismos de adaptación de componentes, o de reconfiguración:
+
+\begin{itemize}
+	\item \textbf{Binding Modification}: Este mecanismo hace referencia a la alteración de los vínculos entre los diferentes componentes de la arquitectura. Estos tienen el objetivo de modificar la interacción entre componentes, lo que es especialmente común en implementaciones con \textit{proxies}. Este tipo de mecanismo de adaptación fue usado por Kabashkin \citeyear{Kabashkin_2017} para añadir fiabilidad a la red de comunicación aérea.
+
+	\item \textbf{Interface Modification}: Las interfases funcionan como los puntos de comunicación entre los diferentes componentes de la arquitectura. Siendo así, es posible que la modificación de estos sea de interés con el fin de alterar el comportamiento de un sistema al igual que soportar la heterogeneidad del sistema. Esto puede verse en el trabajo desarrollado por Liu, Parashar y Hariri \citeyear{Liu_2004} en donde definen la utilidad de dichas adaptaciones al igual que la implementación de las mismas.
+
+	\item \textbf{Component Replacement, Addition and Subtraction}: En términos simples, este mecanismo se encarga de alterar los componentes que componen la arquitectura; de esta manera, modificando su comportamiento. Ejemplos de esto puede verse en el trabajo de Huynh \citeyear{Huynh_2019} en el cual se evalúan varios acercamientos a la reconfiguración de arquitecturas a partir del remplazo de componentes a nivel individual al igual que grupal.
+
+	      Este acercamiento a la mutación de la arquitectura también puede verse en el despliegue de componentes como respuesta a cambios en los objetivos de negocio de las aplicaciones al igual que como respuesta a cambios inesperados dentro de la aplicación. Esto puede verse en trabajos como el de Patouni \citeyear{Patouni_2006} donde se realizan este tipo de implementaciones.
+
+\end{itemize}
+
+\subsection{Internet of Things}
+
+% Aquí es para contextualizar una de las aplicaciones de la computación embebida más que otra cosa
+
+El Internet de las cosas, o IoT (Internet of Things); es una de las áreas de las ciencias de la computación en la cual  se embeben diferentes dispositivos en objetos del día a día. Esto les da la capacidad de enviar y recibir información con el fin de realizar monitoreo o facilitar el control de ciertas acciones \cite{Berte_2018}.
+
+Esta tecnología, debido a su flexibilidad al igual que el alcance que puede tener, presenta una gran cantidad de aplicaciones que va desde electrónica de consumo hasta la industria. Encuestas realizadas en el 2020 reportan su uso en smart homes, smart cities, transporte, agricultura, medicina, etc. \cite{Dawood_2020}. Su impacto no ha sido poco.
+
+\subsubsection*{Sistemas Embebidos}
+
+% Tengo que contextualizar qué es lo que es la computación embebida y cual es el principio o justificación de este
+
+Los sistemas de cómputo embebidos hacen referencia a un sistema compuesto de microcontroladores los cuales están orientados a llevar a cabo una función o un rango de funciones específicas \cite{heath2002embedded}. Este tipo de sistemas, debido a la posibilidad de combinar hardware y software en una manera compacta, se ha visto en multiples campos de la industria como lo son el sector automotor, de maquinaria industrial o electrónica de consumo \cite{deichmann_2022}.
+
+% Extender la aplicación de la computación autonómica en los sistemas embebidos.
+
+\subsubsection*{Smart Campus}
+
+% Y aquí es para explicar el concepto de un smart campus. Para qué se usa y de donde surge.
+
+Un Smart Campus, equiparable con el concepto de Smart City, es una plataforma en la que se emplean tecnologías, sumado a una infraestructura física, con la cual se busca la recolección de información y monitoreo en tiempo real \cite{MinAllah2020}. Los datos recolectados tienen el objetivo de apoyar la toma de decisiones, mejora de servicios, entre otros \cite{Anagnostopoulos_2023}.
+
+Estas plataformas, debido a su escala y alcance en cuanto a la cantidad de servicios que pueden ofrecer, requieren de
+infraestructuras tecnológicas las cuales den soporte a los objetivos del sistema. Es posible ver implementaciones orientadas a microservicios en trabajos como los de Jiménez, Cárcamo y Pedraza \citeyear{henry_2020} donde se desarrolla una plataforma de software escalable con la cual se pueda lograr interoperatividad y alta usabilidad para todos.
+
+\subsection{Domain-Specific Languages} % Fase 2
+
+% En esta selección es más que todo el dar el concepto de qué es un lenguaje de notación
+
+% Explicar que es la notación en general, en términos lingüísticos y de ahí expandir a notación en software
+% UML y eso.
+
+Los \textit{Domain-Specific Languages} (DSL), o Lenguaje específico de dominio, son lenguajes de programación los cuales se usan con un fin específico. Estos están orientados principalmente al uso de abstracciones de un mayor nivel debido al enfoque que estos tienen para la solución de un problema en específico \cite{Kelly2008}. Ejemplos de este tipo de acercamiento, en el caso del modelado (\textit{Domain-specific modeling}), pueden observarse en los diagramas de entidad relación usados en el desarrollo de modelos de base de datos \cite{Celikovic2014ADF}.
+
+% El concepto de \textit{notación} está definido como la representación gráfica del habla \cite{crystal2011dictionary}. En el contexto de las ciencias de la computación, esta idea se ha extrapolado con el fin de representar diferentes conceptos específicos del software y algoritmia de manera visual \cite{RutanenKalle2018McoO}. Esto puede verse con la existencia de lenguajes de notación como lo es UML con el cual se realizan representaciones que van desde arquitecturas de software, estructuras de base de datos, entre otros \cite{Booch2005-xu}.
+
+% \subsubsection*{Gramática}
+
+% % Esto es más que nada para contextualizar la necesidad de una forma en la notación
+
+% La gramática, más específicamente gramáticas libres de contexto, son un conjunto de reglas descriptivas. Este conjunto de reglas, en conjunto de una notación, cumplen la función de dictar si una frase es válida para un lenguaje dado \cite[p. 101]{Sipser2012-wl}. 
+
+
+
+% \subsubsection*{Serialización de Datos}
+
+% % qué es la serialización de datos y para que se usa en el caso de las arquitecturas.
+
+% La serialización de datos se refiere a la traducción de una estructura de datos hacia una manera en la que pueda ser almacenada. En el contexto del proyecto, esta serialización nos permitirá describir las arquitecturas objetivo a partir de la notación y gramáticas establecidas. Así mismo, debería darnos la flexibilidad de describir cualquier tipo de meta para el sistema de software.
+
+\pagebreak
+
+\section{Metodología}
+
+Para el desarrollo del trabajo de grado, se propone un modelo de prototipado iterativo compuesto de 5 fases (Ver fig. \ref{fig:met}). De esta manera, se avanzará a medida que se va completando la fase anterior y permitirá a futuro el poder iterar sobre lo que se ha desarrollado anteriormente.
+
+\begin{figure}[H]
+	\centering
+	\includesvg{Images/DiagramaMetodologia.svg}
+	\caption{Metodología del proyecto}
+	\label{fig:met}
+\end{figure}
+
+\subsection{Ambientación Conceptual y Tecnológica}
+
+La primera fase de la metodología se basa en la investigación de la literatura, al igual que de la industria, necesaria para cubrir las bases tanto conceptuales como técnicas necesarias para el desarrollo del proyecto.
+
+\subsubsection*{Actividades}
+
+\begin{enumerate}[label=\thesubsection.\arabic*., wide, labelindent=2em, leftmargin=5em]
+	\item Identificación de las características principales de un sistema auto-adaptable.
+	\item Análisis de los mecanismos de adaptación de la arquitectura.
+	\item Análisis los algoritmos empleados para la comparación de la comparación de las arquitecturas.
+	\item Determinación de los criterios de selección para el lenguaje de notación.
+	\item Evaluación de los posibles lenguajes de programación para la implementación a realizar.
+	\item Análisis, retroalimentación y conclusiones del desarrollo de la fase.
+\end{enumerate}
+
+\subsection{Definición de la notación de la arquitectura}
+
+La segunda fase está en la definición del cómo se realiza la declaración de la arquitectura. Partiendo de los criterios de selección establecidos en la fase 1, se espera determinar un lenguaje de notación el cual nos permita definir la arquitectura objetivo a alcanzar, al igual que la gramática correspondiente para poder realizar dicha declaración.
+
+\subsubsection*{Actividades}
+
+\begin{enumerate}[label=\thesubsection.\arabic*., wide, labelindent=2em, leftmargin=5em]
+	\item Selección del lenguaje de marcado a usar a partir de los criterios establecidos.
+	\item Definición la gramática a usar para la definición de la arquitectura.
+	\item Implementación la traducción de la notación al modelo de grafos. % (¿Esto en qué fase debería estar?)
+	\item Determinación como se realizará la representación de los componentes y partes de la arquitectura.
+	\item Análisis, retroalimentación y conclusiones del desarrollo de la fase.
+\end{enumerate}
+
+\subsection{Mecanismos De Comparación}
+
+Durante la tercera fase del proyecto, se buscará poder determinar e implementar cómo se realizará la comparación entre el estado de la arquitectura obtenido durante la auto-descripción de la misma y el objetivo establecido. Así mismo, y con el fin de reportar a los administradores de los sistemas, también será necesario definir \textit{niveles} de similitud entre las 2 arquitecturas.
+
+\subsubsection*{Actividades}
+
+\begin{enumerate}[label=\thesubsection.\arabic*., wide, labelindent=2em, leftmargin=5em]
+	\item Selección del mecanismo de comparación a usar para evaluación de estado de la arquitectura.
+	\item Implementación del mecanismo de comparación seleccionado.
+	\item Determinación de los diferentes niveles de similitud entre arquitecturas.
+	\item Análisis, retroalimentación y conclusiones del desarrollo de la fase.
+\end{enumerate}
+
+\subsection{Mecanismos De Adaptación}
+
+La cuarta fase del proyecto está orientada a la selección, al igual que la implementación en Smart Campus UIS, del conjunto de mecanismos de adaptación de la arquitectura.
+
+\subsubsection*{Actividades}
+
+\begin{enumerate}[label=\thesubsection.\arabic*., wide, labelindent=2em, leftmargin=5em]
+	\item Definición el conjunto de mecanismos de adaptación.
+	\item Implementación el conjunto de mecanismos de adaptación seleccionados.
+	\item Análisis, retroalimentación y conclusiones del desarrollo de la fase.
+\end{enumerate}
+
+\subsection{Validación De Resultados}
+
+La fase final del proyecto se encargará principalmente de la realización de pruebas de los mecanismos implementados, los resultados obtenidos al igual que la documentación de todo lo que se desarrolló durante el proyecto.
+
+\subsubsection*{Actividades}
+
+\begin{enumerate}[label=\thesubsection.\arabic*., wide, labelindent=2em, leftmargin=5em]
+	\item Realización de las pruebas del funcionamiento de la implementación realizada con diversas arquitecturas objetivo.
+	\item Recopilación la documentación generada durante el desarrollo de cada una de las fases del proyecto.
+	\item Compilación de la documentación para generar el documento de final.
+	\item Correcciones y adiciones para la presentación final del proyecto de grado.
+\end{enumerate}
+
+
+\pagebreak
+
+\section{Cronograma}
+
+En la tabla \ref{tab:cron} se presenta el cronograma propuesto para el desarrollo del el proyecto. En este se establece un tiempo total de 16 semanas en las cuales se desarrollarán las actividades definidas en la metodología.
+
+\begin{table}[H]
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|rllllllllllllllll|}
+			\hline
+			\multicolumn{1}{|l|}{\cellcolor[HTML]{D9D9D9}Fase / Semana}        & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}1} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}2} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}3} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}4} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}5} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}6} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}7} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}8} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}9} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}10} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}11} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}12} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}13} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}14} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}15} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}16} \\ \hline
+			\multicolumn{1}{|r|}{Ambientación Conceptual Y Tecnológica}        & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{Definición De La Notación De La Arquitectura} & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9FC5E8}}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9FC5E8}}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9FC5E8}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{Mecanismos De Comparación}                    & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{\cellcolor[HTML]{9FC5E8}}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9FC5E8}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{Mecanismos De Adaptación}                     & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{Validación De Resultados}                     & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   \\ \hline
+			\multicolumn{17}{|c|}{\cellcolor[HTML]{D9D9D9}Fase: Ambientación Conceptual Y Tecnológica}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                \\ \hline
+			\multicolumn{1}{|l|}{\cellcolor[HTML]{D9D9D9}Activadad / Semana}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}1} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}2} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}3} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}4} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}5} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}6} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}7} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}8} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}9} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}10} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}11} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}12} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}13} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}14} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}15} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}16} \\ \hline
+			\multicolumn{1}{|r|}{5.1.1.}                                       & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.1.2.}                                       & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.1.3.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.1.4.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.1.5.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.1.6.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{17}{|c|}{\cellcolor[HTML]{D9D9D9}Fase: Definición De La Notación De La Arquitectura}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         \\ \hline
+			\multicolumn{1}{|l|}{\cellcolor[HTML]{D9D9D9}Activadad / Semana}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}1} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}2} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}3} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}4} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}5} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}6} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}7} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}8} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}9} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}10} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}11} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}12} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}13} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}14} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}15} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}16} \\ \hline
+			\multicolumn{1}{|r|}{5.2.1.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.2.2.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.2.3.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.2.4.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.2.5.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{17}{|c|}{\cellcolor[HTML]{D9D9D9}Fase: Mecanismos De Comparación}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \\ \hline
+			\multicolumn{1}{|l|}{\cellcolor[HTML]{D9D9D9}Activadad / Semana}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}1} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}2} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}3} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}4} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}5} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}6} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}7} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}8} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}9} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}10} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}11} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}12} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}13} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}14} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}15} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}16} \\ \hline
+			\multicolumn{1}{|r|}{5.3.1.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.3.2.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}  & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.3.3.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}  & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.3.4.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{17}{|c|}{\cellcolor[HTML]{D9D9D9}Fase: Mecanismos De Adaptación}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             \\ \hline
+			\multicolumn{1}{|l|}{\cellcolor[HTML]{D9D9D9}Activadad / Semana}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}1} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}2} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}3} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}4} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}5} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}6} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}7} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}8} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}9} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}10} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}11} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}12} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}13} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}14} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}15} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}16} \\ \hline
+			\multicolumn{1}{|r|}{5.4.1.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.4.2.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.4.3.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{17}{|c|}{\cellcolor[HTML]{D9D9D9}Fase: Validación De Resultados}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             \\ \hline
+			\multicolumn{1}{|l|}{\cellcolor[HTML]{D9D9D9}Activadad / Semana}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}1} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}2} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}3} & \multicolumn{1}{c|}{\cellcolor[HTML]{B6D7A8}4} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}5} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}6} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}7} & \multicolumn{1}{c|}{\cellcolor[HTML]{A4C2F4}8} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}9} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}10} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}11} & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}12} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}13} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}14} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}15} & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}16} \\ \hline
+			\multicolumn{1}{|r|}{5.5.1.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                                                 \\ \hline
+			\multicolumn{1}{|r|}{5.5.2.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   \\ \hline
+			\multicolumn{1}{|r|}{5.5.3.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   \\ \hline
+			\multicolumn{1}{|r|}{5.5.4.}                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{B4A7D6}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EA9999}}   \\ \hline
+		\end{tabular}%
+	}
+	\caption[Tabla]{Cronograma del proyecto}
+	\label{tab:cron}
+\end{table}
+
+\pagebreak
+
+\section{Presupuesto}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.8}{
+		\begin{tabular}{|lllr|}
+			\hline
+			\multicolumn{4}{|l|}{\textbf{GASTOS DE PERSONAL}}                                                                                                                                     \\ \hline
+			\multicolumn{1}{|l|}{\textbf{INVESTIGADOR}}                  & \multicolumn{1}{l|}{\textbf{FUNCIÓN}} & \multicolumn{1}{l|}{\textbf{DEDICACIÓN}} & \multicolumn{1}{l|}{\textbf{TOTAL}} \\ \hline
+			\multicolumn{1}{|l|}{PHD. GABRIEL RODRIGO PEDRAZA FERREIRA*} & \multicolumn{1}{l|}{DIRECTOR}         & \multicolumn{1}{l|}{16 HRS}              & \$4,880,000.00                      \\ \hline
+			\multicolumn{1}{|l|}{MSC. HENRY ANDRÉS JIMÉNEZ HERRERA*}     & \multicolumn{1}{l|}{CO-DIRECTOR}      & \multicolumn{1}{l|}{16 HRS}              & \$4,080,000.00                      \\ \hline
+			\multicolumn{1}{|l|}{EST. DANIEL DAVID DELGADO CERVANTES**}  & \multicolumn{1}{l|}{AUTOR}            & \multicolumn{1}{l|}{728$\sim$1000 HRS}   & \$1,160,000.00                      \\ \hline
+			\multicolumn{3}{|l|}{\textbf{TOTAL}}                         & \$10,120,000.00                                                                                                        \\ \hline
+		\end{tabular}
+	}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+	\centering
+	\scalebox{0.8}{%
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{RUBRO}          & \textbf{VALOR}  \\ \hline
+			GASTOS DEL PERSONAL     & \$10,120,000.00 \\ \hline
+			GASTOS DE EQUIPOS**     & \$6,317,405.00  \\ \hline
+			GASTOS DE MATERIAL*     & \$200,000.00    \\ \hline
+			GASTOS DE PUBLICACION** & \$400,000.00    \\ \hline
+			\textbf{TOTAL}          & \$17,037,405.00 \\ \hline
+		\end{tabular}
+	}
+\end{table}
+
+\pagebreak
+
+\section{Bibliografía}
+
+\begingroup
+\renewcommand{\section}[2]{}
+\renewcommand{\addcontentsline}[3]{}
+\bibliography{bibliography}
+\endgroup
+
+\end{document}
+

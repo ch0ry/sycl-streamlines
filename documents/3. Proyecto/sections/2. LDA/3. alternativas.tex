@@ -1,0 +1,48 @@
+
+\subsection{Búsqueda de Alternativas}
+
+Una vez establecidos los criterios de selección, se realizó una exhaustiva búsqueda de alternativas disponibles en la literatura y en la industria para describir arquitecturas de sistemas IoT. Este proceso se realizó a partir de la revisión en diferentes bases de datos, como \textit{Scopus}; al igual que algunas de las revistas especializadas en el tema, y el internet en general.
+
+Durante la búsqueda, se identificaron una gran variedad de opciones. Sin embargo, la gran mayoría de estas se filtraron, o descartaron; a partir de los criterios de selección establecidos. Esto se debió a que los LDAs usados tanto en la industria y academia, como AADL (Architecture Analysis and Design Language), tienen un enfoque a los campos de aviónica, equipos médicos y aeronáutica (lo que complicaría su implementación hacia sistemas de software IoT) \cite{aadl_web, aadl_pdf}; o SysML, que son bastante genéricos y abarcan hardware, software e incluso personas y procesos \cite{omgsysml_2015}.
+
+Es así como, de las posibles opciones de notación, se seleccionaron cinco, las cuales fueron evaluadas con el fin de determinar si alguna de estas hubiera podido ser usada, o si era necesario desarrollar una notación propia para el proyecto. A continuación, se presentan las alternativas evaluadas:
+
+\begin{itemize}
+    \item \textbf{MontiThings:} Basado en MontiArc, otro LDA más general; está diseñado para el modelado y prototipado de aplicaciones de IoT. Este realiza las descripciones de sus arquitecturas en un modelo componente-conector, donde los componentes están compuestos por otros componentes; y los conectores definen la manera en la que se comunican dichos componentes a nivel de los datos y la dirección de los mismos. \cite{MontiThings, MontiThingsRepo}
+    \item \textbf{Eclipse Mita}: Mita, creado por la Eclipse Foundation; es un lenguaje de programación orientado al facilitar la programación de sistemas IoT. Aunque como tal no es un LDA, está orientada a la descripción de los componentes y el comportamiento del sistema establecido, de esta manera, puede generar el código que debe correr en los dispositivos embebidos \cite{Mita}. 
+    \item \textbf{SysML4IoT:} Es un perfil de SysML\footnote{Los perfiles se refieren a extensiones a UML, en este caso es una extensión de SysML en sí \cite{Charles2007}.} en el cual se usan estereotipos de UML con el fin de abstraer las diferentes partes de los sistemas de IoT. Al igual que SysML, este permite el modelado más allá de dispositivos incluso llegando a personas y procesos, con la diferencia del enfoque dado al \textit{dominio de IoT} \footnote{El \textit{dominio del IoT}, hace referencia al \textit{Architecture Reference Model} establecido por IoT-A, un consorcio Europeo el cual buscaba el establecer un modelo para la interoperatividad de dispositivos IoT. \cite{IoTA2014}} \cite{SysML4IoT2016}.
+    \item \textbf{ThingML:} Similar a Mita, ThingML, es un lenguaje de modelado el cual tiene capacidades de generar el código requerido por los dispositivos embebidos. En términos del proyecto, este permite el modelado de los sistemas de IoT a partir de \textit{state machine models}\footnote{Los \textit{state machine model}, también conocidas como Autómatas Finitos; son modelos matemáticos que describen todos los posibles estados de un sistema a partir de unas entradas dadas \cite{StateMachine2023}. } los cuales permiten describir los componentes del sistema al igual que el comportamiento de estos \cite{ThingML2016}.
+    \item \textbf{IoT-DDL}: Iot-DDL es un LDA, implementado en XML, que describe objetos dentro de los ecosistemas IoT con base en sus componentes, identidad y servicios entre otros. Este tiene la capacidad de describir parte de la base de conocimiento que tienen los diferentes componentes (Principalmente relaciones y asociaciones entre componentes) \cite{Ahmed2018}.
+\end{itemize}
+
+Una vez seleccionadas las alternativas a evaluar, se utilizó la matriz de evaluación en la tabla \ref{tab:evaluation} para determinar la solución ideal para el desarrollo del proyecto. 
+
+\skipline
+\skipline
+\skipline
+\skipline
+
+\begin{table}[H]
+    \centering
+    % \vspace{-4mm}
+    \caption{\\Evaluación de las alternativas en función de los criterios establecidos} \label{tab:evaluation}
+    % \vspace{4mm}
+    \begin{tabular}{cccccc}
+    \hline
+    \multicolumn{1}{l}{} &
+      \multicolumn{1}{l}{MontiThings} &
+      \multicolumn{1}{l}{Eclipse Mita} &
+      \multicolumn{1}{l}{SysML4IoT} &
+      \multicolumn{1}{l}{ThingML} &
+      \multicolumn{1}{l}{IoT-DDL} \\ \hline
+      C1 & ✓ & ✓ & ✓ & ✓ & ✓ \\
+      C2 & ✗ & ✗ & ✗ & ✗ & ✗ \\
+      C3 & ✓ & ✓ & ✓ & ✓ & ✓ \\
+      C4 & ✓ & ✓ & ✓ & ✓ & ✗ \\
+      C5 & ✓ & ✓ & ✗ & ✓ & ✗ \\
+      C6 & ✗ & ✗ & ✗ & ✓ & ✗ \\ \hline
+    \end{tabular}
+    % \vspace{-4mm}
+\end{table}
+
+Partiendo de los resultados de la evaluación, se puede apreciar que ninguno de estos LDA cumple con los criterios establecidos para el proyecto. Aunque estos están orientados hacia la descripción y desarrollo de sistemas IoT, no están enfocados hacia su contexto en términos de aplicación más allá de la definición de comportamiento. Esto se debe a los objetivos de cada una de estas notaciones, de una u otra manera; buscan el representar como tal el sistema IoT en términos de su funcionalidad técnica y no la aplicación en si. 

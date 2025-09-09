@@ -1,0 +1,32 @@
+    %% Portada
+    \input{sections/0. Formalidades/portada}
+    
+    %% Numeración romana 
+    \pagenumbering{roman} 
+
+    %% Dedicatoria
+    \input{sections/0. Formalidades/dedicatoria}
+
+    %% Agradecimientos
+    \input{sections/0. Formalidades/agradecimientos}
+
+    %% Tablas de contenidos
+    \renewcommand{\contentsname}{\normalsize Contenido}
+    \tableofcontents
+    
+    \newpage
+    \renewcommand{\listfigurename}{\normalsize Lista de figuras}
+    \listoffigures
+
+    \newpage
+    \renewcommand{\listtablename}{\normalsize Lista de tablas}
+    \listoftables
+
+    \newpage
+    \listofappendices
+    
+    \newpage
+    \input{sections/1. Generalidades/glosario}
+    \newpage
+    
+    \pagenumbering{arabic} 

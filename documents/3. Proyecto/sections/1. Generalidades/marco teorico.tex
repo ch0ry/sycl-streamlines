@@ -1,0 +1,64 @@
+\section{Marco Teórico}
+
+\subsection{Internet of Things}
+
+% Aquí es para contextualizar una de las aplicaciones de la computación embebida más que otra cosa
+
+El Internet de las cosas, o IoT (Internet of Things); es una de las áreas de las ciencias de la computación en la cual  se embeben diferentes dispositivos en objetos del día a día. Esto les da la capacidad de enviar y recibir información con el fin de realizar monitoreo o facilitar el control de ciertas acciones \cite{Berte_2018}.
+
+Esta tecnología, debido a su flexibilidad al igual que el alcance que puede tener, presenta una gran cantidad de aplicaciones que van desde electrónica de consumo hasta la industria. Encuestas realizadas en el 2020 reportan su uso en smart homes, smart cities, transporte, agricultura, medicina, etc. \cite{Dawood_2020}.
+
+\subsubsection{Sistemas Embebidos}
+
+% Tengo que contextualizar qué es lo que es la computación embebida y cual es el principio o justificación de este
+
+Los sistemas de cómputo embebidos hacen referencia a un sistema compuesto de microcontroladores los cuales están orientados a llevar a cabo una función o un rango de funciones específicas \cite{heath2002embedded}. Este tipo de sistemas, debido a la posibilidad de combinar hardware y software en una manera compacta, se ha visto en multiples campos de la industria como lo son el sector automotor, de maquinaria industrial o electrónica de consumo \cite{deichmann_2022}.
+
+% Extender la aplicación de la computación autonómica en los sistemas embebidos.
+
+\subsubsection{Location-based Services}
+
+Location-Based Services, o servicios basados en ubicación, hace referencia a aquellos servicios que integran la ubicación geográfica de un dispositivo como una parte fundamental la cual da un valor agregado al usuario \cite{Schiller2004}. Este tipo de servicios han sido principalmente usados en aplicaciones relacionas con entornos inteligentes, modelado espacial, personalización, conciencia de contexto, comunicación cartográfica, redes sociales, análisis de datos masivos, entre otros \cite{Gartner2015,alliedmarketresearch2023}. 
+
+\subsubsection{Smart Campus}
+
+% Y aquí es para explicar el concepto de un smart campus. Para qué se usa y de donde surge.
+
+Un Smart Campus, equiparable con el concepto de Smart City, es una plataforma en la que se emplean tecnologías, sumado a una infraestructura física, con la cual se busca la recolección de información y monitoreo en tiempo real \cite{MinAllah2020}. Los datos recolectados tienen el objetivo de apoyar la toma de decisiones, mejora de servicios, entre otros \cite{Anagnostopoulos_2023}.
+
+Estas plataformas, debido a su escala y alcance en cuanto a la cantidad de servicios que pueden ofrecer, requieren de 
+infraestructuras tecnológicas las cuales den soporte a los objetivos del sistema. Es posible ver implementaciones orientadas a microservicios en trabajos de \citeauthor{henry_2020} \citeyear{henry_2020} donde se desarrolla una plataforma de software escalable con la cual se pueda lograr interoperatividad y alta usabilidad para todos.
+
+% \subsection{Notación, Sintaxis y Lenguajes}
+
+\subsection{Notación}
+
+De manera general, notación se refiere a una serie de caracteres, símbolos, figuras o expresiones usadas con el fin de expresar un sistema, método o proceso \cite{MerriamWebsterNotation}. Más específicamente en el contexto de las ciencias de la computación, las notaciones han sido usadas para la representación de estructuras y arquitecturas en el software, como lo son lenguajes de modelado tales como UML \cite{WhatIsUML}; lenguajes de programación, como C/C++, Ruby \cite{Bansal2013}; algoritmia de manera visual \cite{RutanenKalle2018McoO}; entre otros.
+
+
+\subsubsection{Gramática}
+
+% Esto es más que nada para contextualizar la necesidad de una forma en la notación
+
+La gramática, en el caso de los lenguajes, es un conjunto de reglas la cual es usada para describir tanto la sintaxis como la semántica de una lenguaje de programación \cite{Sebesta2012}. Siendo así, estas cumplen la función de describir una frase considerada válida dentro del contexto de un lenguaje dado \cite[p. 101]{Sipser2012-wl}. Existen varios tipos de gramática, tales como gramáticas de atributos, gramáticas libres de contexto, etc. \cite{Sebesta2012}.
+
+\subsubsection{Sintaxis}
+
+La sintaxis se refiere a la forma en la cual elementos, pertenecientes a un lenguaje, se estructuran de forma ordenada con el fin de formar estructuras más grandes \cite{MerriamWebsterSyntax}. En el contexto de las ciencias de la computación, esta definición se puede expresar como un conjunto de reglas con las cuales regimos la forma en que escribimos en diferentes lenguajes de programación, marcado, entre otros \cite[p. 51]{Friedman2008}.
+
+\subsubsection{Domain-Specific Languages} % Fase 2
+
+Los \textit{Domain-Specific Languages} (DSL), o Lenguaje de dominio específico, son lenguajes de programación empleados para un fin específico. Estos están orientados principalmente al uso de abstracciones de un mayor nivel debido al enfoque que estos tienen para la solución de un problema en específico \cite{Kelly2008}. Ejemplos de este tipo de acercamiento, en el caso del modelado (\textit{Domain-specific modeling}), pueden observarse en los diagramas de entidad relación usados en el desarrollo de modelos de base de datos \cite{Celikovic2014ADF}. 
+
+\subsection{Serialización de Datos}
+
+La serialización de datos se refiere a la traducción de una estructura de datos a una manera en la que pueda ser almacenada o transmitida de manera eficiente \cite{mozillaSerialization}. Este proceso ha sido, principalmente, adoptado por lenguajes de programación orientada a objetos, en donde existe un soporte nativo, tales como Go, JavaScript, o PHP; o existe algún tipo de framework o librería que permite hacerlo, como lo es en el caso de C/C++, Rust o Perl.
+
+\subsubsection{Métodos de Serialización de Datos}
+
+Dentro del ámbito de la programación, se encuentran diversas opciones en cuanto a formatos y técnicas empleadas para la serialización de datos. Cada uno de estos enfoques presenta sus particularidades, lo que resulta en ventajas y desventajas específicas, las cuales deben ser consideradas según las necesidades del proyecto. Las dos opciones principales, en cuanto a la serialización de datos, son:
+
+\begin{itemize}
+    \item \textbf{Serialización en Formato de Texto}: Esta forma de serialización emplea un formato legible por humanos, generalmente utilizando caracteres y símbolos. Este enfoque es especialmente útil cuando se necesita que los datos sean legibles, y editables, directamente por humanos, lo que los hace adecuados para la configuración de aplicaciones y la comunicación entre sistemas heterogéneos; o cuando se requiere tener compatibilidad entre diferentes sistemas y lenguajes de programación \cite{Grochowski2019}.
+    \item \textbf{Serialización Binaria}: Esta implica la representación de datos en un formato binario. Este enfoque es altamente eficiente en cuanto a espacio y velocidad, pero no es legible por humanos. Los formatos de serialización binaria, están diseñados para minimizar el tamaño de los datos serializados y optimizar el rendimiento en aplicaciones donde la velocidad y la eficiencia son críticas, sacrificando la estandarización e interoperatividad con otras implementaciones de este tipo de serialización \cite{Grochowski2019}.
+\end{itemize}

@@ -1,0 +1,71 @@
+@startuml metamodel
+
+    ' skinparam linetype ortho
+
+    Component -up-|> Device
+    Component -up- ComponentType
+
+    Device "0..*" --o "1..*" Device
+    Device "0..*" -[hidden]-o "1..*" Device
+    Device "0..*" -[hidden]-o "1..*" Device
+    Device -right- DeviceStatus
+    Device -up- Location 
+
+    Gateway -up-|> Device
+
+    Campus "1..*" *-left- "1..*" Location
+    Campus "1..*" o-- "1..*" Device
+
+    abstract Device {
+        + id: String
+        + name: String
+        + devices: ArrayList<Device>
+        + location: Location
+        + status: DeviceStatus
+        + timeout_threshold: float | int
+    }
+
+    abstract Component {
+        + properties: ArrayList<Property>
+        + type: ComponentType
+        + data: Hashmap
+    }
+
+    class Campus {
+        + name: String
+        + locations: ArrayList<Location>
+        + devices: ArrayList<Device>
+
+        + add_location(location: Location) 
+        + add_device(device: Device, location: Location) 
+        + process_request(data: Hashmap)
+    }
+
+    enum ComponentType <<enumeration>> {
+        Sensor
+        Actuator
+    }
+
+    enum DeviceStatus <<enumeration>> {
+        Optimal
+        Degradated
+        Fault
+        Uninitialized
+    }
+    
+    class Location {
+        + id: String
+        + name: String
+        + locations: ArrayList<Location> 
+        + add_location(location: Location)
+    }
+
+    class Gateway {
+        + ip: String
+    }
+
+    class Property {
+
+    }
+
+@enduml

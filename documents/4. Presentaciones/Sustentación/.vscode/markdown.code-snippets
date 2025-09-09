@@ -1,0 +1,14 @@
+{
+    "Two Column Slide": {
+        "prefix": "twocols",
+        "body": ["<div class=\"twocols center-grid\">", "", "$0", "", "</div>"]
+    },
+    "Column": {
+        "prefix": "newcol",
+        "body": ["<div class=\"col\">", "", "$0", "", "</div>"]
+    },
+    "Header": {
+        "prefix": "header",
+        "body": ["<!-- _header: <h1 id=\"$0\"> $1 </h1> -->"]
+    }
+}

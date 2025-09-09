@@ -1,0 +1,168 @@
+{
+    "name": "Malaga",
+    "description": "Test Scenario A",
+    "status": "Fault",
+    "locations": {
+      "name": "root",
+      "ip": null,
+      "status": "Fault",
+      "locations": {
+        "malaga": {
+          "name": "Sede Malaga",
+          "ip": null,
+          "status": "Fault",
+          "locations": {
+            "south-sector": {
+              "name": "Sector Sur",
+              "ip": null,
+              "status": "Fault",
+              "locations": { },
+              "data_requirements": {
+                "temperature": {
+                  "components": [
+                    {
+                      "name": "Unregistered device 6112565e864c471d9e7a390f4f38d788",
+                      "uuid": "6112565e-864c-471d-9e7a-390f4f38d788",
+                      "status": "Fault",
+                      "last_reading": "2024-01-18T23:44:53"
+                    }
+                  ],
+                  "required": true,
+                  "count": 1,
+                  "timeout": 30,
+                  "status": "Fault",
+                  "output": "Number"
+                },
+                "wind-speed": {
+                  "components": [
+                    {
+                      "name": "Unregistered device 713cf78b6865430cb26b2c6081f21c7c",
+                      "uuid": "713cf78b-6865-430c-b26b-2c6081f21c7c",
+                      "status": "Coherent",
+                      "last_reading": "2024-01-18T23:44:51"
+                    },
+                    {
+                      "name": "Unregistered device f1264bdf1c974f31b79488d8b219fed2",
+                      "uuid": "f1264bdf-1c97-4f31-b794-88d8b219fed2",
+                      "status": "Coherent",
+                      "last_reading": "2024-01-18T23:44:51"
+                    },
+                    {
+                      "name": "Unregistered device 343d071492934ecaae845f6dfe071a92",
+                      "uuid": "343d0714-9293-4eca-ae84-5f6dfe071a92",
+                      "status": "Coherent",
+                      "last_reading": "2024-01-18T23:44:52"
+                    }
+                  ],
+                  "required": true,
+                  "count": 3,
+                  "timeout": 60,
+                  "status": "Coherent",
+                  "output": "Number"
+                },
+                "particulate-matter": {
+                  "components": [
+                    {
+                      "name": "Unregistered device 0c845268d0fb46db9277e5facac50444",
+                      "uuid": "0c845268-d0fb-46db-9277-e5facac50444",
+                      "status": "Coherent",
+                      "last_reading": "2024-01-18T23:44:52"
+                    },
+                    {
+                      "name": "Unregistered device 98f08dfafb2046f8878f58a6c1872970",
+                      "uuid": "98f08dfa-fb20-46f8-878f-58a6c1872970",
+                      "status": "Coherent",
+                      "last_reading": "2024-01-18T23:44:53"
+                    }
+                  ],
+                  "required": false,
+                  "count": 2,
+                  "timeout": 120,
+                  "status": "Coherent",
+                  "output": "Number"
+                }
+              },
+              "properties": { }
+            },
+            "north-sector": {
+              "name": "Sector Norte",
+              "ip": null,
+              "status": "Fault",
+              "locations": { },
+              "data_requirements": {
+                "temperature": {
+                  "components": [
+                    {
+                      "name": "Unregistered device adb73aef7ae34def962988ff81314427",
+                      "uuid": "adb73aef-7ae3-4def-9629-88ff81314427",
+                      "status": "Fault",
+                      "last_reading": "2024-01-18T23:44:51"
+                    }
+                  ],
+                  "required": true,
+                  "count": 1,
+                  "timeout": 30,
+                  "status": "Fault",
+                  "output": "Number"
+                },
+                "particulate-matter": {
+                  "components": [
+                    {
+                      "name": "Unregistered device f7bd5299826441fe8003a4b29bb3dc6b",
+                      "uuid": "f7bd5299-8264-41fe-8003-a4b29bb3dc6b",
+                      "status": "Coherent",
+                      "last_reading": "2024-01-18T23:44:50"
+                    },
+                    {
+                      "name": "Unregistered device 55edbee953c34120b8bcbe4cd073ec14",
+                      "uuid": "55edbee9-53c3-4120-b8bc-be4cd073ec14",
+                      "status": "Coherent",
+                      "last_reading": "2024-01-18T23:44:50"
+                    }
+                  ],
+                  "required": false,
+                  "count": 2,
+                  "timeout": 120,
+                  "status": "Coherent",
+                  "output": "Number"
+                },
+                "wind-speed": {
+                  "components": [
+                    {
+                      "name": "Unregistered device 104e8eab940b4a03af4020e254733dfa",
+                      "uuid": "104e8eab-940b-4a03-af40-20e254733dfa",
+                      "status": "Coherent",
+                      "last_reading": "2024-01-18T23:44:49"
+                    },
+                    {
+                      "name": "Unregistered device fa87c65cb9c24efa906db0c675ed19bc",
+                      "uuid": "fa87c65c-b9c2-4efa-906d-b0c675ed19bc",
+                      "status": "Coherent",
+                      "last_reading": "2024-01-18T23:44:49"
+                    },
+                    {
+                      "name": "Unregistered device b86aad8ddb8047f6a15ea6b66ac595fe",
+                      "uuid": "b86aad8d-db80-47f6-a15e-a6b66ac595fe",
+                      "status": "Coherent",
+                      "last_reading": "2024-01-18T23:44:49"
+                    }
+                  ],
+                  "required": true,
+                  "count": 3,
+                  "timeout": 60,
+                  "status": "Coherent",
+                  "output": "Number"
+                }
+              },
+              "properties": { }
+            }
+          },
+          "data_requirements": { },
+          "properties": { }
+        }
+      },
+      "data_requirements": { },
+      "properties": { }
+    },
+    "last_update": "2024-01-18T23:45:23.705619665"
+  }

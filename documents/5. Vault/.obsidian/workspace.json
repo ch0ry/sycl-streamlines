@@ -1,0 +1,184 @@
+{
+  "main": {
+    "id": "7a3af7a02255d4d8",
+    "type": "split",
+    "children": [
+      {
+        "id": "903231d70f52e967",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7ec6a4546d251e67",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Estado del Arte/Notación, Sintaxis y Lenguajes de Dominio Específico.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "9edf29e76e3f752f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Estado del Arte/Algoritmos para la Comparación de Estructuras de Datos.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "47c3ef9baf6e7401",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Estado del Arte/Mecanismos de Adaptación en Arquitecturas de Software.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ed0f5d21bd13b337",
+    "type": "split",
+    "children": [
+      {
+        "id": "57f28b4899029c67",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3f4739580f46e425",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "0773ca9cd38b05f9",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "9bbac3fb592efa60",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "2ea1af303694fcb0",
+    "type": "split",
+    "children": [
+      {
+        "id": "04c9350e77c2e731",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0c80bf94f08a7950",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Estado del Arte/Mecanismos de Adaptación en Arquitecturas de Software.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "1cec41de16509faf",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Estado del Arte/Mecanismos de Adaptación en Arquitecturas de Software.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "23d3f79814036f9d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "47f9942724b4e2eb",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Estado del Arte/Mecanismos de Adaptación en Arquitecturas de Software.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "3f4739580f46e425",
+  "lastOpenFiles": [
+    "Estado del Arte/Algoritmos para la Comparación de Estructuras de Datos.md",
+    "Estado del Arte/Mecanismos de Adaptación en Arquitecturas de Software.md",
+    "Estado del Arte/Notación, Sintaxis y Lenguajes de Dominio Específico.md",
+    "Estado del Arte/Propuestas de Sistemas de Software Autonómicos.md",
+    "Untitled",
+    "Estado del Arte/Untitled",
+    "Estado del Arte"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+    "ltex.enabled": false,
+    "terminal.integrated.env.linux": {
+        "GTK_PATH": ""
+    },
+    "cSpell.language": "en,es",
+    "cSpell.enabled": true,
+    "cSpell.words": [
+        "AADL",
+        "agregador",
+        "agregadores",
+        "AMQP",
+        "deserialización",
+        "deserializarlos",
+        "editables",
+        "metamodelo",
+        "MQTT",
+        "reimplementación",
+        "serializado"
+    ]
+}

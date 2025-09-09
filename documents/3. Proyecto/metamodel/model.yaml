@@ -1,0 +1,111 @@
+locations:
+    campus-central:
+        name: "Campus Central"
+        locations:
+            laboratorios-pesados: 
+                name: "Laboratorios Pesados"
+                ip: '192.168.0.2'
+            mecanica:
+                name: "Mecanica"
+                ip: '192.168.0.3'
+            camilo-torres:
+                name: "Camilo Torres"
+                locations:
+                    ct-primero:
+                        name: "Primer Piso" 
+                        ip: '192.168.0.6'
+                    ct-segundo:
+                        name: "Segundo Piso"
+                        ip: '192.168.0.5'
+
+    malaga:
+        name: "Sede Malaga"
+        locations:
+            reconver-gan:
+                name: "Laboratorio De Reconversion Ganadera"
+                ip: '192.168.0.127'
+            admon-malaga:
+                name: "Administracion Sede Malaga"
+                ip: '192.168.0.126'
+    
+    barichara:
+        name: "Sede Barichara"
+        ip: "192.168.1.1"
+
+components:
+    dol139:
+        name: "DOL 139 Environmental Monitor"
+        component-type: "sensor"
+        locations: 
+            malaga: 
+                quantity: 3
+                timeout: 15
+                required: true
+            campus-central:
+                quantity: 3
+                timeout: 15
+                required: true
+            camilo-torres:
+                quantity: 1
+                timeout: 15
+                required: false
+        components: 
+            temperature-sensor:
+                name: "Temperature Sensor"
+                component-type: "sensor"
+                required: true
+                outputs:
+                    temperature: "float"
+            co2-sensor:
+                name: "CO2 Sensor"
+                component-type: "sensor"
+                required: true
+                outputs:
+                    ppm: "float"
+            humidity-sensor:
+                name: "Humidity Sensor"
+                component-type: "sensor"
+                required: true
+                outputs:
+                    RH: "float"
+    pm: 
+        name: "Particulate Matter Monitor"
+        component-type: "sensor"
+        locations: 
+            mecanica:
+                quantity: 1
+                timeout: 60
+                required: false
+            admon-malaga:
+                quantity: 2
+                timeout: 60
+                required: true
+        components: 
+            pm25:
+                name: "PM2.5 Sensor"
+                component-type: "sensor"
+                required: false
+                outputs:
+                    ppm: "float"
+
+            pm10:
+                name: "PM10 Sensor"
+                component-type: "sensor"
+                required: false
+                outputs:
+                    ppm: "float"
+
+    barometric: 
+        name: "Barometric Pressure Sensor"
+        locations:
+            campus-central:
+                quantity: 1
+                required: true
+                timeout: 3600
+            malaga:
+                quantity: 1
+                required: true
+                timeout: 3600
+        component-type: "sensor"
+        outputs:
+            atm: "float"

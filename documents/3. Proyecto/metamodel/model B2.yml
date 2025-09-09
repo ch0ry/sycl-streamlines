@@ -1,0 +1,23 @@
+application:
+  name: House
+  description: "House App"
+
+locations:
+  first-floor:
+    name: "First Floor"
+    data-requirements:
+      temperature:
+        output: number
+        required: true
+        count: 1
+        timeout: 30
+  basement:
+    name: "Basement"
+    data-requirements:
+      co:
+        output: number
+        required: false
+        count: 1
+        timeout: 30
+
+            

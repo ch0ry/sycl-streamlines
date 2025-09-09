@@ -1,0 +1,45 @@
+{
+    "greenhouse": {
+      "addition": {
+        "image": "mrdahaniel/mocker:latest",
+        "network_name": "smart_campus_production_smart_uis",
+        "env_vars": {
+          "RUST_LOG": "mocker",
+          "ip": "mqtt_broker"
+        },
+        "args": [
+          "key:random(5,35)"
+        ]
+      },
+      "reconfig": {
+        "uuid": null,
+        "network": "smart_campus_production_smart_uis",
+        "query_type": {
+          "Http": {
+            "endpoint": "/get/device",
+            "port": 8000
+          }
+        },
+        "reconfig": {
+          "Http": {
+            "endpoint": "/update/interval",
+            "port": 8000,
+            "method": "PUT",
+            "payload": {
+              "nanos": 0,
+              "secs": 25
+            }
+          }
+        }
+      },
+      "restart": {
+        "uuid": null,
+        "query_type": {
+          "Http": {
+            "endpoint": "/get/device",
+            "port": 8000
+          }
+        }
+      }
+    }
+  }

@@ -1,0 +1,55 @@
+\documentclass[12pt, oneside]{article}
+
+\setlength{\headheight}{15.71667pt}
+
+
+\input{sections/config}
+
+\bibliographystyle{apacite}
+
+\titulo{Mecanismos de adaptación autonómica de arquitectura software para la plataforma Smart Campus UIS}
+\autor{Daniel David Delgado Cervantes}
+\optando{Ingeniero de Sistemas}
+
+\director[PhD.]{Gabriel Rodrigo Pedraza Ferreira}{Escuela De Ingeniería De Sistemas e Informática}
+\codirector[MSc.]{Henry Andrés Jiménez Herrera}{Escuela De Ingeniería De Sistemas e Informática} 
+
+\universidad{Universidad Industrial de Santander}
+\facultad{Facultad De Ingenierías Fisicomecánicas}
+\escuela{Escuela De Ingeniería De Sistemas e Informática}
+
+\begin{document}
+
+    \input{sections/0. Formalidades/formalidades.tex}
+    
+    \input{sections/1. Generalidades/generalidades.tex}
+    
+    \input{sections/2. LDA/0. LDA.tex}
+    
+    \input{sections/3. Comparación/0. CDE.tex}
+
+    \input{sections/4. Adaptación/0. ADP.tex}
+
+    \input{sections/5. Desarrollo/0. desarrollo.tex}
+    
+    \input{sections/6. Analisis/0. analisis.tex}
+
+    \input{sections/7. Conclusiones/0. conclusiones.tex}
+    
+    \newpage
+    % \pagenumbering{Alph}
+    \bibliography{bibliography.bib}
+    
+    % \appendix
+    \begin{appendices}
+        % \appendix
+        % \newpage
+        \section*{Apéndices}
+        \input{sections/9. Apendices/apendix.tex}
+    
+    \end{appendices}
+
+
+    % \include{sections/9. Apendices/metamodel}
+
+\end{document}
