@@ -11,7 +11,7 @@
 \Escuela{Escuela De Ingeniería De Sistemas E Informática}
 \Titulo{Estudio experimental sobre el impacto del uso de SYCL en el cálculo de Streamlines, Streaklines y Pathlines}
 \Modalidad{Trabajo de investigación}
-\Autor{Juan Pablo Cerinza Zaraza}{2190081}
+\Autores{Juan Pablo Cerinza Zaraza}{2190081}{Ashley Michelle Calderon Villamizar}{2162101}
 \Director{Sergio Augusto Gélvez Cortes}{Escuela De Ingeniería De Sistemas e Informática}
 \EntidadInt{Universidad Industrial de Santander}
 
@@ -67,46 +67,40 @@ Con ello, la investigación busca contribuir al conocimiento sobre la aplicabili
 \section{Planteamiento Y Justificación Del Problema}
 
 % La complejidad de los sistemas software ha ido en aumento \cite[pp.~4-5]{horn_2001}. A medida que se hace la transición a arquitecturas orientadas a microservicios \cite{forrester_research_2019}; la computación distribuida es más común gracias a las soluciones \textit{cloud} \cite{the_cloud_in_2021} y la computación embebida se hace más presente en la industria y el día a día \cite{deichmann_2022}; la administración y gestión de estos requiere de una mayor cantidad de recursos en términos técnicos y humanos con el fin de mantenerlos en los estados más óptimos respecto a los requerimientos del negocio. La búsqueda de reducir o abstraer la complejidad de la gerencia de estos sistemas se ha convertido en una necesidad \cite{lalanda_diaconescu_mccann_2014}.
-La visualización de campos de flujo, mediante técnicas como Streamlines, Streaklines y Pathlines, es fundamental en diversas áreas de la ciencia e ingeniería, incluyendo la dinámica de fluidos computacional (CFD), la meteorología, y el modelado de procesos físicos. Estos métodos permiten representar de forma intuitiva el comportamiento de partículas en movimiento dentro de un campo vectorial, lo cual facilita el análisis y la interpretación de fenómenos complejos.
+La visualización de campos de flujo, mediante técnicas como Streamlines, Streaklines y Pathlines, es fundamental en diversas áreas de la ciencia e ingeniería, incluyendo la dinámica de fluidos computacional (CFD), la meteorología, y el modelado de procesos físicos \cite{camp_streamline_2011}. Estos métodos permiten representar de forma intuitiva el comportamiento de partículas en movimiento dentro de un campo vectorial, lo cual facilita el análisis y la interpretación de fenómenos complejos.
 
 
 
-Sin embargo, la simulación precisa y eficiente de estas trayectorias implica un alto costo computacional, especialmente cuando se trabaja con volúmenes de datos grandes o se requieren resoluciones espaciales y temporales finas. En este contexto, la programación tradicional en C/C++, aunque eficiente, puede resultar insuficiente para explotar de manera óptima las capacidades de cómputo de los sistemas modernos, en especial aquellos que cuentan con aceleradores como GPUs.
+Sin embargo, la simulación precisa y eficiente de estas trayectorias implica un alto costo computacional, especialmente cuando se trabaja con volúmenes de datos grandes o se requieren resoluciones espaciales y temporales finas \cite{pugmire_scalable_2009}. En este contexto, la programación tradicional en C/C++, aunque eficiente, puede resultar insuficiente para explotar de manera óptima las capacidades de cómputo de los sistemas modernos, en especial aquellos que cuentan con aceleradores como GPUs.
 
 
 
-En respuesta a esta necesidad, han surgido enfoques como la programación heterogénea, que busca distribuir la carga computacional entre distintos dispositivos de procesamiento, permitiendo una ejecución más rápida y eficiente. En particular, el estándar SYCL, basado en C/C++, ofrece una solución portable y flexible para desarrollar aplicaciones que aprovechen arquitecturas heterogéneas sin perder la expresividad y control del lenguaje de bajo nivel.
+En respuesta a esta necesidad, han surgido enfoques como la programación heterogénea, que busca distribuir la carga computacional entre distintos dispositivos de procesamiento, permitiendo una ejecución más rápida y eficiente. En particular, el estándar SYCL, basado en C/C++, ofrece una solución portable y flexible para desarrollar aplicaciones que aprovechen arquitecturas heterogéneas sin perder la expresividad y control del lenguaje de bajo nivel \cite{keryell_sycl_2019}.
 
 
-A pesar de sus beneficios teóricos, existe una brecha de conocimiento práctico respecto al impacto real del uso de SYCL en problemas computacionalmente intensivos como el cálculo de líneas de flujo. No se cuenta con suficiente evidencia comparativa que cuantifique su desempeño frente a enfoques tradicionales en términos de tiempo de ejecución, consumo de memoria y escalabilidad.
-% Una de las posibles soluciones se encuentra en la computación autonómica. Desde este enfoque, se tiene como objetivo sistemas con la capacidad de auto-gestión, es decir, sistemas con la capacidad de manejarse a ellos mismos dependiendo de las necesidades y las metas establecidas por los administradores del sistema \cite{evaluation_2004}. 
-% El crecimiento de las capacidades de los sistemas de software en términos de la escala, tienen como consecuencia el aumento en la complejidad, heterogeneidad e incertidumbre. El manejo de una gran cantidad de estos componentes es un reto en términos de recursos técnicos y humanos \cite[pp.~4-5]{horn_2001}. 
-% La propuesta de IBM, responsables de los primeros acercamientos a la computación autonómica, es especialmente interesante en los casos de las arquitecturas de software orientadas a microservicios, uno de los patrones de diseño más usados \cite{forrester_research_2019}; al igual los sistemas embebidos se hacen más presentes en la industria \cite{deichmann_2022}; los cuales afrontan una gran cantidad de incertidumbre. 
-% Dicho esto, y con la intención de dar continuidad con los esfuerzos de desarrollo realizados en la plataforma, se plantea como caso de estudio la implementación de mecanismos de adaptación con los cuales se pueda alterar el estado de la plataforma a partir de un objetivo establecido.  
+A pesar de sus beneficios teóricos, existe una brecha de conocimiento práctico respecto al impacto real del uso de SYCL en problemas computacionalmente intensivos como el cálculo de líneas de flujo. No se cuenta con suficiente evidencia comparativa que cuantifique su desempeño frente a enfoques tradicionales en términos de tiempo de ejecución, consumo de memoria y escalabilidad, con respecto a esta técnica de visualización en particular. Para cuantificar el desempeño se realizan estudios experimentales usando métricas como tiempo de ejecución, uso de memoria y escalabilidad \cite{camp_gpu_2013}, relacionadas con características del problema como: tamaño del dataset, tamaño del conjunto de semillas, distribución del conjunto de semillas y complejidad del campo vectorial \cite{camp_streamline_2011}.
 
 \section{Objetivos}
 \subsection{Objetivo General}
 \begin{itemize}
 
-	\item Comparar el desempeño computacional de un algoritmo para la visualización de campos de flujo (Streamlines, Streaklines y Pathlines), implementado en lenguaje C/C++, mediante métodos tradicionales de cómputo y mediante programación heterogénea con SYCL, evaluando métricas como el tiempo de ejecución, uso de memoria y escalabilidad.
+	\item Comparar el desempeño computacional de una técnica de visualización de campos de flujo (Streamlines, Streaklines y Pathlines), que involucra el método de Runge-Kutta implementado en lenguaje C/C++, mediante métodos tradicionales de cómputo y programación heterogénea con SYCL, evaluando métricas como el tiempo de ejecución, uso de memoria y escalabilidad.
 \end{itemize}
 
 \subsection{Objetivos Específicos}
-
+\textbf{Aunque los OE incluidos no hacen parte de esta evaluación, se hace la observación que los mismos están formulados como actividades y no como Objetivos. NOTA: Se ha de tener presente esta observación en la formulación del Plan}
 \begin{itemize}
-	\item Diseñar e implementar un algoritmo en C/C++ para el cálculo de Streamlines, Streaklines y Pathlines.
-	\item Desarrollar una versión del algoritmo optimizada para ejecución en arquitecturas heterogéneas utilizando SYCL.
-	\item Definir y aplicar un conjunto de métricas de evaluación del desempeño, tales como tiempo de ejecución, uso de memoria y eficiencia computacional.
-	\item Realizar pruebas experimentales con distintos tamaños de entrada y escenarios de flujo, registrando el comportamiento de ambas implementaciones.
-	\item Analizar los resultados obtenidos para identificar ventajas, limitaciones y condiciones óptimas de uso de SYCL frente al enfoque tradicional.
+	\item Formular una versión optimizada del algoritmo RK4 para ejecución en arquitecturas heterogéneas utilizando SYCL.
+	\item Comparar el comportamiento de las implementaciones bajo diferentes características del problema.
+	\item Examinar los resultados obtenidos para determinar ventajas, limitaciones y condiciones óptimas de uso de SYCL frente a soluciones de solo CPU o de GPU de uso común en la industria como CUDA.
 \end{itemize}
 
 
 \section{Marco De Referencia}
 
-Como base para el desarrollo del proyecto es necesario establecer los fundamentos para la selección de los mecanismos de adaptación, por lo cual es indispensable conocer los principios de la computación autonómica, las aplicaciones de la misma en la industria y las partes requeridas para la integración, las cuales se describen a continuación.
+Como base para el desarrollo del proyecto es necesario establecer los fundamentos para la formulación del algoritmo optimzado de RK4, por lo cual es imperativo conocer las características del problema , los principios de la computación heterogénea y la computación de alto rendimiento, las aplicaciones de la misma en la industria y las partes requeridas para la optimización, las cuales se describen a continuación.
 
-\subsection{Computación Autonómica}
+\subsection{}
 
 % Definir qué es la computación autonómica y qué es lo que propone
 

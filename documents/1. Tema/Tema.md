@@ -12,8 +12,6 @@ La visualización de campos de flujo, mediante técnicas como Streamlines, Strea
 
 Sin embargo, la simulación precisa y eficiente de estas trayectorias implica un alto costo computacional, especialmente cuando se trabaja con volúmenes de datos grandes o se requieren resoluciones espaciales y temporales finas (Pugmire et al., 2009). En este contexto, la programación tradicional en C/C++, aunque eficiente, puede resultar insuficiente para explotar de manera óptima las capacidades de cómputo de los sistemas modernos, en especial aquellos que cuentan con aceleradores como GPUs.
 
-En respuesta a esta necesidad, han surgido enfoques como la programación heterogénea, que busca distribuir la carga computacional entre distintos dispositivos de procesamiento, permitiendo una ejecución más rápida y eficiente. En particular, el estándar SYCL, basado en C/C++, ofrece una solución portable y flexible para desarrollar aplicaciones que aprovechen arquitecturas heterogéneas sin perder la expresividad y control del lenguaje de bajo nivel (Keryell, R., 2019).
-
 A pesar de sus beneficios teóricos, existe una brecha de conocimiento práctico respecto al impacto real del uso de SYCL en problemas computacionalmente intensivos como el cálculo de líneas de flujo. No se cuenta con suficiente evidencia comparativa que cuantifique su desempeño frente a enfoques tradicionales en términos de tiempo de ejecución, consumo de memoria y escalabilidad, con respecto a esta técnica de visualización en particular. Para cuantificar el desempeño se realizan estudios experimentales usando métricas como tiempo de ejecución, uso de memoria y escalabilidad (Camp et al., 2013), relacionadas con características del problema como: tamaño del dataset, tamaño del conjunto de semillas, distribución del conjunto de semillas y complejidad del campo vectorial (Camp et al., 2011).
 
 Camp, D., Garth, C., Childs, H., Pugmire, D., & Joy, K. (2011). Streamline Integration Using MPI-Hybrid Parallelism on a Large Multicore Architecture. IEEE Transactions on Visualization and Computer Graphics, 17(11), 1702–1713. <https://doi.org/10.1109/TVCG.2010.259>
@@ -26,21 +24,13 @@ Pugmire, D., Childs, H., Garth, C., Ahern, S., & Weber, G. H. (2009). Scalable c
 
 ## Objetivos específicos
 
-- Evaluar el un algoritmo en C/C++ para el cálculo de Streamlines, Streaklines y Pathlines.
-- Desarrollar una versión del algoritmo optimizada para ejecución en arquitecturas heterogéneas utilizando SYCL.
-- Definir y aplicar un conjunto de métricas de evaluación del desempeño, tales como tiempo de ejecución, uso de memoria y eficiencia computacional.
-- Realizar pruebas experimentales con distintos tamaños de entrada y escenarios de flujo, registrando el comportamiento de ambas implementaciones.
-- Analizar los resultados obtenidos para identificar ventajas, limitaciones y condiciones óptimas de uso de SYCL frente al enfoque tradicional.
+- Formular una versión optimizada del algoritmo RK4 para ejecución en arquitecturas heterogéneas utilizando SYCL.
+- Comparar el comportamiento de las implementaciones bajo diferentes características del problema.
+- Examinar los resultados obtenidos para determinar ventajas, limitaciones y condiciones óptimas de uso de SYCL frente a soluciones de solo CPU o de GPU de uso común en la industria como CUDA.
 
 # Observaciones
 
-1. ~~Se debe incluir un segundo autores~~
-2. Dentro del planteamiento no se describe con suficiencia en que consiste el “Estudio experimental” que se señala en el título
-3. ~~En el OG se propone “Comparar el desempeño computacional de un algoritmo…”, no indicando cual.
-4. ~~En el OG se encuentra como redundante la repetición de la expresión “mediante”~~
-5. La formulación carece de referencias
-6. ~~Se requiere chequeo de originalidad, para lo cual el director debe acercarse a la Dirección de escuela.~~
-7. Aunque los OE incluidos no hacen parte de esta evaluación, se hace la observación que los mismos están formulados como actividades y no como Objetivos.
+7- Aunque los OE incluidos no hacen parte de esta evaluación, se hace la observación que los mismos están formulados como actividades y no como Objetivos. NOTA: Se ha de tener presente esta observación en la formulación del Plan
 
 # Referencias
 
