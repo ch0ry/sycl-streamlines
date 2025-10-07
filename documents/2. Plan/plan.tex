@@ -100,155 +100,79 @@ A pesar de sus beneficios teóricos, existe una brecha de conocimiento práctico
 
 Como base para el desarrollo del proyecto es necesario establecer los fundamentos para la formulación del algoritmo optimzado de RK4, por lo cual es imperativo conocer las características del problema , los principios de la computación heterogénea y la computación de alto rendimiento, las aplicaciones de la misma en la industria y las partes requeridas para la optimización, las cuales se describen a continuación.
 
-\subsection{}
+\subsection{COMPUTACIÓN DE ALTO RENDIMIENTO (HPC)}
 
-% Definir qué es la computación autonómica y qué es lo que propone
-
-El concepto de computación autonómica, definido inicialmente por IBM \citeyear{horn_2001}, se refiere a un conjunto de características que presenta un sistema computacional el cual le permite actuar de manera autónoma, o auto-gobernarse, con el fin de alcanzar algún objetivo establecido por los administradores del sistema \cite{lalanda_diaconescu_mccann_2014}.
+La computación de alto rendimiento, conocida como HPC, forma parte indisoluble del ámbito de la computación y está dedicada fundamentalmente a la resolución de problemas, que requieren para su resolución un gran poder computacional. El objetivo de HPC es el de aprovechar arquitecturas avanzadas y paralelas que puedan ser utilizadas para resolver tareas que de ser necesarias en sistemas convencionales no se podrían realizar precisamente debido, entre otras consideraciones, a la complejidad de los cálculos a realizar y a la gran cantidad de datos a procesar.
 
 
-Los 8 elementos clave, definidos por IBM, que deberían presentar este tipo de sistemas son:
-% \begin{multicols}{2}
-\begin{enumerate}
-	\item Auto-conocimiento: habilidad de conocer su estado actual, las interacciones del sistema.
-	\item Auto-configuración: capacidad de reconfigurarse frente a los constantes cambios en el entorno.
-	\item Auto-optimización: búsqueda constante de optimizar el funcionamiento de sí mismo.
-	\item Auto-sanación: aptitud de restaurar el sistema en el caso de que se presenten fallas.
-	\item Auto-protección: facultad de protegerse a sí mismo de ataques externos.
-	\item Auto-conciencia: posibilidad de conocer el ambiente en el que el sistema se encuentra.
-	\item Heterogeneidad: capacidad de interactuar con otros sistemas de manera cooperativa.
-	\item Abstracción: ocultar la complejidad a los administradores del sistema con objetivos de alto nivel de abstracción.
-\end{enumerate}
-% \end{multicols}
+De un modo general, HPC ha pasado a ser parte fundamental de la computación en diversas disciplinas científicas y de la ingeniería, permitiendo realizar simulaciones numéricas, el procesamiento de grandes cantidades de datos o el modelado detallado de fenómenos físicos. Este enfoque ha permitido la expansión de áreas como la predicción del tiempo (clima), la exploración espacial, la biología computacional, el diseño de nuevos materiales, etc.
 
-En el caso de que un sistema tenga una implementación parcial de estas características, este podría considerarse autonómico. En este sentido debería tener la capacidad de lidiar con los problemas como la complejidad, heterogeneidad e incertidumbre \cite{emerging_2005} al igual que reducir la cantidad de recursos tanto técnicos como humanos requeridos para mantener los sistemas en funcionamiento.
 
-\subsubsection*{MAPE-K}
+A lo largo de la historia —de los sistemas HPC —las supercomputadoras se transforman en infraestructuras distribuidas y clústeres HPC y estos cambios han conducido también a la aparición de paradigmas de programación que permiten explotar el paralelismo como por ejemplo MPI (Message Passing Interface) y OpenMP (Open Multi-Processing) y más recientemente la aparición de las GPUs han permitido incrementar todavía más la capacidad computacional por medio de un paralelismo masivo orientado hacia cálculos científicos y simulaciones.
+
+
+Un aspecto clave de los sistemas HPC en la actualidad es la migración hacia arquitecturas heterogéneas que integran diferentes tipos de procesadores (CPU, GPU, FPGA y aceleradores específicos) con vista a una mayor eficiencia. El éxito que han ido logrando estas arquitecturas no responde solamente a la necesidad de un mayor poder computacional, sino que tiene que ver también en el avance del conocimiento de la factibilidad y del consumo energético, así como de la escalabilidad. En este marco, la programación y la portabilidad del código, se convierte en uno de los pilares que conduce a los avances que presentan nuevos modelos como SYCL, que intenta crear un acceso unificado a las diferentes plataformas, conservando al mismo tiempo el rendimiento \cite{reinders_data_2021} .
+
+
+Por consiguiente, HPC no debe ser entendida solo como la existencia y uso de supercomputadoras, sino que forma parte de un conjunto de tipos de tecnología que siempre están evolucionando y que tienen mucha repercusión en la aceleración del conocimiento científico y la posibilidad de poder tratar la solución de problemas que tienen mucho significado a nivel mundial.
+
+
+\subsubsection*{COMPUTACIÓN HETEROGÉNEA}
 
 % Explicar como funciona el modelo de management y los pasos que se aplican dentro de lo que se tiene
 % Más que todo es desarrollar que es el ciclo MAPE-K
 
-IBM, en cuanto a la implementación de las características, propone una modelo de ciclo auto-adaptativo, denominado MAPE-K \cite{Krikava2013}. Este acercamiento, compuesto de cinco fases, es uno de ciclos de control más usado en implementaciones de sistemas auto-adaptativos y computación autonómica \cite{Arcaini_2015}. En la figura \ref{fig:mapek}, se presentan las fases que \textit{manejador} debe desarrollar para así administrar cada uno de los elementos del sistema computacional basado en una base de conocimiento común \cite{alessandra_2010}.
+La computación heterogénea tiene su fundamento en el uso conjunto de varios tipos de procesadores existentes en un mismo sistema y tiene como objetivo el aumento del rendimiento y de la eficiencia. En este modelo de computación no solo se hace funcionar la CPU, sino que se hacen funcionar otros dispositivos adicionales a esta como las GPU, FPGA u otros tipos de aceleradores, de forma que se distribuyen las tareas en función de las capacidades de cada una de las unidades de procesamiento.
 
-\begin{figure}[H]
-	\centering
-	\includesvg[inkscapelatex=false]{Images/Mape-k.svg}
-	\caption{El ciclo auto-adaptativo MAPE-K.} \cite{alessandra_2010}
-	\label{fig:mapek}
-\end{figure}
+El interés por este modelo ha crecido en los últimos años debido a que los problemas actuales no tienen únicamente que ver con la capacidad de cómputo, sino también con la eficiencia energética y la escalabilidad. Si bien las CPU ofrecen flexibilidad y son apropiadas para las tareas secuenciales, las GPU llegan a aportar niveles de paralelismo muy elevados, de tal forma que se pueden utilizar en simulaciones, cálculos numéricos masivos o grandes volúmenes de datos. \cite{mittal_survey_2015}.
 
-Cada una de estas fases son:
+La adopción de arquitecturas heterogéneas se ha visto favorecida por la aparición de entornos de programación como CUDA, OpenCL y SYCL, que facilitan su programación y proporcionan diferentes niveles de portabilidad. \cite{keryell_sycl_2019}. Aun así, la computación heterogénea tiene también sus inconvenientes, como la necesidad de encontrar algoritmos a partir de los cuales las computaciones puedan adaptarse a hardware heterogéneo y la gestión de la carga de trabajo en los distintos dispositivos.
 
-\begin{itemize}
-	\item Monitorear (M): Esta fase se compone de la recolección, filtración y reportar la información adquirida sobre el estado del elemento a manejar.
-	\item Analizar (A): La fase de análisis se encarga del interpretar el entorno en el cual se encuentra, el predecir posibles situaciones comunes y diagnosticar el estado del sistema.
-	\item Planear (P): Durante la planificación se determina las acciones a tomar con el fin de llegar a un objetivo establecido a partir de una serie de reglas o estrategias.
-	\item Ejecutar (E): Finalmente, se ejecuta lo planeado usando los mecanismos disponibles para el manejo del sistema.
-\end{itemize}
+Este paradigma se ha instalado como una de las principales tendencias en la computación de alto rendimiento, debido a que permanece en la línea que se busca entre velocidad de ejecución, eficiencia energética y uso de recursos.
 
-Es de resaltar que este modelo, aunque útil para el desarrollo de este tipo de sistemas, es bastante general en cuanto a la estructura y no usan modelos de diseño establecidos \cite{Ouareth_2018}.
+\subsubsection*{VISUALIZACIÓN DE CAMPOS DE FLUJO}
 
-\subsubsection*{Mecanismos de Descripción}
+La visualización de los campos de flujo es una metodología para realizar una representación gráfica del comportamiento de los sistemas dinámicos que se desarrollan con respecto al tiempo y al espacio. Un campo de flujo es la descripción de cómo varía una magnitud vectorial, como puede ser, por ejemplo, la velocidad o la fuerza, en los distintos puntos de un dominio, siendo su análisis importante en la dinámica de fluidos, la meteorología o bien en la física computacional.
 
-% Esta parte está más que todo para introducir el concepto de la base de conocimiento de la aplicación.
-% Es decir, está orientado a dar como un ejemplo de esa base de conocimiento que tiene el "manejador" sobre la 
-% plataforma
+La importancia de este concepto reside en que es capaz de entender fenómenos complejos mediante representaciones visuales (como diagramas de flujo) que ayudan en la interpretación de los datos numéricos. En problemas como la simulación de fluidos, la dispersión de contaminantes o el modelado atmosférico, las soluciones numéricas en sí mismas son difíciles de interpretar; por ello, se requiere de la visualización para que se puedan ver patrones, trayectorias y estructuras internas. \cite{laramee_state_2004}.
 
-La fase de monitoreo dentro del ciclo MAPE-K es vital para el funcionamiento del manejador autonómico pues es a partir de la información que se construirá la base de conocimiento requerida por las demás partes del ciclo. Parte de esta, está compuesta por el \textit{estado del sistema} el cual incluye la descripción del sistema en un momento dado \cite{Weiss_2011}.
+Hay muchas aplicaciones de la visualización de campos de flujo. Por ejemplo, se emplea en el diseño aerodinámico de la industria del automóvil y la aeronáutica para pronosticar el clima; también se utiliza para simular la turbulencia o estudiar el movimiento de partículas en medios físicos. Igualmente, se utiliza para el análisis de modelos en biomedicina. A partir de todas estas aplicaciones, se requiere de métodos computacionales intensivos para poder resolver numéricamente el problema, como para convertir gráfica y visualmente los resultados. \cite{laramee_state_2004} \cite{post_state_2003}.
 
-Existen varias maneras de realizar implementaciones de mecanismos de auto-descripción y la utilidad de cada uno de estos varía dependiendo en el tipo de sistema de software que se esté usando. Para el marco del proyecto, nos interesan aquellos que estén orientados a los sistemas embebidos e  IoT, algunos de estos son:
+Sin embargo, la visualización de campos de flujo presenta limitaciones debido principalmente al alto coste computacional que se deriva de ciertos aspectos; por ejemplo, el cálculo de trayectorias, la interpolación de datos en malla tridimensional y el renderizado de grandes cantidades de datos requieren de sistemas que puedan ejecutar tareas en paralelo, y de arquitecturas de computación avanzada. \cite{post_state_2003}.
 
-\begin{itemize}
-	\item \textbf{JSON Messaging}: Iancu y Gatea \citeyear{Iancu_2022} plantean un protocolo que emplea mensajería entre \textit{gateways} con el fin de recibir información sobre estas. En términos simples, estas funcionan como un \textit{ping} hacia el nodo que luego retorna sus datos, al igual que los dispositivos conectados a ella, al encargado de recolectar toda esta información con el fin de construir una descripción del sistema.-
+Es en este sentido que desde el proyecto se ha considerado este tipo de problemas, ya que el algoritmo para la integración numérica RK4, optimizado y adaptado a arquitecturas heterogéneas, sirve para calcular trayectorias para partículas dentro de campos de flujo. Por lo que para la visualización no solo se quedaría como una aplicación representativa, sino que también serviría como un caso de estudio para poder validar la eficiencia y portabilidad de las implementaciones en SYCL frente a otras soluciones de forma tradicional.
+\subsubsection*{ALGORITMOS DE INTEGRACION NUMERICA (RK4)}
 
-	\item \textbf{IoT Service Description Model}: O IoT-LMsDM, es un servicio de descripción desarrollado por Zhen y Aiello \citeyear{Wang_2021} el cual está orientado al contexto, servicios e interfaz de un sistema IoT. De este se espera poder contar no solo con descripciones del estado del sistema en términos del ambiente, pero la funcionalidad (es decir, los \textit{endpoints} a usar) al igual que las estructuras de datos que estos consumen.
+Los algoritmos de integración numérica constituyen un conjunto de métodos que se idearon para aproximar la solución de Ecuaciones Diferenciales Ordinarias (EDO), sobre todo, cuando no se puede obtener una solución analítica, exacta. Entre todos estos métodos, el método de Runge-Kutta de cuarto orden (RK4) es uno de los más utilizados a causa de su equilibrio entre sencillez, precisión y coste computacional. \cite{butcher_numerical_2008}.
 
-	\item \textbf{Adaptadores de Auto-descripción}: En este acercamiento a los mecanismos de auto-descripción, se tienen adaptadores los cuales emplean los datos generados por los sensores del componente gestionado con el fin de realizar la determinación de la arquitectura desplegada. De igual manera, este acercamiento permite realizar modificaciones a la descripción de manera manual en caso de que se detecten problemas \cite{msc_henry_2022}.
+La razón por la que este método es importante, radica en su capacidad para proporcionar resultados con un error relativamente pequeño sin tener que aumentar excesivamente el coste de cálculo. Por eso, el RK4 ha pasado a ser considerado un estándar en lo que se refiere a simulaciones físicas, ingeniería, biología computacional y en general cualquier disciplina que busque modelar fenómenos dinámicos mediante EDO. \cite{suli_introduction_2003}.
 
-\end{itemize}
+Entre sus aplicaciones se encuentran la simulación de trayectorias de partículas en campos vectoriales, la dinámica de fluidos, la modelación de circuitos eléctricos, el análisis orbital en astrofísica y la biomecánica. En estas aplicaciones, el RK4 ofrece aproximaciones estables y confiables incluso en sistemas fuertemente no lineales.
 
-De esto podemos ver no solo las diferentes maneras en las que las implementaciones realizan las descripciones de los sistemas asociados, sino que también el alcance de estos en cuanto a lo que pueden describir.
+Sin embargo, el método tiene una serie de limitaciones ligadas al coste en recursos computacionales, sobre todo cuando la dimensión de las datasets aumenta o cuando se busca una alta resolución tanto temporal como espacial. En estos casos, llevar a cabo el algoritmo de forma secuencial puede acabar convirtiéndose en un cuello de botella, lo que requiere recurrir a utilizar técnicas de paralelización y arquitecturas de computación más avanzadas. \cite{camp_streamline_2011}\cite{pugmire_scalable_2009}.
 
-\subsubsection*{Mecanismos de Adaptación}
-
-% Ya aquí es como definir de manera general qué es eso de los mecanismos de adaptación, qué hacen y qué características
-% tienen. 
-% No sé si meter ejemplos, creo que eso sería más para un estado del arte en este caso.
-
-La adaptación, en el contexto de la computación autonómica, es la parte más importante en cuanto a la auto-gestión de un sistema de software se refiere. Así mismo, presenta el mayor reto debido a la necesidad de modificar código de bajo nivel, tener que afrontarse a incertidumbre de los efectos que pueden tener dichas alteraciones al sistema al igual que lidiar con esto en \textit{runtime} debido a los problemas que el \textit{downtime} tendría en los negocios \cite{lalanda_diaconescu_mccann_2014}.
-
-Esta adaptabilidad puede exponerse en múltiples puntos dentro de un sistema de software. Pueden realizarse adaptaciones en sistema operativo, lenguaje de programación, arquitectura e incluso datos \cite{lalanda_diaconescu_mccann_2014}.
-
-Manteniéndose en el marco del proyecto, son las implementaciones relacionadas con la modificación de la arquitectura los cuales nos interesan. Siendo así, nos centraremos en los mecanismos de adaptación de componentes, o de reconfiguración:
-
-\begin{itemize}
-	\item \textbf{Binding Modification}: Este mecanismo hace referencia a la alteración de los vínculos entre los diferentes componentes de la arquitectura. Estos tienen el objetivo de modificar la interacción entre componentes, lo que es especialmente común en implementaciones con \textit{proxies}. Este tipo de mecanismo de adaptación fue usado por Kabashkin \citeyear{Kabashkin_2017} para añadir fiabilidad a la red de comunicación aérea.
-
-	\item \textbf{Interface Modification}: Las interfases funcionan como los puntos de comunicación entre los diferentes componentes de la arquitectura. Siendo así, es posible que la modificación de estos sea de interés con el fin de alterar el comportamiento de un sistema al igual que soportar la heterogeneidad del sistema. Esto puede verse en el trabajo desarrollado por Liu, Parashar y Hariri \citeyear{Liu_2004} en donde definen la utilidad de dichas adaptaciones al igual que la implementación de las mismas.
-
-	\item \textbf{Component Replacement, Addition and Subtraction}: En términos simples, este mecanismo se encarga de alterar los componentes que componen la arquitectura; de esta manera, modificando su comportamiento. Ejemplos de esto puede verse en el trabajo de Huynh \citeyear{Huynh_2019} en el cual se evalúan varios acercamientos a la reconfiguración de arquitecturas a partir del remplazo de componentes a nivel individual al igual que grupal.
-
-	      Este acercamiento a la mutación de la arquitectura también puede verse en el despliegue de componentes como respuesta a cambios en los objetivos de negocio de las aplicaciones al igual que como respuesta a cambios inesperados dentro de la aplicación. Esto puede verse en trabajos como el de Patouni \citeyear{Patouni_2006} donde se realizan este tipo de implementaciones.
-
-\end{itemize}
-
-\subsection{Internet of Things}
-
-% Aquí es para contextualizar una de las aplicaciones de la computación embebida más que otra cosa
-
-El Internet de las cosas, o IoT (Internet of Things); es una de las áreas de las ciencias de la computación en la cual  se embeben diferentes dispositivos en objetos del día a día. Esto les da la capacidad de enviar y recibir información con el fin de realizar monitoreo o facilitar el control de ciertas acciones \cite{Berte_2018}.
-
-Esta tecnología, debido a su flexibilidad al igual que el alcance que puede tener, presenta una gran cantidad de aplicaciones que va desde electrónica de consumo hasta la industria. Encuestas realizadas en el 2020 reportan su uso en smart homes, smart cities, transporte, agricultura, medicina, etc. \cite{Dawood_2020}. Su impacto no ha sido poco.
-
-\subsubsection*{Sistemas Embebidos}
-
-% Tengo que contextualizar qué es lo que es la computación embebida y cual es el principio o justificación de este
-
-Los sistemas de cómputo embebidos hacen referencia a un sistema compuesto de microcontroladores los cuales están orientados a llevar a cabo una función o un rango de funciones específicas \cite{heath2002embedded}. Este tipo de sistemas, debido a la posibilidad de combinar hardware y software en una manera compacta, se ha visto en multiples campos de la industria como lo son el sector automotor, de maquinaria industrial o electrónica de consumo \cite{deichmann_2022}.
-
-% Extender la aplicación de la computación autonómica en los sistemas embebidos.
-
-\subsubsection*{Smart Campus}
-
-% Y aquí es para explicar el concepto de un smart campus. Para qué se usa y de donde surge.
-
-Un Smart Campus, equiparable con el concepto de Smart City, es una plataforma en la que se emplean tecnologías, sumado a una infraestructura física, con la cual se busca la recolección de información y monitoreo en tiempo real \cite{MinAllah2020}. Los datos recolectados tienen el objetivo de apoyar la toma de decisiones, mejora de servicios, entre otros \cite{Anagnostopoulos_2023}.
-
-Estas plataformas, debido a su escala y alcance en cuanto a la cantidad de servicios que pueden ofrecer, requieren de
-infraestructuras tecnológicas las cuales den soporte a los objetivos del sistema. Es posible ver implementaciones orientadas a microservicios en trabajos como los de Jiménez, Cárcamo y Pedraza \citeyear{henry_2020} donde se desarrolla una plataforma de software escalable con la cual se pueda lograr interoperatividad y alta usabilidad para todos.
-
-\subsection{Domain-Specific Languages} % Fase 2
-
-% En esta selección es más que todo el dar el concepto de qué es un lenguaje de notación
-
-% Explicar que es la notación en general, en términos lingüísticos y de ahí expandir a notación en software
-% UML y eso.
-
-Los \textit{Domain-Specific Languages} (DSL), o Lenguaje específico de dominio, son lenguajes de programación los cuales se usan con un fin específico. Estos están orientados principalmente al uso de abstracciones de un mayor nivel debido al enfoque que estos tienen para la solución de un problema en específico \cite{Kelly2008}. Ejemplos de este tipo de acercamiento, en el caso del modelado (\textit{Domain-specific modeling}), pueden observarse en los diagramas de entidad relación usados en el desarrollo de modelos de base de datos \cite{Celikovic2014ADF}.
-
-% El concepto de \textit{notación} está definido como la representación gráfica del habla \cite{crystal2011dictionary}. En el contexto de las ciencias de la computación, esta idea se ha extrapolado con el fin de representar diferentes conceptos específicos del software y algoritmia de manera visual \cite{RutanenKalle2018McoO}. Esto puede verse con la existencia de lenguajes de notación como lo es UML con el cual se realizan representaciones que van desde arquitecturas de software, estructuras de base de datos, entre otros \cite{Booch2005-xu}.
-
-% \subsubsection*{Gramática}
-
-% % Esto es más que nada para contextualizar la necesidad de una forma en la notación
-
-% La gramática, más específicamente gramáticas libres de contexto, son un conjunto de reglas descriptivas. Este conjunto de reglas, en conjunto de una notación, cumplen la función de dictar si una frase es válida para un lenguaje dado \cite[p. 101]{Sipser2012-wl}. 
+En el caso del proyecto, RK4 se convierte en el núcleo matemático que se desea optimizar. Su implementación en un entorno heterogéneo gracias a SYCL permite trabajar en conseguir mejoras en cuanto a el rendimiento y la portabilidad al comparar sus resultados a implementaciones tradicionales en CPU y GPU, como las que basan en CUDA.
 
 
+\subsection{MODELOS DE PROGRAMACION EN PARALELO}
 
-% \subsubsection*{Serialización de Datos}
+La programación paralela es un paradigma que intenta ejecutar muchas operaciones a la vez, dividiendo un problema en subproblemas más pequeños que pueden resolverse de manera simultánea en diferentes unidades de procesamiento. Este modelo, a diferencia de la programación secuencial, trata de maximizar el uso de los recursos de hardware y es fundamental para hacer frente a nuevos problemas de gran escala en ciencia e ingeniería. (Grama et al. 2003).
 
-% % qué es la serialización de datos y para que se usa en el caso de las arquitecturas.
+Una vez más, su importancia reside en que esas capacidades del hardware moderno están conformadas por procesadores multinúcleo, tarjetas gráficas (GPU) y aceleradores. Es con la ejecución paralela que se puede mejorar los tiempos de cómputo y mejorar la eficiencia energética para las aplicaciones que requieren grandes volúmenes de cálculo, como es el caso de la simulación científica, el aprendizaje automático o la visualización de datos. (Kumar et al., 2022).
 
-% La serialización de datos se refiere a la traducción de una estructura de datos hacia una manera en la que pueda ser almacenada. En el contexto del proyecto, esta serialización nos permitirá describir las arquitecturas objetivo a partir de la notación y gramáticas establecidas. Así mismo, debería darnos la flexibilidad de describir cualquier tipo de meta para el sistema de software.
+Existen diferentes modelos y herramientas de este paradigma. CUDA, desarrollado por NVIDIA, se ha convertido en un estándar de programación para GPU propietarias. OpenCL es un marco de programación abierto que permite usar arquitecturas heterogéneas. OpenMP permite la programación paralela en entornos de memoria compartida para CPU multinúcleo, y por último SYCL, promovido por Khronos Group, extiende el modelo de C++ para múltiples arquitecturas, pero en un marco portable y estándar. (Khronos Group, 2020; Reinders et al., 2021).
+
+No obstante, este método también conlleva ciertas limitaciones. Entre ellas están la dependencia del hardware —hay modelos que se ejecutan solamente en arquitecturas específicas—, la complejidad en el control del paralelismo y dependencias como la dificultad de portar aplicaciones entre plataformas heterogéneas. Este tipo de restricciones ha sido el impulso para el desarrollo de otros métodos que consideren una buena relación entre el rendimiento y la portabilidad. (Choi et al., 2020).
+
+En la parte asociada a este proyecto, la paralelización de las aplicaciones se relaciona estrictamente con la elección de SYCL como modelo de referencia. Esta estrategia permite escribir código portable en C++ y ejecutarlo en CPU, GPU y FPGA, lo que resulta un aspecto fundamental a considerar para evaluar eficiencia y escalabilidad frente a otros modelos convencionales.
+
 
 \pagebreak
 
 \section{Metodología}
 
-Para el desarrollo del trabajo de grado, se propone un modelo de prototipado iterativo compuesto de 5 fases (Ver fig. \ref{fig:met}). De esta manera, se avanzará a medida que se va completando la fase anterior y permitirá a futuro el poder iterar sobre lo que se ha desarrollado anteriormente.
 
-Para el desarrollo del trabajo de grado, se propone un plan de 3 fases:
+Para el desarrollo del trabajo de grado, se propone un plan de 3 fases, que acarrea una secuencia lógica desde la implementación hasta el análisis de los resultados:
 \begin{itemize}
 	\item Implementación de RK4
 	\item Desarrollo del ambiente de pruebas
@@ -296,8 +220,6 @@ Durante la tercera fase y última fase, se compilarán los resultados en un form
 	\item Retroalimentación y conclusiones de los resultados obtenidos.
 \end{enumerate}
 
-\pagebreak
-
 \section{Cronograma}
 
 En la tabla \ref{tab:cron} se presenta el cronograma propuesto para el desarrollo del el proyecto. En este se establece un tiempo total de 16 semanas en las cuales se desarrollarán las actividades definidas en la metodología.
@@ -316,7 +238,8 @@ En la tabla \ref{tab:cron} se presenta el cronograma propuesto para el desarroll
 			\multicolumn{1}{|l|}{5.1.2.}                                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}}  & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                            \\ \hline
 			\multicolumn{1}{|l|}{5.1.3}                                                        & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}}  & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}}  & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                            \\ \hline
 			\multicolumn{17}{|c|}{\cellcolor[HTML]{FFFFC7}Fase: Desarrollo Del Ambiente De Pruebas}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              \\ \hline
-			\multicolumn{1}{|l|}{\cellcolor[HTML]{FFFFC7}Actividad / Semana}                   & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}1} & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}2} & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}3} & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}4} & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}5} & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}6} & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}7} & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}8} & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}9} & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}10} & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}11} & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}12} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}13} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}14} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}15} & \cellcolor[HTML]{FFCCC9}16 \\ \hline
+			\multicolumn{1}{|l|}{\cellcolor[HTML]{FFFFC7}Actividad / Semana}                   & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}1} & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}2} & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}3} & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}4} & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}5} & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}6} & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}7} & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}8} & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}9} & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}10} & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}11} & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}12} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}13} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}14} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}15} &
+			\cellcolor[HTML]{FFCCC9}16                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           \\ \hline
 			\multicolumn{1}{|l|}{5.2.1.}                                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}}  & \multicolumn{1}{l|}{\cellcolor[HTML]{96FFFB}}  & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                            \\ \hline
 			\multicolumn{1}{|l|}{5.2.2.}                                                       & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}}  & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}}   & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}}   & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                            \\ \hline
 			\multicolumn{1}{|l|}{5.2.3}                                                        & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                          & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{\cellcolor[HTML]{CBCEFB}}   & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           & \multicolumn{1}{l|}{}                           &                            \\ \hline
