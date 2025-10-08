@@ -1,0 +1,378 @@
+---
+MainSourceFile:  '/home/ch0ry/cuda-streamlines/dpct_output/nrrd_field.h'
+Replacements:
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          52
+    Length:          0
+    ReplacementText: "#include <sycl/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          320
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          340
+    Length:          6
+    ReplacementText: 'sycl::float3'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          352
+    Length:          6
+    ReplacementText: 'sycl::float3'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          366
+    Length:          0
+    ReplacementText: ",\n           dpct::image_accessor_ext<sycl::float4, 3> m_texture"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          380
+    Length:          5
+    ReplacementText: 'pos.x()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          388
+    Length:          5
+    ReplacementText: 'pos.x()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          396
+    Length:          10
+    ReplacementText: 'm_offset.x()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          412
+    Length:          5
+    ReplacementText: 'pos.y()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          420
+    Length:          5
+    ReplacementText: 'pos.y()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          428
+    Length:          10
+    ReplacementText: 'm_offset.y()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          444
+    Length:          5
+    ReplacementText: 'pos.z()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          452
+    Length:          5
+    ReplacementText: 'pos.z()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          460
+    Length:          10
+    ReplacementText: 'm_offset.z()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          477
+    Length:          5
+    ReplacementText: 'pos.x()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          485
+    Length:          5
+    ReplacementText: 'pos.x()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          493
+    Length:          9
+    ReplacementText: 'm_scale.x()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          508
+    Length:          5
+    ReplacementText: 'pos.y()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          516
+    Length:          5
+    ReplacementText: 'pos.y()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          524
+    Length:          9
+    ReplacementText: 'm_scale.y()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          539
+    Length:          5
+    ReplacementText: 'pos.z()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          547
+    Length:          5
+    ReplacementText: 'pos.z()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          555
+    Length:          9
+    ReplacementText: 'm_scale.z()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          571
+    Length:          6
+    ReplacementText: 'sycl::float4'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          594
+    Length:          5
+    ReplacementText: 'pos.x()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          601
+    Length:          5
+    ReplacementText: 'pos.y()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          608
+    Length:          5
+    ReplacementText: 'pos.z()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          613
+    Length:          0
+    ReplacementText: ', m_texture'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          630
+    Length:          26
+    ReplacementText: 'sycl::float3(r.x(), r.y(), r.z())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          670
+    Length:          3
+    ReplacementText: 'r.w()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          708
+    Length:          6
+    ReplacementText: 'sycl::float4'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          727
+    Length:          6
+    ReplacementText: 'sycl::float3'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/nrrd_field.h'
+    Offset:          746
+    Length:          6
+    ReplacementText: 'sycl::float3'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+MainSourceFilesDigest:
+  - MainSourceFile:  ''
+    Digest:          ''
+    HasCUDASyntax:   false
+DpctVersion:     2025.2.0
+SDKVersionMajor: '12'
+SDKVersionMinor: '9'
+MainHelperFileName: ''
+USMLevel:        ''
+FeatureMap:      {}
+CompileTargets:  {}
+OptionMap:
+  AnalysisScopePath:
+    Value:           ''
+    ValueVec:
+      - '/home/ch0ry/cuda-streamlines'
+    Specified:       false
+  AsyncHandler:
+    Value:           'false'
+    Specified:       false
+  BuildScript:
+    Value:           '0'
+    Specified:       false
+  CodePinEnabled:
+    Value:           'false'
+    Specified:       false
+  CommentsEnabled:
+    Value:           'false'
+    Specified:       false
+  CompilationsDir:
+    Value:           ''
+    Specified:       false
+  CtadEnabled:
+    Value:           'false'
+    Specified:       false
+  EnablepProfiling:
+    Value:           'false'
+    Specified:       false
+  ExperimentalFlag:
+    Value:           '0'
+    Specified:       false
+  ExplicitNamespace:
+    Value:           '20'
+    Specified:       false
+  ExtensionDDFlag:
+    Value:           '0'
+    Specified:       false
+  ExtensionDEFlag:
+    Value:           '4294967295'
+    Specified:       false
+  HelperFuncPreferenceFlag:
+    Value:           '0'
+    Specified:       false
+  NDRangeDim:
+    Value:           '3'
+    Specified:       false
+  NoDRYPattern:
+    Value:           'false'
+    Specified:       false
+  OptimizeMigration:
+    Value:           'false'
+    Specified:       false
+  ProcessAll:
+    Value:           'false'
+    Specified:       false
+  RuleFile:
+    Value:           ''
+    Specified:       false
+  SyclNamedLambda:
+    Value:           'false'
+    Specified:       false
+  UseSYCLCompat:
+    Value:           'false'
+    Specified:       false
+  UsmLevel:
+    Value:           '1'
+    Specified:       false
+...

@@ -1,0 +1,567 @@
+---
+MainSourceFile:  '/home/ch0ry/cuda-streamlines/dpct_output/array3d.h'
+Replacements:
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          45
+    Length:          0
+    ReplacementText: "#include <sycl/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          224
+    Length:          4
+    ReplacementText: 'dpct::dim3'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          316
+    Length:          4
+    ReplacementText: 'dpct::dim3'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          469
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          511
+    Length:          0
+    ReplacementText: ",\n        dpct::image_accessor_ext<sycl::float4, 3> m_texture"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          534
+    Length:          9
+    ReplacementText: 'dpct::image_matrix'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          560
+    Length:          10
+    ReplacementText: 'sycl::range<3>'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          579
+    Length:          0
+    ReplacementText: '{0, 0, 0}'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          583
+    Length:          19
+    ReplacementText: 'dpct::image_wrapper_base_p'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          718
+    Length:          4
+    ReplacementText: 'dpct::dim3'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          759
+    Length:          4
+    ReplacementText: 'dpct::dim3'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          772
+    Length:          6
+    ReplacementText: '[0]'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          788
+    Length:          7
+    ReplacementText: '[1]'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          805
+    Length:          6
+    ReplacementText: '[2]'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          940
+    Length:          4
+    ReplacementText: 'dpct::dim3'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1066
+    Length:          35
+    ReplacementText: delete m_texture
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1107
+    Length:          22
+    ReplacementText: delete m_array
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1167
+    Length:          39
+    ReplacementText: 'sycl::range<3>(size.x, size.y, size.z)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1224
+    Length:          26
+    ReplacementText: 'dpct::image_channel::create<T>()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1266
+    Length:          17
+    ReplacementText: 'DPCT_CHECK_ERROR(m_array = new dpct::image_matrix'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1284
+    Length:          10
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1294
+    Length:          6
+    ReplacementText: cdesc
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1333
+    Length:          123
+    ReplacementText: 'sycl::range<3>(m_extent.width * sizeof(T), m_extent.height, m_extent.depth)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1489
+    Length:          1
+    ReplacementText: 'dpct::image_type::standard'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1491
+    Length:          0
+    ReplacementText: ')'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1517
+    Length:          16
+    ReplacementText: 'dpct::image_data'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1562
+    Length:          16
+    ReplacementText: 'dpct::image_data'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1584
+    Length:          35
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1622
+    Length:          29
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1651
+    Length:          0
+    ReplacementText: "\n  tr.set_data(m_array);"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1655
+    Length:          15
+    ReplacementText: 'dpct::sampling_info'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1699
+    Length:          15
+    ReplacementText: 'dpct::sampling_info'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1724
+    Length:          33
+    ReplacementText: 'set(sycl::filtering_mode::linear)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1759
+    Length:          45
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1804
+    Length:          45
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1854
+    Length:          38
+    ReplacementText: 'set(sycl::addressing_mode::clamp)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1894
+    Length:          41
+    ReplacementText: "  /*\n  DPCT1062:1: SYCL Image doesn't support normalized read mode.\n  */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1940
+    Length:          24
+    ReplacementText: 'set(sycl::coordinate_normalization_mode::unnormalized)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          1980
+    Length:          51
+    ReplacementText: 'DPCT_CHECK_ERROR(m_texture = dpct::create_image_wrapper(tr, td))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2178
+    Length:          17
+    ReplacementText: 'dpct::memcpy_parameter'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2209
+    Length:          3
+    ReplacementText: '{}'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2227
+    Length:          6
+    ReplacementText: from.pitched
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2242
+    Length:          120
+    ReplacementText: 'dpct::pitched_data((void *)data, m_extent.width * sizeof(T), m_extent.width, m_extent.height)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2378
+    Length:          8
+    ReplacementText: to.image
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2411
+    Length:          6
+    ReplacementText: size
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2443
+    Length:          4
+    ReplacementText: direction
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2450
+    Length:          22
+    ReplacementText: 'dpct::host_to_device'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2488
+    Length:          12
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::dpct_memcpy'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2501
+    Length:          11
+    ReplacementText: copyParams
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2513
+    Length:          0
+    ReplacementText: ')'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2619
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2673
+    Length:          0
+    ReplacementText: ",\n                  dpct::image_accessor_ext<sycl::float4, 3> m_texture"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2683
+    Length:          0
+    ReplacementText: "  /*\n  DPCT1064:2: Migrated tex3D call is used in a macro/template definition and may not be valid for all macro/template uses. Adjust the code.\n  */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/ch0ry/cuda-streamlines/array3d.h'
+    Offset:          2692
+    Length:          28
+    ReplacementText: '(m_texture).sycl::ext::oneapi::experimental::sample_image(x, y, z)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+MainSourceFilesDigest:
+  - MainSourceFile:  ''
+    Digest:          ''
+    HasCUDASyntax:   false
+DpctVersion:     2025.2.0
+SDKVersionMajor: '12'
+SDKVersionMinor: '9'
+MainHelperFileName: ''
+USMLevel:        ''
+FeatureMap:      {}
+CompileTargets:  {}
+OptionMap:
+  AnalysisScopePath:
+    Value:           ''
+    ValueVec:
+      - '/home/ch0ry/cuda-streamlines'
+    Specified:       false
+  AsyncHandler:
+    Value:           'false'
+    Specified:       false
+  BuildScript:
+    Value:           '0'
+    Specified:       false
+  CodePinEnabled:
+    Value:           'false'
+    Specified:       false
+  CommentsEnabled:
+    Value:           'false'
+    Specified:       false
+  CompilationsDir:
+    Value:           ''
+    Specified:       false
+  CtadEnabled:
+    Value:           'false'
+    Specified:       false
+  EnablepProfiling:
+    Value:           'false'
+    Specified:       false
+  ExperimentalFlag:
+    Value:           '0'
+    Specified:       false
+  ExplicitNamespace:
+    Value:           '20'
+    Specified:       false
+  ExtensionDDFlag:
+    Value:           '0'
+    Specified:       false
+  ExtensionDEFlag:
+    Value:           '4294967295'
+    Specified:       false
+  HelperFuncPreferenceFlag:
+    Value:           '0'
+    Specified:       false
+  NDRangeDim:
+    Value:           '3'
+    Specified:       false
+  NoDRYPattern:
+    Value:           'false'
+    Specified:       false
+  OptimizeMigration:
+    Value:           'false'
+    Specified:       false
+  ProcessAll:
+    Value:           'false'
+    Specified:       false
+  RuleFile:
+    Value:           ''
+    Specified:       false
+  SyclNamedLambda:
+    Value:           'false'
+    Specified:       false
+  UseSYCLCompat:
+    Value:           'false'
+    Specified:       false
+  UsmLevel:
+    Value:           '1'
+    Specified:       false
+...
