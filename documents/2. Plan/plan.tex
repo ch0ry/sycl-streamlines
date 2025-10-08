@@ -117,10 +117,7 @@ Un aspecto clave de los sistemas HPC en la actualidad es la migración hacia arq
 Por consiguiente, HPC no debe ser entendida solo como la existencia y uso de supercomputadoras, sino que forma parte de un conjunto de tipos de tecnología que siempre están evolucionando y que tienen mucha repercusión en la aceleración del conocimiento científico y la posibilidad de poder tratar la solución de problemas que tienen mucho significado a nivel mundial.
 
 
-\subsubsection*{COMPUTACIÓN HETEROGÉNEA}
-
-% Explicar como funciona el modelo de management y los pasos que se aplican dentro de lo que se tiene
-% Más que todo es desarrollar que es el ciclo MAPE-K
+\subsubsection{COMPUTACIÓN HETEROGÉNEA}
 
 La computación heterogénea tiene su fundamento en el uso conjunto de varios tipos de procesadores existentes en un mismo sistema y tiene como objetivo el aumento del rendimiento y de la eficiencia. En este modelo de computación no solo se hace funcionar la CPU, sino que se hacen funcionar otros dispositivos adicionales a esta como las GPU, FPGA u otros tipos de aceleradores, de forma que se distribuyen las tareas en función de las capacidades de cada una de las unidades de procesamiento.
 
@@ -130,7 +127,7 @@ La adopción de arquitecturas heterogéneas se ha visto favorecida por la aparic
 
 Este paradigma se ha instalado como una de las principales tendencias en la computación de alto rendimiento, debido a que permanece en la línea que se busca entre velocidad de ejecución, eficiencia energética y uso de recursos.
 
-\subsubsection*{VISUALIZACIÓN DE CAMPOS DE FLUJO}
+\subsubsection{VISUALIZACIÓN DE CAMPOS DE FLUJO}
 
 La visualización de los campos de flujo es una metodología para realizar una representación gráfica del comportamiento de los sistemas dinámicos que se desarrollan con respecto al tiempo y al espacio. Un campo de flujo es la descripción de cómo varía una magnitud vectorial, como puede ser, por ejemplo, la velocidad o la fuerza, en los distintos puntos de un dominio, siendo su análisis importante en la dinámica de fluidos, la meteorología o bien en la física computacional.
 
@@ -141,7 +138,8 @@ Hay muchas aplicaciones de la visualización de campos de flujo. Por ejemplo, se
 Sin embargo, la visualización de campos de flujo presenta limitaciones debido principalmente al alto coste computacional que se deriva de ciertos aspectos; por ejemplo, el cálculo de trayectorias, la interpolación de datos en malla tridimensional y el renderizado de grandes cantidades de datos requieren de sistemas que puedan ejecutar tareas en paralelo, y de arquitecturas de computación avanzada. \cite{post_state_2003}.
 
 Es en este sentido que desde el proyecto se ha considerado este tipo de problemas, ya que el algoritmo para la integración numérica RK4, optimizado y adaptado a arquitecturas heterogéneas, sirve para calcular trayectorias para partículas dentro de campos de flujo. Por lo que para la visualización no solo se quedaría como una aplicación representativa, sino que también serviría como un caso de estudio para poder validar la eficiencia y portabilidad de las implementaciones en SYCL frente a otras soluciones de forma tradicional.
-\subsubsection*{ALGORITMOS DE INTEGRACION NUMERICA (RK4)}
+
+\subsubsection{ALGORITMOS DE INTEGRACION NUMERICA (RK4)}
 
 Los algoritmos de integración numérica constituyen un conjunto de métodos que se idearon para aproximar la solución de Ecuaciones Diferenciales Ordinarias (EDO), sobre todo, cuando no se puede obtener una solución analítica, exacta. Entre todos estos métodos, el método de Runge-Kutta de cuarto orden (RK4) es uno de los más utilizados a causa de su equilibrio entre sencillez, precisión y coste computacional. \cite{butcher_numerical_2008}.
 
@@ -166,6 +164,17 @@ No obstante, este método también conlleva ciertas limitaciones. Entre ellas es
 
 En la parte asociada a este proyecto, la paralelización de las aplicaciones se relaciona estrictamente con la elección de SYCL como modelo de referencia. Esta estrategia permite escribir código portable en C++ y ejecutarlo en CPU, GPU y FPGA, lo que resulta un aspecto fundamental a considerar para evaluar eficiencia y escalabilidad frente a otros modelos convencionales.
 
+\subsection{SYCL (Y ESTANDARES DE PORTABILIDAD)}
+
+SYCL (del inglés Standard C++ for Heterogeneous Computing) es un estándar abierto de Khronos Group destinado a la extensión del lenguaje C++ con el fin de facilitar la programación en arquitecturas heterogéneas. A diferencia de los modelos basados en implementaciones propietarias, SYCL desarrolla una interfaz de programación de alto nivel que permite a los desarrolladores escribir código portable de forma única para ejecutarse posteriormente en CPU, GPU, FPGA u otros aceleradores (Khronos Group, 2020).
+
+La importancia del estándar SYCL se encuentra en su desarrollada portabilidad y además por su productividad. Por enlazarse de manera nativa con C++, permite a los programadores aplicar las características modernas de C++ sin tener que aprender un nuevo paradigma. Este mismo hecho ayuda a promover la interoperabilidad entre familias de plataformas que es especialmente importante en un contexto donde el hardware en la arquitectura puede variar entre diferentes generaciones y fabricantes (Reinders et al., 2021).
+
+Entre sus aplicaciones más destacadas nos encontramos con proyectos de cómputo de alto rendimiento (HPC), simulaciones científicas, inteligencia artificial y para análisis de datos. Frameworks como oneAPI de Intel, DPC++, o hipSYCL, hacen de SYCL una buena base para ofrecer entornos de desarrollo con rendimiento y a la vez portabilidad, corroborando así su importancia en el marco de estándares modernos de programación paralela (Intel, 2022; Alpay et al., 2020).
+
+No obstante, SYCL también posee algunas limitaciones. La principal limitación radica en su madurez relativa comparada con los modelos ya consolidados, como CUDA, que deriva en un ecosistema de herramientas y bibliotecas todavía no desarrollado. El soporte de hardware tampoco es homogéneo, depende del compromiso que asuman cada uno de los fabricantes, lo que puede hacer que existan diferencias de rendimiento entre dispositivos (Choi et al., 2020).
+
+Durante el transcurso de este proyecto, SYCL se establece como la herramienta relevante para comprobar la portabilidad y el rendimiento de la implementación del algoritmo RK4 aplicado a la visualización de campos de flujo. Su uso permite no solo explorar las ventajas de trabajar con un estándar abierto también permite establecer comparativas respecto a otros modelos de tipo propietario en casos de heterogeneidad.
 
 \pagebreak
 
