@@ -26,7 +26,6 @@
 
 \section{Introducción}
 
-% 1. Origen de la computación autonómica (Citation needed for industry tendencies)
 El desarrollo de la computación de alto rendimiento (High Performance Computing, HPC) ha permitido abordar problemas científicos y de ingeniería que requieren un procesamiento intensivo de datos. Dentro de este ámbito, la programación paralela constituye una estrategia esencial para aprovechar de manera eficiente las arquitecturas modernas de cómputo, particularmente aquellas basadas en unidades de procesamiento gráfico (GPU). Este enfoque resulta especialmente relevante en áreas como la dinámica de fluidos computacional (CFD, por sus siglas en inglés), en la cual el cálculo de trayectorias de partículas —representadas mediante Streamlines, Streaklines y Pathlines— demanda una elevada capacidad de cómputo y optimización en la gestión de recursos.
 
 
@@ -38,35 +37,9 @@ El presente trabajo tiene como propósito realizar un estudio experimental sobre
 
 Con ello, la investigación busca contribuir al conocimiento sobre la aplicabilidad de modelos de programación portables en escenarios de alto costo computacional, aportando evidencia que permita valorar la pertinencia de SYCL como alternativa a CUDA en el ámbito de la dinámica de fluidos y, en general, en el desarrollo de software científico de alto rendimiento.
 
-% En la última década, el interés de la computación autonómica ha ido en 2 direcciones. Aunque la investigación y la cantidad de artículos ha ido bajando (Ver figura \ref{fig:scopus}), es posible ver el cómo las patentes se han ido manteniendo relativamente estables (Ver figura \ref{fig:lens}). Aunque esto puede representar un interés más hacia el desarrollo de productos derivados de los estudios de la computación autonómica, sugiere que aún existe un atractivo dentro de la investigación en pro del desarrollo de productos. 
-
-% Con el fin de establecer la pertinencia e importancia de la computación autonómica se realizó la consulta en las bases de datos Scopus \cite{scopus} con la cual se define la actividad científica (artículos científicos) y la base de datos Lens patent (Version 8.7.1, Australia, Copyright © 2023, License CC:BY-NC), para determinar la actividad inventiva (patentes).  Se determinó el periodo de búsqueda entre el  2011 – a la fecha (9 de enero de 2023).
-
-% \begin{figure}[ht]
-%     \centering
-%     \includesvg[inkscapelatex=false, scale=0.5]{Images/Tabla.svg}
-%     \caption{Documentos publicados sobre computación autonómica desde 2011 hasta 2023} \cite{scopus} 
-%     \label{fig:scopus}
-% \end{figure}
-
-% \begin{figure}[ht]
-%     \centering
-%     \includesvg[inkscapelatex=false, scale=0.5]{Images/lens.svg}
-%     \caption{Patentes sobre computación autonómica desde 2011 hasta 2023} \cite{lens} 
-%     \label{fig:lens}
-% \end{figure}
-
-% 2. Relación y utilidad para las otras ramas de la computación (¿Qué ramas?, ¿Por qué les es útil?)
-
-
-% 4. Presentar el objetivo final del proyecto (¿Qué se espera obtener?)
-
-
-% 5. Presentar de manera general la metodología a seguir
 
 \section{Planteamiento Y Justificación Del Problema}
 
-% La complejidad de los sistemas software ha ido en aumento \cite[pp.~4-5]{horn_2001}. A medida que se hace la transición a arquitecturas orientadas a microservicios \cite{forrester_research_2019}; la computación distribuida es más común gracias a las soluciones \textit{cloud} \cite{the_cloud_in_2021} y la computación embebida se hace más presente en la industria y el día a día \cite{deichmann_2022}; la administración y gestión de estos requiere de una mayor cantidad de recursos en términos técnicos y humanos con el fin de mantenerlos en los estados más óptimos respecto a los requerimientos del negocio. La búsqueda de reducir o abstraer la complejidad de la gerencia de estos sistemas se ha convertido en una necesidad \cite{lalanda_diaconescu_mccann_2014}.
 La visualización de campos de flujo, mediante técnicas como Streamlines, Streaklines y Pathlines, es fundamental en diversas áreas de la ciencia e ingeniería, incluyendo la dinámica de fluidos computacional (CFD), la meteorología, y el modelado de procesos físicos \cite{camp_streamline_2011}. Estos métodos permiten representar de forma intuitiva el comportamiento de partículas en movimiento dentro de un campo vectorial, lo cual facilita el análisis y la interpretación de fenómenos complejos.
 
 
@@ -88,7 +61,6 @@ A pesar de sus beneficios teóricos, existe una brecha de conocimiento práctico
 \end{itemize}
 
 \subsection{Objetivos Específicos}
-\textbf{Aunque los OE incluidos no hacen parte de esta evaluación, se hace la observación que los mismos están formulados como actividades y no como Objetivos. NOTA: Se ha de tener presente esta observación en la formulación del Plan}
 \begin{itemize}
 	\item Formular una versión optimizada del algoritmo RK4 en SYCL, con el propósito de evaluar su desempeño en arquitecturas heterogéneas.
 	\item Comparar el comportamiento de las implementaciones en C/C++ y en SYCL bajo diferentes configuraciones del problema (tamaño del dataset, conjunto de semillas y complejidad del campo vectorial), con el fin de identificar diferencias en su eficiencia y desempeño.
