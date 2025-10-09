@@ -26,7 +26,7 @@
 
 \section{Introducción}
 
-El desarrollo de la computación de alto rendimiento (High Performance Computing, HPC) ha permitido abordar problemas científicos y de ingeniería que requieren un procesamiento intensivo de datos. Dentro de este ámbito, la programación paralela constituye una estrategia esencial para aprovechar de manera eficiente las arquitecturas modernas de cómputo, particularmente aquellas basadas en unidades de procesamiento gráfico (GPU). Este enfoque resulta especialmente relevante en áreas como la dinámica de fluidos computacional (CFD, por sus siglas en inglés), en la cual el cálculo de trayectorias de partículas —representadas mediante Streamlines, Streaklines y Pathlines— demanda una elevada capacidad de cómputo y optimización en la gestión de recursos.
+El desarrollo de la computación de alto rendimiento (High Performance Computing, HPC) ha permitido abordar problemas científicos y de ingeniería que requieren un procesamiento intensivo de datos. Dentro de este ámbito, la programación paralela constituye una estrategia esencial para aprovechar de manera eficiente las arquitecturas modernas de cómputo, particularmente aquellas basadas en unidades de procesamiento gráfico (GPU). Este enfoque resulta especialmente relevante en áreas como la dinámica de fluidos computacional (CFD, por sus siglas en inglés), en la cual el cálculo de trayectorias de partículas (representadas mediante Streamlines, Streaklines y Pathlines) demanda una elevada capacidad de cómputo y optimización en la gestión de recursos.
 
 
 Entre las tecnologías predominantes en este campo, CUDA (Compute Unified Device Architecture) se ha consolidado como una herramienta de referencia debido a su estrecha integración con hardware de NVIDIA y a la madurez de su ecosistema de desarrollo. No obstante, la dependencia de un único proveedor limita su portabilidad y dificulta la adaptación a entornos heterogéneos. En respuesta a esta necesidad, ha emergido SYCL, un estándar desarrollado por el consorcio Khronos, que ofrece un modelo de programación en C++ para la ejecución paralela en dispositivos diversos (CPU, GPU, FPGA, entre otros). SYCL promueve la portabilidad y la interoperabilidad, características de creciente relevancia en la investigación y la industria, al tiempo que busca mantener un alto nivel de rendimiento.
@@ -74,13 +74,13 @@ Como base para el desarrollo del proyecto es necesario establecer los fundamento
 
 \subsection{COMPUTACIÓN DE ALTO RENDIMIENTO (HPC)}
 
-La computación de alto rendimiento, conocida como HPC, forma parte indisoluble del ámbito de la computación y está dedicada fundamentalmente a la resolución de problemas, que requieren para su resolución un gran poder computacional. El objetivo de HPC es el de aprovechar arquitecturas avanzadas y paralelas que puedan ser utilizadas para resolver tareas que de ser necesarias en sistemas convencionales no se podrían realizar precisamente debido, entre otras consideraciones, a la complejidad de los cálculos a realizar y a la gran cantidad de datos a procesar.
+La computación de alto rendimiento, conocida como HPC, forma parte indisoluble del ámbito de la computación y está dedicada fundamentalmente a la resolución de problemas, que requieren para su resolución un gran poder computacional. El objetivo de HPC es el de aprovechar arquitecturas avanzadas y paralelas que puedan ser utilizadas para resolver tareas que de ser necesarias en sistemas convencionales no se podrían realizar precisamente debido, entre otras consideraciones, a la complejidad de los cálculos a realizar y a la gran cantidad de datos a procesar. \cite{eijkhout_art_2022}
 
 
 De un modo general, HPC ha pasado a ser parte fundamental de la computación en diversas disciplinas científicas y de la ingeniería, permitiendo realizar simulaciones numéricas, el procesamiento de grandes cantidades de datos o el modelado detallado de fenómenos físicos. Este enfoque ha permitido la expansión de áreas como la predicción del tiempo (clima), la exploración espacial, la biología computacional, el diseño de nuevos materiales, etc.
 
 
-A lo largo de la historia —de los sistemas HPC —las supercomputadoras se transforman en infraestructuras distribuidas y clústeres HPC y estos cambios han conducido también a la aparición de paradigmas de programación que permiten explotar el paralelismo como por ejemplo MPI (Message Passing Interface) y OpenMP (Open Multi-Processing) y más recientemente la aparición de las GPUs han permitido incrementar todavía más la capacidad computacional por medio de un paralelismo masivo orientado hacia cálculos científicos y simulaciones.
+A lo largo de la historia (de los sistemas HPC) las supercomputadoras se transforman en infraestructuras distribuidas y clústeres HPC y estos cambios han conducido también a la aparición de paradigmas de programación que permiten explotar el paralelismo como por ejemplo MPI (Message Passing Interface) y OpenMP (Open Multi-Processing) y más recientemente la aparición de las GPUs han permitido incrementar todavía más la capacidad computacional por medio de un paralelismo masivo orientado hacia cálculos científicos y simulaciones.\cite{eijkhout_art_2022}
 
 
 Un aspecto clave de los sistemas HPC en la actualidad es la migración hacia arquitecturas heterogéneas que integran diferentes tipos de procesadores (CPU, GPU, FPGA y aceleradores específicos) con vista a una mayor eficiencia. El éxito que han ido logrando estas arquitecturas no responde solamente a la necesidad de un mayor poder computacional, sino que tiene que ver también en el avance del conocimiento de la factibilidad y del consumo energético, así como de la escalabilidad. En este marco, la programación y la portabilidad del código, se convierte en uno de los pilares que conduce a los avances que presentan nuevos modelos como SYCL, que intenta crear un acceso unificado a las diferentes plataformas, conservando al mismo tiempo el rendimiento \cite{reinders_data_2021} .
@@ -89,7 +89,7 @@ Un aspecto clave de los sistemas HPC en la actualidad es la migración hacia arq
 Por consiguiente, HPC no debe ser entendida solo como la existencia y uso de supercomputadoras, sino que forma parte de un conjunto de tipos de tecnología que siempre están evolucionando y que tienen mucha repercusión en la aceleración del conocimiento científico y la posibilidad de poder tratar la solución de problemas que tienen mucho significado a nivel mundial.
 
 
-\subsubsection{COMPUTACIÓN HETEROGÉNEA}
+\subsection{COMPUTACIÓN HETEROGÉNEA}
 
 La computación heterogénea tiene su fundamento en el uso conjunto de varios tipos de procesadores existentes en un mismo sistema y tiene como objetivo el aumento del rendimiento y de la eficiencia. En este modelo de computación no solo se hace funcionar la CPU, sino que se hacen funcionar otros dispositivos adicionales a esta como las GPU, FPGA u otros tipos de aceleradores, de forma que se distribuyen las tareas en función de las capacidades de cada una de las unidades de procesamiento.
 
@@ -99,11 +99,22 @@ La adopción de arquitecturas heterogéneas se ha visto favorecida por la aparic
 
 Este paradigma se ha instalado como una de las principales tendencias en la computación de alto rendimiento, debido a que permanece en la línea que se busca entre velocidad de ejecución, eficiencia energética y uso de recursos.
 
-\subsubsection{VISUALIZACIÓN DE CAMPOS DE FLUJO}
+\subsection{VISUALIZACIÓN DE CAMPOS DE FLUJO}
 
 La visualización de los campos de flujo es una metodología para realizar una representación gráfica del comportamiento de los sistemas dinámicos que se desarrollan con respecto al tiempo y al espacio. Un campo de flujo es la descripción de cómo varía una magnitud vectorial, como puede ser, por ejemplo, la velocidad o la fuerza, en los distintos puntos de un dominio, siendo su análisis importante en la dinámica de fluidos, la meteorología o bien en la física computacional.
+%---------------------------------------------
+En este sentido, un campo vectorial puede considerarse como una función que asigna un vector, como podría ser un vector de velocidad, a cada punto del espacio, indicando la dirección y la intensidad del movimiento en un cierto punto; partiendo de esta idea, es posible definir las distintas maneras de representar de una forma u otra el flujo:
 
-La importancia de este concepto reside en que es capaz de entender fenómenos complejos mediante representaciones visuales (como diagramas de flujo) que ayudan en la interpretación de los datos numéricos. En problemas como la simulación de fluidos, la dispersión de contaminantes o el modelado atmosférico, las soluciones numéricas en sí mismas son difíciles de interpretar; por ello, se requiere de la visualización para que se puedan ver patrones, trayectorias y estructuras internas. \cite{laramee_state_2004}.
+1. Streamlines (Líneas de corriente): curvas que son tangentes al campo de velocidad en un instante dado, indicando la dirección del flujo de forma puntual.
+
+2. Pathlines (Trayectorias): caminos seguidos por las partículas en el tiempo, mostrando su verdadero movimiento.
+
+3. Streaklines (Líneas de emisión): conjunto de puntos ocupados por las partículas que en un momento dado han atravesado el punto considerado.
+
+Estas tres definiciones son equivalentes en flujos estacionarios, pero pueden ser diferentes si se lo aplica a los flujos no estacionarios o turbulentos \cite{hansen_visualization_2005}. Un flujo estacionario es aquel en el que el estado del campo de velocidad (dirección y magnitud) no cambia con el tiempo, por lo cual el recorrido de las partículas permanece constante y las tres representaciones -streamlines, pathlines y streaklines- son equivalentes; mientras que un flujo no estacionario implica que el campo de velocidad presenta variaciones en el tiempo y cada tipo de línea hace referencia a una faceta del movimiento: las streamlines hacen referencia a la dirección en un instante, las pathlines representan el recorrido real de las partículas y las streaklines proporcionan la posición de las partículas que han pasado por un punto de referencia.
+
+%----------------------------------------
+La importancia de este concepto reside en que es capaz de entender fenómenos complejos mediante representaciones visuales que ayudan en la interpretación de los datos numéricos. En problemas como la simulación de fluidos, la dispersión de contaminantes o el modelado atmosférico, las soluciones numéricas en sí mismas son difíciles de interpretar; por ello, se requiere de la visualización para que se puedan ver patrones, trayectorias y estructuras internas. \cite{laramee_state_2004}.
 
 Hay muchas aplicaciones de la visualización de campos de flujo. Por ejemplo, se emplea en el diseño aerodinámico de la industria del automóvil y la aeronáutica para pronosticar el clima; también se utiliza para simular la turbulencia o estudiar el movimiento de partículas en medios físicos. Igualmente, se utiliza para el análisis de modelos en biomedicina. A partir de todas estas aplicaciones, se requiere de métodos computacionales intensivos para poder resolver numéricamente el problema, como para convertir gráfica y visualmente los resultados. \cite{laramee_state_2004} \cite{post_state_2003}.
 
@@ -111,7 +122,7 @@ Sin embargo, la visualización de campos de flujo presenta limitaciones debido p
 
 Es en este sentido que desde el proyecto se ha considerado este tipo de problemas, ya que el algoritmo para la integración numérica RK4, optimizado y adaptado a arquitecturas heterogéneas, sirve para calcular trayectorias para partículas dentro de campos de flujo. Por lo que para la visualización no solo se quedaría como una aplicación representativa, sino que también serviría como un caso de estudio para poder validar la eficiencia y portabilidad de las implementaciones en SYCL frente a otras soluciones de forma tradicional.
 
-\subsubsection{ALGORITMOS DE INTEGRACION NUMERICA (RK4)}
+\subsection{ALGORITMOS DE INTEGRACION NUMERICA (RK4)}
 
 Los algoritmos de integración numérica constituyen un conjunto de métodos que se idearon para aproximar la solución de Ecuaciones Diferenciales Ordinarias (EDO), sobre todo, cuando no se puede obtener una solución analítica, exacta. Entre todos estos métodos, el método de Runge-Kutta de cuarto orden (RK4) es uno de los más utilizados a causa de su equilibrio entre sencillez, precisión y coste computacional. \cite{butcher_numerical_2008}.
 
@@ -132,7 +143,7 @@ Una vez más, su importancia reside en que esas capacidades del hardware moderno
 
 Existen diferentes modelos y herramientas de este paradigma. CUDA, desarrollado por NVIDIA, se ha convertido en un estándar de programación para GPU propietarias. OpenCL es un marco de programación abierto que permite usar arquitecturas heterogéneas. OpenMP permite la programación paralela en entornos de memoria compartida para CPU multinúcleo, y por último SYCL, promovido por Khronos Group, extiende el modelo de C++ para múltiples arquitecturas, pero en un marco portable y estándar. \cite{the_khronos_group_inc_sycl_2025}\cite{reinders_data_2021}.
 
-No obstante, este método también conlleva ciertas limitaciones. Entre ellas están la dependencia del hardware —hay modelos que se ejecutan solamente en arquitecturas específicas—, la complejidad en el control del paralelismo y dependencias como la dificultad de portar aplicaciones entre plataformas heterogéneas. Este tipo de restricciones ha sido el impulso para el desarrollo de otros métodos que consideren una buena relación entre el rendimiento y la portabilidad.
+No obstante, este método también conlleva ciertas limitaciones. Entre ellas están la dependencia del hardware (hay modelos que se ejecutan solamente en arquitecturas específicas), la complejidad en el control del paralelismo y dependencias como la dificultad de portar aplicaciones entre plataformas heterogéneas. Este tipo de restricciones ha sido el impulso para el desarrollo de otros métodos que consideren una buena relación entre el rendimiento y la portabilidad.
 
 En la parte asociada a este proyecto, la paralelización de las aplicaciones se relaciona estrictamente con la elección de SYCL como modelo de referencia. Esta estrategia permite escribir código portable en C++ y ejecutarlo en CPU, GPU y FPGA, lo que resulta un aspecto fundamental a considerar para evaluar eficiencia y escalabilidad frente a otros modelos convencionales.
 
@@ -233,6 +244,43 @@ En la tabla \ref{tab:cron} se presenta el cronograma propuesto para el desarroll
 	\caption[Tabla]{Cronograma del proyecto}
 	\label{tab:cron}
 \end{table}
+\pagebreak
+
+\section{Presupuesto}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.8}{
+		\begin{tabular}{|lllr|}
+			\hline
+			\multicolumn{4}{|l|}{\textbf{GASTOS DE PERSONAL}}                                                                                                                                         \\ \hline
+			\multicolumn{1}{|l|}{\textbf{INVESTIGADOR}}                      & \multicolumn{1}{l|}{\textbf{FUNCIÓN}} & \multicolumn{1}{l|}{\textbf{DEDICACIÓN}} & \multicolumn{1}{l|}{\textbf{TOTAL}} \\ \hline
+			\multicolumn{1}{|l|}{SERGIO AUGUSTO GÉLVEZ CORTES*}              & \multicolumn{1}{l|}{DIRECTOR}         & \multicolumn{1}{l|}{16 HRS}              & \$4,270,500.00                      \\ \hline
+			\multicolumn{1}{|l|}{EST. ASHLEY MICHELLE CALDERON VILLAMIZAR**} & \multicolumn{1}{l|}{CO-AUTOR}         & \multicolumn{1}{l|}{728$\sim$1000 HRS}   & \$1.423.500.00                      \\ \hline
+			\multicolumn{1}{|l|}{EST. JUAN PABLO CERINZA ZARAZA**}           & \multicolumn{1}{l|}{CO-AUTOR}         & \multicolumn{1}{l|}{728$\sim$1000 HRS}   & \$1.423.500.00                      \\ \hline
+			\multicolumn{3}{|l|}{\textbf{TOTAL}}                             & \$7.117.500.00                                                                                                         \\ \hline
+		\end{tabular}
+	}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+	\centering
+	\scalebox{0.8}{%
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{RUBRO}          & \textbf{VALOR}  \\ \hline
+			GASTOS DEL PERSONAL     & \$7,117,500.00  \\ \hline
+			GASTOS DE EQUIPOS**     & \$4,298,000.00  \\ \hline
+			GASTOS DE MATERIAL*     & \$200,000.00    \\ \hline
+			GASTOS DE PUBLICACION** & \$400,000.00    \\ \hline
+			\textbf{TOTAL}          & \$12,015,500.00 \\ \hline
+		\end{tabular}
+	}
+\end{table}
+
 \pagebreak
 
 \section{Bibliografía}
