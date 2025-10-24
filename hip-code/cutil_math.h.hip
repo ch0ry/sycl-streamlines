@@ -561,6 +561,11 @@ inline __host__ __device__ float4 floor(const float4 v)
     return make_float4(floor(v.x), floor(v.y), floor(v.z), floor(v.w));
 }
 
+// fused multiply-add
+inline __host__ __device__ float4 fma4(float a, float4 v, float4 acc) {
+    return make_float4(acc.x + a * v.x, acc.y + a * v.y, acc.z + a * v.z, acc.w + a * v.w);
+  }
+
 // int3 functions
 ////////////////////////////////////////////////////////////////////////////////
 

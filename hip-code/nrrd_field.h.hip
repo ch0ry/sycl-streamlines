@@ -27,7 +27,12 @@ struct nrrd_field {
 
    result = make_float3(r.x, r.y, r.z);
 
-   return r.w == 1.0;
+   const float eps = 1e-5f;
+   bool fully_inside = (r.w >= 1.0f - eps);
+  
+  // printf("w = %.3f\n", r.w);
+
+   return fully_inside;
  }
 
 

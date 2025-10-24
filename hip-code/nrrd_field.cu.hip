@@ -32,8 +32,8 @@ nrrd_field::nrrd_field(const std::string &filename) {
 
   hsize_t dims[4];
   H5Sget_simple_extent_dims(space, dims, nullptr);
-  unsigned int ny = dims[0];
-  unsigned int nx = dims[1];
+  unsigned int nx = dims[0];
+  unsigned int ny = dims[1];
   unsigned int nz = dims[2];
 
   // Allocate and read data
