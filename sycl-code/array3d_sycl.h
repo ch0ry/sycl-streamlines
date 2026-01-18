@@ -1,107 +1,137 @@
 #ifndef __array3d_sycl_hpp
 #define __array3d_sycl_hpp
 
-#include <dpct/dpct.hpp>
 #include <sycl/sycl.hpp>
 
-// -------------------------------------------------------------------------
-void cuda_check(dpct::err0 code) {
-  if (code != 0) {
-    throw std::runtime_error(std::string("CUDA error: ") +
-                             dpct::get_error_string_dummy(code));
-  }
-}
 
 /// a simple wrapper for cudaArray3D
 template <typename T> struct array3D {
-  dpct::dim3 size() const;
+
+  array3D() = default;
+
+  array3D(T* data, sycl::float3 size);
+
+  sycl::float3 size() const ;
 
   /// resize to (nx, ny, nz); array will be uninitialized
-  void resize(dpct::dim3 size);
+  // void resize(sycl::queue &q, dpct::dim3 size);
 
   /// copy host data (nx*ny*nz) elements into array
-  void copy(const T *);
+  // void copy(sycl::queue &q, const T *data);
 
   /// return result of an texture lookup (interpolated read)
-  T get(float x, float y, float z,
-        dpct::image_accessor_ext<sycl::float4, 3> m_texture) const;
+  sycl::float4 get(float x, float y, float z, const sycl::stream* s) const;
+
+  // index the data array
+  int idx (int i, int j, int k, const sycl::stream* s) const;
 
 protected:
-  dpct::image_matrix *m_array = 0;
-  sycl::range<3> m_extent{0, 0, 0};
-  dpct::image_wrapper_base_p m_texture;
+  sycl::float3 m_size{0, 0, 0};
+  T* m_data;
 };
 
 // -------------------------------------------------------------------------
 
-template <typename T> dpct::dim3 array3D<T>::size() const {
-  return dpct::dim3(m_extent[0], m_extent[1], m_extent[2]);
-}
-// -------------------------------------------------------------------------
-
-template <typename T> void array3D<T>::resize(dpct::dim3 size) {
-  if (m_array) {
-    // free a poossibly previously allocated array
-    // and the associated texture object
-    delete m_texture;
-    delete m_array;
-
-    m_array = 0;
-  }
-
-  m_extent = sycl::range<3>(size.x, size.y, size.z);
-
-  auto cdesc = dpct::image_channel::create<T>();
-
-  cuda_check(DPCT_CHECK_ERROR(
-      m_array = new dpct::image_matrix(
-          cdesc,
-          sycl::range<3>(m_extent[0] * sizeof(T), m_extent[1], m_extent[2]),
-          dpct::image_type::standard)));
-
-  // set up texture
-  dpct::image_data tr;
-  memset(&tr, 0, sizeof(dpct::image_data));
-
-  tr.set_data(m_array);
-
-  dpct::sampling_info td;
-  memset(&td, 0, sizeof(dpct::sampling_info));
-
-  td.set(sycl::filtering_mode::linear);
-  td.set(sycl::addressing_mode::clamp);
-  /*
-  DPCT1062:1: SYCL Image doesn't support normalized read mode.
-  */
-  td.set(sycl::coordinate_normalization_mode::unnormalized);
-
-  cuda_check(DPCT_CHECK_ERROR(m_texture = dpct::create_image_wrapper(tr, td)));
-}
-
-// -------------------------------------------------------------------------
-
-template <typename T> void array3D<T>::copy(T const *data) {
-  dpct::memcpy_parameter copyParams = {};
-  copyParams.from.pitched = dpct::pitched_data(
-      (void *)data, m_extent[0] * sizeof(T), m_extent[0], m_extent[1]);
-
-  copyParams.to.image = m_array;
-  copyParams.size = m_extent;
-  copyParams.direction = dpct::host_to_device;
-
-  cuda_check(DPCT_CHECK_ERROR(dpct::dpct_memcpy(copyParams)));
-}
+template <typename T>
+array3D<T>::array3D(T* data, sycl::float3 size)
+: m_size(size), m_data(data)
+{}
 
 // -------------------------------------------------------------------------
 
 template <typename T>
-T array3D<T>::get(float x, float y, float z,
-                  dpct::image_accessor_ext<sycl::float4, 3> m_texture) const {
-  /*
-  DPCT1064:2: Migrated tex3D call is used in a macro/template definition and may
-  not be valid for all macro/template uses. Adjust the code.
-  */
-  return (m_texture).sycl::ext::oneapi::experimental::sample_image(x, y, z);
+int array3D<T>::idx(int i, int j, int k, const sycl::stream* s) const {
+
+  int value = i + m_size.x() * (j + m_size.y() * k);
+
+  if (value >= m_size.x() * m_size.y() * m_size.z()) {
+      // printf("Index out of bounds: i=%d, j=%d, k=%d, value=%d, max=%d\n", i, j, k, value, m_size.x * m_size.y * m_size.z);
+      if (s) {
+        (*s) << "Index out of bounds: "
+            << "i=" << i
+            << ", j=" << j
+            << ", k=" << k
+            << ", value=" << value
+            << ", max=" << (m_size.x() * m_size.y() * m_size.z())
+            << sycl::endl;
+      }
+      value = m_size.x() * m_size.y() * m_size.z() - 1;
+  }
+
+  return value;
+}
+// -------------------------------------------------------------------------
+template <typename T>
+sycl::float3 array3D<T>::size() const {
+  return m_size; 
+}
+// -------------------------------------------------------------------------
+
+// template <typename T>
+// void array3D<T>::resize(sycl::queue &q, dpct::dim3 size) {
+//   if (m_data) {
+//     // free a poossibly previously allocated array
+//     // and the associated texture object
+//     sycl::free(m_data, q);
+//
+//     m_data = 0;
+//   }
+//   m_size = size;
+//   m_data = sycl::malloc_device<T>(m_size.x * m_size.y * m_size.z * sizeof(T), q);
+// }
+
+// -------------------------------------------------------------------------
+
+// template <typename T> void array3D<T>::copy(sycl::queue &q, T const *data) {
+//     q.memcpy(m_data, data, m_size.x * m_size.y * m_size.z * sizeof(T)).wait();
+// }
+
+// -------------------------------------------------------------------------
+
+template <typename T>
+sycl::float4 array3D<T>::get(float x, float y, float z, const sycl::stream* s) const {
+
+  if (z < 0 || z >= m_size.z() - 1 ||
+      y < 0 || y >= m_size.y() - 1 ||
+      x < 0 || x >= m_size.x() - 1) {
+      // out of bounds
+      return sycl::float4{0, 0, 0, 1.0f};
+  }
+
+    //printf("%f, %f, %f\n", x, y, z);
+
+  const int x0 = (int)sycl::floor(x);
+  const int x1 = x0 + 1;
+  const int y0 = (int)sycl::floor(y);
+  const int y1 = y0 + 1;
+  const int z0 = (int)sycl::floor(z);
+  const int z1 = z0 + 1;
+
+  const sycl::float4 c000 = m_data[idx(x0, y0, z0, s)];
+  const sycl::float4 c001 = m_data[idx(x0, y0, z1, s)];
+  const sycl::float4 c010 = m_data[idx(x0, y1, z0, s)];
+  const sycl::float4 c011 = m_data[idx(x0, y1, z1, s)];
+  const sycl::float4 c100 = m_data[idx(x1, y0, z0, s)];
+  const sycl::float4 c101 = m_data[idx(x1, y0, z1, s)];
+  const sycl::float4 c110 = m_data[idx(x1, y1, z0, s)];
+  const sycl::float4 c111 = m_data[idx(x1, y1, z1, s)];
+
+  const float xd = (x - x0)/(x1 - x0);
+  const float yd = (y - y0)/(y1 - y0);
+  const float zd = (z - z0)/(z1 - z0);
+
+
+  const sycl::float4 c00 = c000 * (1 - xd) + c100 * xd;
+  const sycl::float4 c01 = c001 * (1 - xd) + c101 * xd;
+  const sycl::float4 c10 = c010 * (1 - xd) + c110 * xd;
+  const sycl::float4 c11 = c011 * (1 - xd) + c111 * xd;
+
+  const sycl::float4 c0 = c00 * (1 - yd) + c10 * yd;
+  const sycl::float4 c1 = c01 * (1 - yd) + c11 * yd;
+
+  const sycl::float4 c = c0 * (1 - zd) + c1 * zd;
+
+  return c;
 }
 
 // -------------------------------------------------------------------------

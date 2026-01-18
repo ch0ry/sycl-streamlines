@@ -5,13 +5,14 @@
 #include "hdf5.h"
 #include "hdf5_field_sycl.h"
 #include <sycl/sycl.hpp>
+#include "array3d_sycl.h"
 
 // namespace sycl = cl::sycl;
 
 // -------------------------------------------------------------------------
 
-hdf5_field::hdf5_field(sycl::queue &q, const std::string &filename)
-    : m_array() {
+
+hdf5_field::hdf5_field(sycl::queue &q, const std::string &filename) {
 
   hid_t file = H5Fopen(filename.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
 
@@ -29,32 +30,48 @@ hdf5_field::hdf5_field(sycl::queue &q, const std::string &filename)
 
   hsize_t dims[4];
   H5Sget_simple_extent_dims(space, dims, nullptr);
-  unsigned int ny = dims[0];
-  unsigned int nx = dims[1];
+  unsigned int nx = dims[0];
+  unsigned int ny = dims[1];
   unsigned int nz = dims[2];
 
   // Allocate and read data
-  std::vector<float> rawData(nx * ny * nz * 3);
+  // std::vector<float> rawData(nx * ny * nz * 3);
+  float* rawData = sycl::malloc_host<float>(nx * ny * nz * 3, q);
   H5Dread(dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT,
-          rawData.data());
+          rawData);
 
   // Clean up
   H5Sclose(space);
 
-  std::vector<sycl::float4> padded(nx * ny * nz);
-  for (size_t i = 0; i < padded.size(); ++i) {
-    padded[i] = {rawData[i * 3 + 0], rawData[i * 3 + 1], rawData[i * 3 + 2],
-                 1.0f};
-  }
+  float* deviceRawData = sycl::malloc_device<float>(nx * ny * nz * 3, q);
 
-  m_array.resize(q, nx, ny, nz);
-  m_array.copy_to_device(q, padded);
+  q.memcpy(deviceRawData, rawData, nx * ny * nz * 3 * sizeof(float)).wait();
+
+
+  q.submit([&](sycl::handler &cgh){
+
+    sycl::float4 *padded = sycl::malloc_device<sycl::float4>(nx * ny * nz, q);
+
+    cgh.parallel_for(sycl::range<1>(nx * ny * nz), [=](sycl::id<1> idx){
+      padded[idx[0]] = {deviceRawData[idx[0] * 3 + 0], deviceRawData[idx[0] * 3 + 1], deviceRawData[idx[0] * 3 + 2],
+                  1.0f};
+    });
+
+    m_array = array3D<sycl::float4>(padded, {nx, ny, nz});
+
+  });
+
+  q.wait();
+
+  sycl::free(rawData, q);
+  sycl::free(deviceRawData, q);
+
 
   hid_t scale_dset = H5Dopen(file, "/scale", H5P_DEFAULT);
   float scale[3];
   H5Dread(scale_dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, scale);
   // m_scale = float3(scale[0], scale[1], scale[2]);
-  sycl::float3 m_scale = {scale[0], scale[1], scale[2]};
+  m_scale = {scale[0], scale[1], scale[2]};
 
   // If you saved spacing as a dataset or attribute, read it here:
   H5Dclose(dset);
@@ -62,7 +79,7 @@ hdf5_field::hdf5_field(sycl::queue &q, const std::string &filename)
   H5Fclose(file);
 
   // m_offset = sycl::float3(0.0f, 0.0f, 0.0f);
-  sycl::float3 m_offset = {0.0f, 0.0f, 0.0f};
+  m_offset = {0.0f, 0.0f, 0.0f};
 }
 
 // -------------------------------------------------------------------------

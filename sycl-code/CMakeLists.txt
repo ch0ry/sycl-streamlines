@@ -9,7 +9,6 @@ find_package( HDF5 REQUIRED COMPONENTS C )
 
 # Source files
 set(SOURCES
-    floatn.hpp
     array3d_sycl.h
     hdf5_field_sycl.cpp
     hdf5_field_sycl.h

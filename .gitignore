@@ -3,3 +3,9 @@
 cuda-code/extras/
 
 hip-code/extras/
+
+.vscode/
+
+sycl-code/data/gradEnv/
+
+*.vtp

@@ -2,3 +2,4 @@ build
 build_win
 *.vtp
 featuresRequest.txt
+data/gradEnv

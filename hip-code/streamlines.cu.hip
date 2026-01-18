@@ -252,7 +252,7 @@ int main(int argc, char *argv[]) {
   float dt = std::stof(str_dt);
 
   // load input field
-  nrrd_field field("../data/jet_v4.h5");
+  nrrd_field field("data/jet_v4.h5");
 
   // prepare output data
   // Here a vector residing in host memory of type integrator_rk4 will be

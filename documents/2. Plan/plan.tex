@@ -43,9 +43,7 @@ Con ello, la investigación busca contribuir al conocimiento sobre la aplicabili
 La visualización de campos de flujo, mediante técnicas como Streamlines, Streaklines y Pathlines, es fundamental en diversas áreas de la ciencia e ingeniería, incluyendo la dinámica de fluidos computacional (CFD), la meteorología, y el modelado de procesos físicos \cite{camp_streamline_2011}. Estos métodos permiten representar de forma intuitiva el comportamiento de partículas en movimiento dentro de un campo vectorial, lo cual facilita el análisis y la interpretación de fenómenos complejos.
 
 
-
 Sin embargo, la simulación precisa y eficiente de estas trayectorias implica un alto costo computacional, especialmente cuando se trabaja con volúmenes de datos grandes o se requieren resoluciones espaciales y temporales finas \cite{pugmire_scalable_2009}. En este contexto, la programación tradicional en C/C++, aunque eficiente, puede resultar insuficiente para explotar de manera óptima las capacidades de cómputo de los sistemas modernos, en especial aquellos que cuentan con aceleradores como GPUs.
-
 
 
 En respuesta a esta necesidad, han surgido enfoques como la programación heterogénea, que busca distribuir la carga computacional entre distintos dispositivos de procesamiento, permitiendo una ejecución más rápida y eficiente. En particular, el estándar SYCL, basado en C/C++, ofrece una solución portable y flexible para desarrollar aplicaciones que aprovechen arquitecturas heterogéneas sin perder la expresividad y control del lenguaje de bajo nivel \cite{keryell_sycl_2019}.
@@ -62,9 +60,9 @@ A pesar de sus beneficios teóricos, existe una brecha de conocimiento práctico
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
-	\item Formular una versión optimizada del algoritmo RK4 en SYCL, con el propósito de evaluar su desempeño en arquitecturas heterogéneas.
+	\item Formular una versión que optimiza el tiempo de ejecución del algoritmo en device, normalizado de RK4 usando SYCL, con el propósito de evaluar su desempeño en arquitecturas heterogéneas.
 	\item Comparar el comportamiento de las implementaciones en C/C++ y en SYCL bajo diferentes configuraciones del problema (tamaño del dataset, conjunto de semillas y complejidad del campo vectorial), con el fin de identificar diferencias en su eficiencia y desempeño.
-	\item Analizar comparativamente las ventajas, limitaciones y condiciones de uso de SYCL frente a implementaciones tradicionales en CPU y en GPU con CUDA, considerando métricas de tiempo de ejecución, uso de memoria y escalabilidad.
+	\item Analizar comparativamente las ventajas, limitaciones y condiciones de uso de SYCL frente a una implementación en GPU con CUDA, considerando métricas de tiempo de ejecución, uso de memoria y escalabilidad.
 \end{itemize}
 
 
@@ -180,42 +178,83 @@ Para el desarrollo del trabajo de grado, se propone un plan de 3 fases, que acar
 
 \subsection{Implementación de RK4}
 
-Esta primera fase consta de la implementación del algoritmo RK4 para visualización de Streamlines, Streaklines y Pathlines en C/C++ usando las tecnologías a comparar, CUDA y SYCL. Que posteriormente serán sujetos de análisis y comparación en la fase 3.
+Esta primera fase consta de la implementación del algoritmo RK4, para un sistema dinámico en 3 dimensiones (t, x, y, z) para visualización de Streamlines, Streaklines y Pathlines en C/C++ usando las tecnologías a comparar, CUDA y SYCL. Que posteriormente serán sujetos de análisis y comparación en la fase 3.
+
+
+De la misma manera, se usará como soporte la literatura para obtener datos de entrada de tamaños variables que servirán durante la fase de pruebas, para evaluar el desempeño de ambas implementaciones.
+
 
 \subsubsection*{Actividades}
 
 \begin{enumerate}[label=\thesubsection.\arabic*., wide, labelindent=2em, leftmargin=5em]
 	\item Recopilación de datos de entrada de tamaño variable para pruebas.
+
+
+
+	      Para  llevar  a  cabo  la  tarea, los campos vectoriales que sirven de entrada serán seleccionados y estructurados. El proceso de selección de los campos a estructurar está determinado, en gran parte, por conjuntos de trabajos anteriores pero también por la bibliografía adecuada en donde se contiene la información tridimensional necesaria para la aplicación del algoritmo RK4. Deben ser procesados los archivos adecuadamente hasta darles un formato que sea compatible con las implementaciones de las partes a desarrollar, y deben ser estructurados en función del tamaño con el objetivo de contar con diversos escenarios de prueba mediante los cuales, al mismo tiempo, se podrá ir comparando de qué manera la variación de la implementación varía con el aumento de la complejidad del problema.
 	\item Implementación del algoritmo RK4 en CUDA.
+
+
+	      Se partirá de una implementación del algoritmo RK4 en CUDA, provista por SC3, sobre el cual se agregarán y/o modificarán librerías para modernizar y mejorar su acople con los objetivos del proyecto. El objetivo de esta actividad es el funcionamiento de dos módulos principales que componen las implementaciones, el módulo que se encarga de la toma y procesamiento de los datos de entrada, y el módulo del algoritmo RK4, para la visualización. Asimismo, los kernels de GPU se implementarán para las operaciones de interpolación trilineal e integración.
+
 	\item Implementación del algoritmo RK4 en SYCL.
+
+
+	      A partir de la previa implementación, se usarán herramientas para dar soporte a la migración del código, que están contenidas en hipSYCL y oneAPI, que no aseguran la funcionalidad total del código migrado, pero facilitan el proceso. De la misma manera, la implementación en SYCL constará de dos módulos, la entrada y salida de ambas implementaciones serán idénticas y los kernels de GPU se encargarán de las mismas tareas.
 \end{enumerate}
 
 \subsection{Desarrollo del ambiente de pruebas}
 
 La segunda fase consta de la creación de un ambiente controlado donde se ejecutarán ambos algoritmos, manteniendo las mismas condiciones de cómputo para ambos algoritmos, y se recopilarán las métricas establecidas para la comparación.
-Para la ejecución de estos algoritmos, se usará un computador personal con las siguientes especificaciones:
+
+Posteriormente, durante esta fase, se hará uso del hardware de GUANE, si está disponible, donde se tomarán las métricas a comparar en la fase 3.
+
+En el caso donde GUANE no esté disponible, se usará un computador personal con las siguientes especificaciones como ambiente de desarrollo y de pruebas:
 \begin{itemize}
 	\item Ryzen 5 7500F
 	\item AMD RX 9060 XT (16 GB GDDR6)
 	\item 32 GB DDR5 CL34 RAM
 \end{itemize}
+
 \subsubsection*{Actividades}
 
 \begin{enumerate}[label=\thesubsection.\arabic*., wide, labelindent=2em, leftmargin=5em]
-	\item Determinación de métricas a evaluar.
+	\item Consultando la literatura del área, identificar métricas utilizadas para medir el desempeño de las implementaciones.
+
+
+	      Con la finalidad de llevar a cabo esta actividad se procederá a leer artículos , trabajos de grado y documentación técnica relacionados con la evaluación de algoritmos paralelos aplicados tanto a la integración numérica como a la visualización científica. De dicha revisión se seleccionarán las métricas más convencionales — esencialmente tiempos de ejecución y comportamiento de la GPU— para que de este modo se implementen unos criterios que serán aplicados sin distinción de ambas implementaciones cuando se efectúe en las pruebas.
+
+
 	\item Implementación en Docker del ambiente de pruebas.
-	\item Ejecución síncrona de pruebas para ambas implementaciones.
+
+
+	      La elaboración de un contenedor Docker se realiza en esta actividad; este contenedor contiene las dependencias necesarias para ejecutar tanto la versión CUDA como la versión SYCL y garantiza  que las pruebas se ejecuten siempre con las mismas condiciones de software, evitando que se produzcan diferencias por sistemas o configuraciones locales. Con este entorno se podrán ejecutar los experimentos de forma reproducible.
+
+
+	\item Ejecución de pruebas y toma de métricas relacionadas al desempeño en términos de tiempos de ejecución y en GPU para speedup por tamaño del problema y ocupación de GPU.
+
+	      Tras la puesta en marcha del entorno, se ejecutarán las pruebas establecidas para las dos implementaciones utilizando los campos de entrada seleccionados. A lo largo de la ejecución se registrarán los tiempos de procesamiento y aquellos datos relacionados con el uso de la GPU, como la aceleración y la ocupación del dispositivo. Estos datos se irán guardando de forma ordenada para su análisis y la posterior comparación entre las dos tecnologías que se han puesto a prueba.
 \end{enumerate}
 
 \subsection{Recopilación de resultados}
 
 Durante la tercera fase y última fase, se compilarán los resultados en un formato adecuado para su análisis, y se retroalimentarán los resultados obtendidos para concluir el trabajo de grado.
 
+Asimismo, se usarán las métricas mencionadas en los objetivos específicos y aquellas que se haya recopilado en la literatura para interpretar las diferencias en el desempeño de ambas implementaciones durante las pruebas.
+
 \subsubsection*{Actividades}
 
 \begin{enumerate}[label=\thesubsection.\arabic*., wide, labelindent=2em, leftmargin=5em]
-	\item Organización de los resultados obtenidos en gráficos y tablas.
+	\item Análisis de los resultados del análisis de desempeño mediante construcción de tablas y gráficas de tiempos de ejecución en device (GPU) normalizados, de speedup por tamaño del problema y de ocupación de la GPU, para las implemeciones planteadas.
+
+
+	      Para llevar a cabo dicha actividad, se continuará con el tratamiento de los datos que se obtendrán de las pruebas realizadas utilizando el entorno controlado. En este sentido, se organizarán en tablas comparativas los tiempos de ejecución y las métricas propias de la GPU, permitiendo que también se pueda observar de forma óptima diversas particularidades entre las distintas implementaciones. Finalmente, se completará la formación de gráficos tendentes a representar el comportamiento en relación con el tiempo de ejecución, la aceleración y la ocupación del dispositivo, permitiendo ver visualmente de qué modo resulta variar el rendimiento con respecto al tamaño del problema y la tecnología utilizada. La forma de proceder con este análisis gráfico y estadístico permitirá justificar las conclusiones del estudio.
+
+
 	\item Retroalimentación y conclusiones de los resultados obtenidos.
+
+
+	      Como resultado del análisis llevado a cabo , se obtendrá la interpretación final de los resultados , se abordarán las virtudes y las limitaciones de cada implantación y se podrá vincular los resultados con los objetivos del proyecto de investigación dando a conocer cual de las tecnologías propuestas da más prestaciones bajo las condiciones de evaluación ,a partir de la cual se redactarán las conclusiones y recomendaciones que cierran el trabajo de grado, resaltando también én las aportaciones alcanzadas y las posibles líneas de trabajo futuro.
 \end{enumerate}
 
 \section{Cronograma}
@@ -279,12 +318,13 @@ En la tabla \ref{tab:cron} se presenta el cronograma propuesto para el desarroll
 	\scalebox{0.8}{%
 		\begin{tabular}{|l|l|}
 			\hline
-			\textbf{RUBRO}          & \textbf{VALOR}  \\ \hline
-			GASTOS DEL PERSONAL     & \$7,117,500.00  \\ \hline
-			GASTOS DE EQUIPOS**     & \$4,298,000.00  \\ \hline
-			GASTOS DE MATERIAL*     & \$200,000.00    \\ \hline
-			GASTOS DE PUBLICACION** & \$400,000.00    \\ \hline
-			\textbf{TOTAL}          & \$12,015,500.00 \\ \hline
+			\textbf{RUBRO}              & \textbf{VALOR}  \\ \hline
+			GASTOS DEL PERSONAL         & \$7,117,500.00  \\ \hline
+			GASTOS DE EQUIPO PERSONAL** & \$4,298,000.00  \\ \hline
+			GASTOS DE EQUIPO HPC**      & \$5,000,000.00  \\ \hline
+			GASTOS DE MATERIAL*         & \$200,000.00    \\ \hline
+			GASTOS DE PUBLICACION**     & \$400,000.00    \\ \hline
+			\textbf{TOTAL}              & \$17,015,500.00 \\ \hline
 		\end{tabular}
 	}
 \end{table}

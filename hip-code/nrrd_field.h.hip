@@ -20,8 +20,8 @@ struct nrrd_field {
    pos.x = pos.x * m_scale.x;
    pos.y = pos.y * m_scale.y;
    pos.z = pos.z * m_scale.z;
-  
- // printf("Standing at (%.3f, %.3f, %.3f)\n", pos.x, pos.y, pos.z);
+
+   //printf("Interpolating at coords %f %f %f \n", pos.x, pos.y, pos.z);
 
    float4 r = m_array.get(pos.x, pos.y, pos.z);
 
@@ -29,9 +29,6 @@ struct nrrd_field {
 
    const float eps = 1e-5f;
    bool fully_inside = (r.w >= 1.0f - eps);
-  
-  // printf("w = %.3f\n", r.w);
-
    return fully_inside;
  }
 
