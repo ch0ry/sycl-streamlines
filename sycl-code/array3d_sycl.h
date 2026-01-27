@@ -20,10 +20,10 @@ template <typename T> struct array3D {
   // void copy(sycl::queue &q, const T *data);
 
   /// return result of an texture lookup (interpolated read)
-  sycl::float4 get(float x, float y, float z, const sycl::stream* s) const;
+  sycl::float4 get(float x, float y, float z) const;
 
   // index the data array
-  int idx (int i, int j, int k, const sycl::stream* s) const;
+  int idx (int i, int j, int k) const;
 
 protected:
   sycl::float3 m_size{0, 0, 0};
@@ -40,21 +40,12 @@ array3D<T>::array3D(T* data, sycl::float3 size)
 // -------------------------------------------------------------------------
 
 template <typename T>
-int array3D<T>::idx(int i, int j, int k, const sycl::stream* s) const {
+int array3D<T>::idx(int i, int j, int k) const {
 
   int value = i + m_size.x() * (j + m_size.y() * k);
 
   if (value >= m_size.x() * m_size.y() * m_size.z()) {
       // printf("Index out of bounds: i=%d, j=%d, k=%d, value=%d, max=%d\n", i, j, k, value, m_size.x * m_size.y * m_size.z);
-      if (s) {
-        (*s) << "Index out of bounds: "
-            << "i=" << i
-            << ", j=" << j
-            << ", k=" << k
-            << ", value=" << value
-            << ", max=" << (m_size.x() * m_size.y() * m_size.z())
-            << sycl::endl;
-      }
       value = m_size.x() * m_size.y() * m_size.z() - 1;
   }
 
@@ -89,7 +80,7 @@ sycl::float3 array3D<T>::size() const {
 // -------------------------------------------------------------------------
 
 template <typename T>
-sycl::float4 array3D<T>::get(float x, float y, float z, const sycl::stream* s) const {
+sycl::float4 array3D<T>::get(float x, float y, float z) const {
 
   if (z < 0 || z >= m_size.z() - 1 ||
       y < 0 || y >= m_size.y() - 1 ||
@@ -98,7 +89,6 @@ sycl::float4 array3D<T>::get(float x, float y, float z, const sycl::stream* s) c
       return sycl::float4{0, 0, 0, 1.0f};
   }
 
-    //printf("%f, %f, %f\n", x, y, z);
 
   const int x0 = (int)sycl::floor(x);
   const int x1 = x0 + 1;
@@ -107,14 +97,14 @@ sycl::float4 array3D<T>::get(float x, float y, float z, const sycl::stream* s) c
   const int z0 = (int)sycl::floor(z);
   const int z1 = z0 + 1;
 
-  const sycl::float4 c000 = m_data[idx(x0, y0, z0, s)];
-  const sycl::float4 c001 = m_data[idx(x0, y0, z1, s)];
-  const sycl::float4 c010 = m_data[idx(x0, y1, z0, s)];
-  const sycl::float4 c011 = m_data[idx(x0, y1, z1, s)];
-  const sycl::float4 c100 = m_data[idx(x1, y0, z0, s)];
-  const sycl::float4 c101 = m_data[idx(x1, y0, z1, s)];
-  const sycl::float4 c110 = m_data[idx(x1, y1, z0, s)];
-  const sycl::float4 c111 = m_data[idx(x1, y1, z1, s)];
+  const sycl::float4 c000 = m_data[idx(x0, y0, z0)];
+  const sycl::float4 c001 = m_data[idx(x0, y0, z1)];
+  const sycl::float4 c010 = m_data[idx(x0, y1, z0)];
+  const sycl::float4 c011 = m_data[idx(x0, y1, z1)];
+  const sycl::float4 c100 = m_data[idx(x1, y0, z0)];
+  const sycl::float4 c101 = m_data[idx(x1, y0, z1)];
+  const sycl::float4 c110 = m_data[idx(x1, y1, z0)];
+  const sycl::float4 c111 = m_data[idx(x1, y1, z1)];
 
   const float xd = (x - x0)/(x1 - x0);
   const float yd = (y - y0)/(y1 - y0);
@@ -130,6 +120,7 @@ sycl::float4 array3D<T>::get(float x, float y, float z, const sycl::stream* s) c
   const sycl::float4 c1 = c01 * (1 - yd) + c11 * yd;
 
   const sycl::float4 c = c0 * (1 - zd) + c1 * zd;
+  
 
   return c;
 }

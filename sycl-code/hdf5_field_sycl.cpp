@@ -47,7 +47,6 @@ hdf5_field::hdf5_field(sycl::queue &q, const std::string &filename) {
 
   q.memcpy(deviceRawData, rawData, nx * ny * nz * 3 * sizeof(float)).wait();
 
-
   q.submit([&](sycl::handler &cgh){
 
     sycl::float4 *padded = sycl::malloc_device<sycl::float4>(nx * ny * nz, q);

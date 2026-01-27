@@ -13,6 +13,7 @@
 #include <math.h>
 #include <type_traits>
 #include <vector>
+#include <chrono>
 
 // Replacement for old thrust experimental pinned_allocator, compatibility for
 // newer CUDA versions
@@ -34,7 +35,6 @@ std::ostream &operator<<(std::ostream &out, const float3 &p) {
 }
 
 // -------------------------------------------------------------------------
-
 struct integrator_rk4 {
   float3 p; // position
   float t;  // time
@@ -227,33 +227,44 @@ int main(int argc, char *argv[]) {
     num_seeds = abs(std::stoi(str_seeds));
   } else {
     num_seeds = 10000;
-    std::cout << "Incorrect or missing argument: number of seeds. Switching to "
-                 "default value: "
-              << num_seeds << " seeds." << std::endl;
+    // std::cout << "Incorrect or missing argument: number of seeds. Switching to "
+    //            "default value: "
+    //         << num_seeds << " seeds." << std::endl;
   } // check if there was an incorrect input in number of seeds
   if ((num_seeds == 0)) {
     num_seeds = 10000; // default value
-    std::cout << "Switching to default value for number of seeds: " << num_seeds
-              << " seeds." << std::endl;
+    // std::cout << "Switching to default value for number of seeds: " << num_seeds
+    //         << " seeds." << std::endl;
   } // check if there are 0 seeds, which can indicate other problems.
   if (str_steps.length() > 0) {
     num_steps = abs(std::stoi(str_steps));
   } else {
     num_steps = 1000;
-    std::cout << "Switching to default value for number of steps: " << num_steps
-              << " steps." << std::endl;
+    // std::cout << "Switching to default value for number of steps: " << num_steps
+    //         << " steps." << std::endl;
   } // check if there was an incorrect input in the value of time steps
   if ((num_steps == 0)) {
     num_steps = 1000; // default value
-    std::cout << "Switching to default value for number of steps: " << num_steps
-              << " steps." << std::endl;
+   // std::cout << "Switching to default value for number of steps: " << num_steps
+   //          << " steps." << std::endl;
   } // check if there are 0 steps, which can also indicate other problems.
   // asignation for dt:: to do, implement error handling here.
   float dt = std::stof(str_dt);
 
+  using clock = std::chrono::steady_clock;
+
+  auto start_timer = clock::now();
+
   // load input field
   nrrd_field field("data/jet_v4.h5");
 
+  auto end_timer = clock::now();
+
+  std::chrono::duration<double, std::milli> ms = end_timer - start_timer;
+
+  std::cout << "field, 0, " << ms.count() << std::endl;
+  
+  start_timer = clock::now();
   // prepare output data
   // Here a vector residing in host memory of type integrator_rk4 will be
   // declared, with num_steps * num_seeds elements.  What that kind of element
@@ -292,8 +303,7 @@ int main(int argc, char *argv[]) {
   for (int s = 0; s < num_steps - 1;
        ++s) // se repite para cada paso hasta numero de pasos
   {
-    std::cerr << "." << std::flush; // flush the cerror stream
-
+    // std::cerr << "." << std::flush; // flush the cerror stream
     // perform integration step
     thrust::for_each(dintg.begin(), dintg.end(),
                      Schritt); // changed here step for Schritt, to try to make
@@ -306,7 +316,7 @@ int main(int argc, char *argv[]) {
                                  // means, to host memory
                                  //
 
-    size_t elements_written = houti - houtput.begin();
+    // size_t elements_written = houti - houtput.begin();
 
     // Now iterate only over the last `num_seeds` elements that were just
     // written
@@ -318,10 +328,18 @@ int main(int argc, char *argv[]) {
     } */
   }
 
-  std::cerr << '\n';
+  end_timer = clock::now();
+
+  // std::cerr << '\n';
+
 
   // copy back and output
   if (str_vtp == "1")
     save_as_vtk(houtput, num_seeds, num_steps, "test.vtp");
+
+  ms = end_timer - start_timer;
+
+  std::cout << "rk4, " << num_steps*num_seeds << ", " << ms.count() << std::endl;
+
   return 0;
 }

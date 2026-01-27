@@ -14,7 +14,7 @@ struct hdf5_field {
   hdf5_field(sycl::queue &q, const std::string &filename);
 
   /// get the interpolated field value at pos
-  inline bool get(sycl::float3 pos, sycl::float3 &result, const sycl::stream* s) const {
+  inline bool get(sycl::float3 pos, sycl::float3 &result) const {
     pos.x() = pos.x() - m_offset.x();
     pos.y() = pos.y() - m_offset.y();
     pos.z() = pos.z() - m_offset.z();
@@ -30,7 +30,7 @@ struct hdf5_field {
     // })
     // sycl::global_ptr<const sycl::float4> d_data = m_array.data();
 
-    sycl::float4 r = m_array.get(pos.x(), pos.y(), pos.z(), s);
+    sycl::float4 r = m_array.get(pos.x(), pos.y(), pos.z());
 
     result.x() = r.x();
     result.y() = r.y();

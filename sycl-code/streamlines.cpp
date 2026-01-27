@@ -7,29 +7,15 @@
 #include <math.h>
 #include <type_traits>
 #include <vector>
+#include <chrono>
 
-
-// -------------------------------------------------------------------------
-
-/*
-DPCT1011:82: The tool detected overloaded operators for built-in vector types,
-which may conflict with the SYCL 2020 standard operators (see 4.14.2.1 Vec
-interface). The tool inserted a namespace to avoid the conflict. Use SYCL 2020
-standard operators instead.
-*/
-namespace dpct_operator_overloading {
-
-std::ostream &operator<<(std::ostream &out, const sycl::float3 &p) {
-  return (out << '(' << p.x() << ", " << p.y() << ", " << p.z() << ')');
-} // namespace dpct_operator_overloading
-}
 
 // -------------------------------------------------------------------------
 
 struct integrator_rk4 {
   sycl::float3 p; // position
   float t;        // time
-template <typename Field> inline void step(const Field &field, const float dt, const sycl::stream *stream_ct1) {
+template <typename Field> void step(const Field &field, const float dt) {
     if (sycl::isnan(t))
       return;
 
@@ -39,25 +25,19 @@ template <typename Field> inline void step(const Field &field, const float dt, c
 
     sycl::float3 k1, k2, k3, k4;
 
-    if (!field.get(p, k1, nullptr))
+    if (!field.get(p, k1))
       ok = false;
 
-    if (!field.get(p + dt_half * k1, k2, nullptr))
+    if (!field.get(p + dt_half * k1, k2))
       ok = false;
 
-    if (!field.get(p + dt_half * k2, k3, nullptr))
+    if (!field.get(p + dt_half * k2, k3))
       ok = false;
 
-    if (!field.get(p + dt * k3, k4, nullptr))
+    if (!field.get(p + dt * k3, k4))
       ok = false;
 
     if (!ok) {
-
-      if (stream_ct1) {
-        (*stream_ct1) << "Out of bounds at ("
-                      << p.x() << ", " << p.y() << ", " << p.z()
-                      << ")" << sycl::endl;
-      }
       t = 0;
       return;
     }
@@ -169,19 +149,13 @@ void save_as_vtk(const std::vector<integrator_rk4> houtput, unsigned int num_see
   out << "\n</DataArray>" << "</PointData>" << "</Piece>" << "</PolyData>"
       << "</VTKFile>" << '\n';
 
-  std::cerr << "wrote " << num_seeds << " streamlines (" << num_points
-            << " points) to " << filename << '\n';
+  // std::cerr << "wrote " << num_seeds << " streamlines (" << num_points << " points) to " << filename << '\n';
 }
 
 // -------------------------------------------------------------------------
 
 int main(int argc, char *argv[]) {
   sycl::queue q_ct1;
-  /*// here the number of seeds and of time steps are defined
-  // also, the time interval.
-  const float dt = 0.002;
-  const int num_seeds = 10000;
-  const int num_steps = 1000;*/
   // Hinzugefügt 26. Januar:
   // Handling command line parameters to automatise benchmarking
   // -----------------------------------------------------------------------
@@ -220,62 +194,65 @@ int main(int argc, char *argv[]) {
     num_seeds = abs(std::stoi(str_seeds));
   } else {
     num_seeds = 10000;
-    std::cout << "Incorrect or missing argument: number of seeds. Switching to "
-                 "default value: "
-              << num_seeds << " seeds." << std::endl;
+    // std::cout << "Incorrect or missing argument: number of seeds. Switching to "
+    //              "default value: "
+    //           << num_seeds << " seeds." << std::endl;
   } // check if there was an incorrect input in number of seeds
   if (num_seeds == 0) {
     num_seeds = 10000; // default value
-    std::cout << "Switching to default value for number of seeds: " << num_seeds
-              << " seeds." << std::endl;
+    // std::cout << "Switching to default value for number of seeds: " << num_seeds
+    //           << " seeds." << std::endl;
   } // check if there are 0 seeds, which can indicate other problems.
   if (str_steps.length() > 0) {
     num_steps = abs(std::stoi(str_steps));
   } else {
     num_steps = 1000;
-    std::cout << "Switching to default value for number of steps: " << num_steps
-              << " steps." << std::endl;
+    // std::cout << "Switching to default value for number of steps: " << num_steps
+    //           << " steps." << std::endl;
   } // check if there was an incorrect input in the value of time steps
   if (num_steps == 0) {
     num_steps = 1000; // default value
-    std::cout << "Switching to default value for number of steps: " << num_steps
-              << " steps." << std::endl;
+    // std::cout << "Switching to default value for number of steps: " << num_steps
+    //           << " steps." << std::endl;
   } // check if there are 0 steps, which can also indicate other problems.
   // asignation for dt:: to do, implement error handling here.
   float dt = std::stof(str_dt);
 
+  using clock = std::chrono::steady_clock;
+
+  auto start_timer = clock::now();
+
   // load input field
   hdf5_field field(q_ct1, "data/jet_v4.h5");
 
-  // prepare output data
-  // Here a vector residing in host memory of type integrator_rk4 will be
-  // declared, with num_steps * num_seeds elements.  What that kind of element
-  // is I don know yet.
-  // integrator_rk4* houtput = sycl::malloc_device<integrator_rk4>(num_steps * num_seeds, q_ct1);
+  auto end_timer = clock::now();
+
+  std::chrono::duration<double, std::milli> ms = end_timer - start_timer;
+
+  std::cout << "field, 0, " << ms.count() << std::endl;
+  
+  start_timer = clock::now();
+  /*
+   * This code was initially converted to SYCL using Intel's oneAPI
+   * Which used DPCT headers. Using the DPC compiler is more complicated
+   * than using AdaptiveCpp's thus, all of the changes that use DPCT were 
+   * refactored to a SYCL native apporach, which ACPP accepted.
+   */
+
+  /*
+   * Since it's inconvenient to make houtput into USM variable
+   * We'll leave it as is
+   */
 
   std::vector<integrator_rk4> houtput(num_steps*num_seeds);
 
-  // auto houti = houtput.begin(); // Dynamic typed variable (at compile time) to
-                                // store interator
-
-  // prepare output storeage
-  // using streamline = std::vector<integrator_rk4>;
-  // std::vector<streamline> streamlines( num_seeds );
-
-  // create initial particle states
-  // dpct::device_vector<integrator_rk4> dintg(
-  //     num_seeds); // a vector with num_seeds elements of type integrator_rk4 is
-  //                 // created on the device
+  /*
+  * We no longer need houti in SYCL, we need to do it the SYCL way
+  *
+  * auto houti = houtput.begin(); 
+  */
 
   integrator_rk4* dintg = sycl::malloc_device<integrator_rk4>(num_seeds, q_ct1);
-
-  // dpct::for_each_index(
-  //     oneapi::dpl::execution::make_device_policy(q_ct1), dintg.begin(),
-  //     dintg.end(),
-  //     seed_generator{num_seeds}); // and now its positions are filled with the
-                                  // result of seed_generator. What
-                                  // seed_generator returns, I don't know
-  // quite obscure struct initialisation.
 
   seed_generator gen{static_cast<unsigned>(num_seeds)};
 
@@ -289,87 +266,85 @@ int main(int argc, char *argv[]) {
 
   }).wait();
 
-
-  // houti = std::copy(oneapi::dpl::execution::make_device_policy(q_ct1),
-  //                   dintg.begin(), dintg.end(),
-  //                   houti); // aca se copian elementos desde el incio de
-                            // dintg hasta el final en houti,
+  q_ct1.memcpy(houtput.data() + (0) * num_seeds, dintg, num_seeds * sizeof(integrator_rk4)).wait();
+  /*
+  *
+  * houti was used in CUDA, with the help of thrust to ease the process 
+  * of iterating throughout houtput in blocks of num_seeds, num_steps times
+  *
+  * This is done in SYCL using memcpy, and moving the adress num_seeds * (i + 1)
+  * where i is the iteration number within the main loop
+  *
+  * houti = std::copy(oneapi::dpl::execution::make_device_policy(q_ct1),
+  *                   dintg.begin(), dintg.end(),
+  *                   houti); 
+  *
+  */                   
   
-  // q_ct1.memcpy(houti, dintg,
-  //              num_seeds * sizeof(integrator_rk4)).wait();
+  /*
+  *
+  * This was previously passed to a thrust iterator to execute 
+  * the step function for each integrator_rk4 inside dintg
+  *
+  * Currently considered clearer to leave the call to step
+  *
+  * auto Schritt = [field, dt](integrator_rk4 &i, sycl::stream *out) {
+  *   i.step(field, dt, out); 
+  *  };
+  *
+  */
   
 
+  for (int s = 0; s < num_steps - 1; ++s) {
 
-  // q_ct1.memcpy(houtput.data(), dintg, num_seeds * sizeof(integrator_rk4)).wait();
+    // std::cerr << "." << std::flush; // flush the cerror stream
 
-  // perform integration steps integrate particles
-  // here they use a lambda function to create the parameter to pass to the
-  // for_each thing
-  //
-  // auto Schritt = [field, dt](integrator_rk4 &i, sycl::stream *out) {
-  //   i.step(field, dt, out); // whatever comes in i, it must have a step member, and
-  //                      // it's invoked here.
-  // }; // changed here step for Schritt, to try to make the code more legible
-
-  for (int s = 0; s < num_steps - 1;
-       ++s) // se repite para cada paso hasta numero de pasos
-  {
-    std::cerr << "." << std::flush; // flush the cerror stream
-
-    // perform integration step
-    // std::for_each(oneapi::dpl::execution::make_device_policy(q_ct1),
-    //               dintg.begin(), dintg.end(),
-    //               Schritt); // changed here step for Schritt, to try to make
-                            // the code more legible, being hopefully the
-                            // same step in the lambda function
-    // Calling this for_each, result of the conversion from CUDA to SYCL,
-    // doesn't allow us to print to console within the kernel
-    
+    /*
+    *
+    *Had to change mos of the thrust calls for a SYCL queue.submit()
+    *It's clearer and also the way to do things using SYCL natively
+    */
 
     q_ct1.submit([&](sycl::handler& h){
-      // sycl::stream out(1024, 256, h);
+
+      //uncomment and swap for nullptr below for console output
 
       h.parallel_for(sycl::range<1>(num_seeds), [=](sycl::id<1> idx){
 
-        dintg[idx[0]].step(field, dt, nullptr);
+        dintg[idx[0]].step(field, dt);
 
       });
 
     });
 
-    q_ct1.wait();
+    q_ct1.wait_and_throw();
 
     // copy back
     // houti = std::copy(oneapi::dpl::execution::make_device_policy(q_ct1),
     //                   dintg.begin(), dintg.end(),
     //                   houti); // the result is copied back to houti, which
                               // means, to host memory
-                              //
 
-    // q_ct1.memcpy(houti, dintg, num_seeds * sizeof(integrator_rk4)).wait();
 
     q_ct1.memcpy(houtput.data() + (s + 1) * num_seeds, dintg, num_seeds * sizeof(integrator_rk4)).wait();
 
-    // size_t elements_written = houti - houtput.begin();
-
-    // Now iterate only over the last `num_seeds` elements that were just
-    // written
-    /*
-    for (size_t i = elements_written - num_seeds; i < elements_written; ++i) {
-      const auto &val = houtput[i];
-      std::cout << '(' << val.p.x << ", " << val.p.y << ", " << val.p.z
-                << "): " << val.t << std::endl;
-    } */
   }
+
+  end_timer = clock::now();
 
   sycl::free(dintg, q_ct1);
 
-  std::cerr << '\n';
+
+  // std::cerr << '\n';
 
   // copy back and output
-  if (str_vtp == "1")
+  if (str_vtp == "1") {
     save_as_vtk(houtput, num_seeds, num_steps, "test.vtp");
+  }
 
+  ms = end_timer - start_timer;
+  
+  std::cout << "rk4, " << num_steps*num_seeds << ", " << ms.count() << std::endl;
 
   return 0;
 }

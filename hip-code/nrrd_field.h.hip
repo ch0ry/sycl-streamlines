@@ -2,7 +2,7 @@
 #ifndef __nrrd_field_hpp
 #define __nrrd_field_hpp
 
-#include "array3d_ai.h.hip"
+#include "array3d.h.hip"
 #include "cutil_math.h.hip"
 
 // -------------------------------------------------------------------------
