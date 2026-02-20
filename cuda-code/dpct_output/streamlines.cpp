@@ -265,72 +265,39 @@ int main(int argc, char *argv[]) {
   // load input field
   nrrd_field field("../data/jet_v4.h5");
 
-  // prepare output data
-  // Here a vector residing in host memory of type integrator_rk4 will be
-  // declared, with num_steps * num_seeds elements.  What that kind of element
-  // is I don know yet.
   std::vector<integrator_rk4> houtput(num_steps * num_seeds);
 
-  auto houti = houtput.begin(); // Dynamic typed variable (at compile time) to
-                                // store interator
+  auto houti = houtput.begin(); 
 
-  // prepare output storeage
-  // using streamline = std::vector<integrator_rk4>;
-  // std::vector<streamline> streamlines( num_seeds );
-
-  // create initial particle states
   dpct::device_vector<integrator_rk4> dintg(
-      num_seeds); // a vector with num_seeds elements of type integrator_rk4 is
-                  // created on the device
+      num_seeds); 
+
   dpct::for_each_index(
       oneapi::dpl::execution::make_device_policy(q_ct1), dintg.begin(),
       dintg.end(),
-      seed_generator{num_seeds}); // and now its positions are filled with the
-                                  // result of seed_generator. What
-                                  // seed_generator returns, I don't know
-  // quite obscure struct initialisation.
+      seed_generator{num_seeds}); 
+
   houti = std::copy(oneapi::dpl::execution::make_device_policy(q_ct1),
                     dintg.begin(), dintg.end(),
-                    houti); // aca se copian elementos desde el incio de
-                            // dintg hasta el final en houti,
+                    houti); 
 
-  // perform integration steps integrate particles
-  // here they use a lambda function to create the parameter to pass to the
-  // for_each thing
   auto Schritt = [=](auto &i) {
-    i.step(field, dt); // whatever comes in i, it must have a step member, and
-                       // it's invoked here.
-  }; // changed here step for Schritt, to try to make the code more legible
+    i.step(field, dt); 
+  }; 
 
-  for (int s = 0; s < num_steps - 1;
-       ++s) // se repite para cada paso hasta numero de pasos
-  {
-    std::cerr << "." << std::flush; // flush the cerror stream
+  for (int s = 0; s < num_steps - 1; ++s)   {
 
-    // perform integration step
+    std::cerr << "." << std::flush; 
+
     std::for_each(oneapi::dpl::execution::make_device_policy(q_ct1),
                   dintg.begin(), dintg.end(),
-                  Schritt); // changed here step for Schritt, to try to make
-                            // the code more legible, being hopefully the
-                            // same step in the lambda function
+                  Schritt); 
 
-    // copy back
     houti = std::copy(oneapi::dpl::execution::make_device_policy(q_ct1),
                       dintg.begin(), dintg.end(),
-                      houti); // the result is copied back to houti, which
-                              // means, to host memory
-                              //
+                      houti); 
 
     size_t elements_written = houti - houtput.begin();
-
-    // Now iterate only over the last `num_seeds` elements that were just
-    // written
-    /*
-    for (size_t i = elements_written - num_seeds; i < elements_written; ++i) {
-      const auto &val = houtput[i];
-      std::cout << '(' << val.p.x << ", " << val.p.y << ", " << val.p.z
-                << "): " << val.t << std::endl;
-    } */
   }
 
   std::cerr << '\n';
