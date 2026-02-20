@@ -1,0 +1,41 @@
+\subsection{RK4 implementado en CUDA}
+
+Para establecer el punto de referencia, partimos de una implementación de RK4, que fue provista por el director del proyecto. Implementada usando CUDA, y librerías auxiliares como thrust, para uso de memoria entre device y host; nrrd, para la lectura del archivo de entrada.
+
+El código realiza 3 tareas fundamentales:
+
+\begin{itemize}
+	\item Procesamiento del archivo de entrada, donde usa HDF5 para tomar los datos del campo y almacenarlos en un arreglo bidimensional, para optimizar la lectura en memoria.
+
+	\item Kernel RK4, que consta de las operaciones relacionadas con el algoritmo RK4, que son realizadas directamente en el device, y sus resultados, almacenados en memoria del host
+
+	\item Postprocesamiento para visualización, usa los datos de salida del kernel para producir un modelo 3D en formato VTK, de forma opcional, para que pueda ser visualizado.
+\end{itemize}
+
+Asimismo, el código tiene 3 parámetros de entrada, excluyendo el archivo H5, que serán utilizados posteriormente para la realización de pruebas:
+
+
+
+\begin{table}[H]
+	% \small
+	\centering
+	\vspace{-4mm}
+	\caption{\\Parámetros de entrada del ejecutable} \label{tab:criterios}
+	% \vspace{4mm}
+	\begin{tabular}{lm{4.7cm}m{0.60\linewidth}c}
+		\hline
+		\multicolumn{1}{l}{}                   &
+		\multicolumn{1}{c}{\textbf{Parámetro}} &
+		\multicolumn{1}{c}{\textbf{Explicación}}                                                                                                                                      \\ \hline
+		                                       & \centering num-seeds  &
+		Corresponde al número de semillas generadas durante el paso inicial previo al kernel RK4                                                                                      \\
+		                                       & \centering  num-steps &
+		El número de veces o iteraciones de cálculos de pasos de RK4 por los que pasará cada semilla. Haciendo que el número total que se calcula RK4 es \textbf{num-seeds*num-steps} \\
+		                                       & \centering vtk        &
+		un valor numérico para que se guarde el archivo de visualización                                                                                                              \\
+		\\ \hline
+	\end{tabular}
+	\vspace{-4mm}
+\end{table}
+
+No obstante, tras un análisis inicial del código, se optó por intercambiar la libería NRRD por HDF5, como sugerencia del director y autor del código, puesto que HDF5 posee características que se adecúan más a su uso en un contexto de computación heterogénea, como lectura/escritura paralela basada en MPI. Tras este cambio, asumimos esta implementación como un punto de referencia, para derivar las implementaciones en HIP y SYCL.

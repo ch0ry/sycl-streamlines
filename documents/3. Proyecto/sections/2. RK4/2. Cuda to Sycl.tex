@@ -1,0 +1,73 @@
+\subsection{Migración del código de CUDA a SYCL}
+
+\lstset{
+	language=C++,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!60!black},
+	stringstyle=\color{red},
+	numbers=left,
+	numberstyle=\tiny,
+	stepnumber=1,
+	numbersep=5pt,
+	breaklines=true,
+	frame=single,
+	tabsize=2
+}
+
+Con el fin de comparar ambas tecnologías, CUDA y SYCL, especialmente si se parte de CUDA, es menester comparar el proceso de migración de una base de código en CUDA a una en SYCL. Algunas entornos como el de OneAPI de Intel o HIP de AMD, proveen una herramienta que se encarga de transpilar el código en CUDA hacia sus respectivos modelos. En el caso de OneAPI, esta se llama \textit{dpct} (Intel DPC++ Compatibility Tool) y para HIP, se llama HIPify.
+
+Cabe destacar que ambas implementaciones no producen un código en SYCL o un SYCL nativo, HIPify produce código en su modelo homónimo HIP, y oneAPI produce una versión de SYCL que usa la librería de dpct, lo cual presenta un problema si no se desea compilar con el compilador de oneAPI.
+
+Para ilustrar esta diferencia, a continuación un fragmento del código de la función main en su versión de CUDA, DPCT y SYCL nativo:
+
+\textbf{Versión del fragmento en CUDA:}
+
+\begin{lstlisting}
+  thrust::device_vector<integrator_rk4> dintg(num_seeds); 
+
+  thrust::tabulate(
+      dintg.begin(), dintg.end(),
+      seed_generator{num_seeds}); 
+
+  houti = thrust::copy(dintg.begin(), dintg.end(), houti); 
+\end{lstlisting}
+
+\textbf{Versión del fragmento en DPCT:}
+
+\begin{lstlisting}
+  dpct::device_vector<integrator_rk4> dintg(num_seeds); 
+
+  dpct::for_each_index(
+      oneapi::dpl::execution::make_device_policy(q_ct1), dintg.begin(),
+      dintg.end(), seed_generator{num_seeds}); 
+
+  houti = std::copy(oneapi::dpl::execution::make_device_policy(q_ct1),
+                    dintg.begin(), dintg.end(), houti); 
+\end{lstlisting}
+
+\textbf{Versión del fragmento en SYCL nativo:}
+
+\begin{lstlisting}
+  integrator_rk4* dintg = sycl::malloc_device<integrator_rk4>(num_seeds, q_ct1);
+
+  seed_generator gen{static_cast<unsigned>(num_seeds)};
+
+  q_ct1.submit([&](sycl::handler& h){
+    h.parallel_for(sycl::range<1>(num_seeds), [=](sycl::id<1> idx) {
+        const unsigned i = static_cast<unsigned>(idx[0]);
+        dintg[i] = gen(i);
+    });
+  }).wait();
+
+  q_ct1.memcpy(houtput.data() + (0) * num_seeds, dintg, num_seeds * sizeof(integrator_rk4)).wait();
+\end{lstlisting}
+
+En adición, en este caso en particular, donde se usa una tarjeta gráfica de marca AMD para el desarrollo, no es posible ejecutar el código de oneAPI en el device, puesto que el plugin necesario para ejecutar código compilado en oneAPI en GPUs NVIDIA y AMD no está disponible, dado que la empresa que lo desarrolla cesó operaciones.
+
+Esto presentó inconvenientes durante la migración y creó la necesidad de ignorar las llamadas de la librería de dpct, haciendo que el proceso de migración con dpct, haya aportado muy poca conveniencia.
+
+
+
+% En la tabla \ref{tab:criterios}, se presentan los criterios usados para la selección, con su respectiva explicación y valor considerado para la selección.
+
