@@ -5,6 +5,7 @@ WORKDIR /test-program
 COPY ./streamlines /test-program/
 COPY --chmod=555 ./run.sh /test-program/run.sh 
 COPY ./jet_v4.h5 /test-program/data/jet_v4.h5
+COPY --chmod=555 ./parse-valgrind.py /test-program/parse-valgrind.py
 
 RUN apt-get update &&\
   apt-get install -y --no-install-recommends libhdf5-dev\
@@ -13,7 +14,7 @@ RUN apt-get update &&\
   libc++abi1 libclang-dev libclang1 liblldb-dev\
   libllvm-ocaml-dev libomp-dev libomp5 lld lldb\
   llvm-dev llvm-runtime llvm python3-clang git \
-  cmake
+  cmake valgrind
 
 RUN git clone https://github.com/AdaptiveCpp/AdaptiveCpp 
 
