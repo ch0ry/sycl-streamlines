@@ -38,4 +38,6 @@ Asimismo, el código tiene 3 parámetros de entrada, excluyendo el archivo H5, q
 	\vspace{-4mm}
 \end{table}
 
-No obstante, tras un análisis inicial del código, se optó por intercambiar la libería NRRD por HDF5, como sugerencia del director y autor del código, puesto que HDF5 posee características que se adecúan más a su uso en un contexto de computación heterogénea, como lectura/escritura paralela basada en MPI. Tras este cambio, asumimos esta implementación como un punto de referencia, para derivar las implementaciones en HIP y SYCL.
+No obstante, tras un análisis inicial del código, se optó por intercambiar la libería NRRD por HDF5, como sugerencia del director y autor del código, puesto que HDF5 posee características que se adecúan más a su uso en un contexto de computación heterogénea, como lectura/escritura paralela basada en MPI.
+
+En adición, para la toma de métricas de tiempo de ejecución, se tomó el tiempo que le tomó ejecutar las dos primeras tareas del código, para medir aspectos como la lectura de archivos, escritura a memoria, tiempo de ejecución dentro del kernel y comunicación entre host y device. Tras este cambio, asumimos esta implementación como un punto de referencia, para derivar las implementaciones en los demás estándares a analizar.

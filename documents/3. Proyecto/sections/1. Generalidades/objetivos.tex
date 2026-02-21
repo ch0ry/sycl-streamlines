@@ -2,15 +2,14 @@
 \subsection{Objetivo General}
 \begin{itemize}
 
-    \item Diseñar un conjunto de mecanismos autonómicos para permitir la adaptación de la Arquitectura Software IoT respecto a un modelo objetivo en la plataforma Smart Campus UIS
+	\item Comparar el desempeño computacional de una técnica de visualización de campos de flujo (Streamlines, Streaklines y Pathlines), que involucra el método de Runge-Kutta implementado en lenguaje C/C++, mediante métodos tradicionales de cómputo y programación heterogénea con SYCL, evaluando métricas como el tiempo de ejecución, uso de memoria y escalabilidad.
 
 \end{itemize}
 
 \subsection{Objetivos Específicos}
 
 \begin{itemize}
-    \item Proponer una notación (lenguaje) para describir una arquitectura objetivo de un sistema software IoT.
-    \item Diseñar un mecanismo para determinar las diferencias existentes entre una arquitectura actual en ejecución y una arquitectura objetivo especificada.
-    \item Diseñar un conjunto de mecanismos de adaptación que permitan disminuir las diferencias entre la arquitectura actual y la arquitectura objetivo.
-    \item Evaluar la implementación realizada a partir de un conjunto de pruebas con el fin de establecer la efectividad de los mecanismos usados.
+	\item Formular una versión optimizada del algoritmo RK4 en SYCL, con el propósito de evaluar su desempeño en arquitecturas heterogéneas.
+	\item Comparar el comportamiento de las implementaciones en C/C++ y en SYCL bajo diferentes configuraciones del problema (tamaño del dataset, conjunto de semillas y complejidad del campo vectorial), con el fin de identificar diferencias en su eficiencia y desempeño.
+	\item Analizar comparativamente las ventajas, limitaciones y condiciones de uso de SYCL frente a implementaciones tradicionales en CPU y en GPU con CUDA, considerando métricas de tiempo de ejecución, uso de memoria y escalabilidad.
 \end{itemize}

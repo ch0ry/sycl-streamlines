@@ -1,4 +1,4 @@
-\subsection{Migración del código de CUDA a SYCL}
+\subsection{Migración del código de CUDA}
 
 \lstset{
 	language=C++,
@@ -15,11 +15,12 @@
 	tabsize=2
 }
 
-Con el fin de comparar ambas tecnologías, CUDA y SYCL, especialmente si se parte de CUDA, es menester comparar el proceso de migración de una base de código en CUDA a una en SYCL. Algunas entornos como el de OneAPI de Intel o HIP de AMD, proveen una herramienta que se encarga de transpilar el código en CUDA hacia sus respectivos modelos. En el caso de OneAPI, esta se llama \textit{dpct} (Intel DPC++ Compatibility Tool) y para HIP, se llama HIPify.
+Con el fin de comparar los estándares de portabilidad,
+especialmente si se parte de CUDA, es menester incluir el proceso de migración de una base de código en CUDA. Algunos estándares como el de OneAPI de Intel o HIP de AMD, proveen una herramienta que se encarga de migrar el código en CUDA hacia sus respectivos estándares. En el caso de OneAPI, esta se llama \textit{dpct} (Intel DPC++ Compatibility Tool) y para HIP, se llama \textit{HIPify}.
 
-Cabe destacar que ambas implementaciones no producen un código en SYCL o un SYCL nativo, HIPify produce código en su modelo homónimo HIP, y oneAPI produce una versión de SYCL que usa la librería de dpct, lo cual presenta un problema si no se desea compilar con el compilador de oneAPI.
+% Cabe destacar que ambas implementaciones no producen un código en SYCL o un SYCL nativo, HIPify produce código en su estándar homónimo HIP, y oneAPI produce una versión de SYCL que usa la librería de dpct, lo cual presenta un problema si no se desea compilar con el compilador de oneAPI.
 
-Para ilustrar esta diferencia, a continuación un fragmento del código de la función main en su versión de CUDA, DPCT y SYCL nativo:
+Para ilustrar la diferencia entre la sintaxis de estos estándares, a continuación un fragmento del código de la función main en su versión de CUDA, DPCT y SYCL nativo:
 
 \textbf{Versión del fragmento en CUDA:}
 
@@ -27,13 +28,23 @@ Para ilustrar esta diferencia, a continuación un fragmento del código de la fu
   thrust::device_vector<integrator_rk4> dintg(num_seeds); 
 
   thrust::tabulate(
-      dintg.begin(), dintg.end(),
-      seed_generator{num_seeds}); 
+      dintg.begin(), dintg.end(), seed_generator{num_seeds}); 
 
   houti = thrust::copy(dintg.begin(), dintg.end(), houti); 
 \end{lstlisting}
 
-\textbf{Versión del fragmento en DPCT:}
+\textbf{Versión del fragmento en HIP:}
+
+\begin{lstlisting}
+  thrust::device_vector<integrator_rk4> dintg(num_seeds); 
+
+  thrust::tabulate(
+      dintg.begin(), dintg.end(), seed_generator{num_seeds}); 
+
+  houti = thrust::copy(dintg.begin(), dintg.end(), houti); 
+\end{lstlisting}
+
+\textbf{Versión del fragmento en SYCL*:}
 
 \begin{lstlisting}
   dpct::device_vector<integrator_rk4> dintg(num_seeds); 
@@ -63,10 +74,14 @@ Para ilustrar esta diferencia, a continuación un fragmento del código de la fu
   q_ct1.memcpy(houtput.data() + (0) * num_seeds, dintg, num_seeds * sizeof(integrator_rk4)).wait();
 \end{lstlisting}
 
-En adición, en este caso en particular, donde se usa una tarjeta gráfica de marca AMD para el desarrollo, no es posible ejecutar el código de oneAPI en el device, puesto que el plugin necesario para ejecutar código compilado en oneAPI en GPUs NVIDIA y AMD no está disponible, dado que la empresa que lo desarrolla cesó operaciones.
 
-Esto presentó inconvenientes durante la migración y creó la necesidad de ignorar las llamadas de la librería de dpct, haciendo que el proceso de migración con dpct, haya aportado muy poca conveniencia.
+Usando solamente este fragmento, es posible afirmar que la sintaxis entre CUDA y HIP no es muy diferente. Esto explica también por squé HIPify fue mucho más efectivo durante su migración automatizada, requiriendo cambios mínimos a la base de código.
 
+En adición, en este caso en particular, donde se usa una tarjeta gráfica de marca AMD para el desarrollo, es requerido una configuración adicional para poder ejecutar el código usando la GPU con el compilador de oneAPI\footnote{Como se indica en las notas de la nueva versión del compilador de oneAPI \cite{intel_technologies_intel_2026} } (icpx), y durante una prueba preliminar, presentó
+
+Esto presentó inconvenientes durante la migración y creó la necesidad de incluir a oneAPI como un estándar de portabilidad más a comparar en vez de tomarlo como un sabor diferente de SYCL.
+
+Cabe destacar que ninguna de estas herramientas de migración pudieron satisfactoriamente migrar algunas llamadas de funciones exclusivas de CUDA, en particular \textit{Tex3D.get()}. Esta función se encarga de realizar la interpolación trilmineal de una textura, que es la función más matemáticamente demandante del algoritmo. A raíz de esto, se modificó el código original para que no se use la configuración y función exclusiva de CUDA. No obstante, esta acomodación es un punto cualitativo de comparación a favor de CUDA.
 
 
 % En la tabla \ref{tab:criterios}, se presentan los criterios usados para la selección, con su respectiva explicación y valor considerado para la selección.

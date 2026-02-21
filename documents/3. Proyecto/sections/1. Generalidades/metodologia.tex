@@ -1,120 +1,74 @@
 \section{Metodología de la Investigación}
 
-Para el desarrollo del trabajo de grado, se propuso un modelo de prototipado iterativo compuesto de 5 fases (Ver fig. \ref{fig:met}), que permitió avanzar a medida que se fue completando la fase anterior y permitió el poder iterar sobre lo que se ha desarrollado anteriormente.
+Para el desarrollo del trabajo de grado, se propuso un plan de 3 fases, que acarrea una secuencia lógica desde la implementación hasta el análisis de los resultados:
 
-\begin{figure}[H]
-    \centering
-    \caption{\\Metodología de investigación}
-    \includegraphics[width=0.7\linewidth]{images/Metodologia.pdf}
-    \label{fig:met}
-\end{figure}
 
-\subsection{Ambientación Conceptual y Tecnológica}
+\subsection{Implementación de RK4}
 
-La primera fase de la metodología se basó en la revisión de la literatura, al igual que de lo presente en la industria, lo anterior fué necesario para cubrir las bases tanto conceptuales como técnicas requeridas para el desarrollo del proyecto. 
+Esta primera fase se basó en el análisis de la fuente de código inicial provista por el director, que contiene una implementación del algoritmo RK4 para la visualización de Streamlines, Streaklines y Pathlines usando CUDA. Posterior a ello, la base de código fue modificada para facilitar su estudio y migración a demás plataformas que usan SYCL o HIP para su estudio en fases próximas.
 
 \subsubsection*{Actividades}
 
 \begin{enumerate}
-    \itemsep-2mm
-    \item Identificación de las características principales de un sistema auto-adaptable.
-    \item Análisis de los mecanismos de adaptación de la arquitectura.
-    \item Análisis los algoritmos empleados para la comparación de las arquitecturas.
-    \item Determinación de los criterios de selección para el lenguaje de notación.
-    \item Evaluación de los posibles lenguajes de programación para la implementación a realizar.
-\end{enumerate} 
+	\itemsep-2mm
+	\item Recopilación de datos de entrada de tamaño variable para pruebas.
+	\item Implementación del algoritmo RK4 en CUDA.
+	\item Implementación del algoritmo RK4 en SYCL.
+\end{enumerate}
 
 \subsubsection*{Productos}
 
 \begin{enumerate}
-    \itemsep-2mm
-    \item Lista de criterios de selección para el lenguaje de notación.
-    \item Evaluación de los posibles lenguajes de programación para la implementación.
+	\itemsep-2mm
+	\item Implementaciones del algoritmo RK4 para visualización de Streamlines, Streaklines y Pathlines en los siguientes estándares: CUDA, HIP, oneAPI (SYCL*\footnote{Denominación que otorga Intel a su uso de SYCL, pues es una extensión del mismo}) y SYCL
+	\item Evaluación de los posibles lenguajes de programación para la implementación.
 \end{enumerate}
 
-\subsection{Definición de la notación de la arquitectura}
+\subsection{Desarrollo del ambiente de pruebas}
 
-La segunda fase consistió en la definición del cómo se realiza la declaración de la arquitectura. Partiendo de los criterios de selección establecidos en la fase 1, se determinó un lenguaje de notación el cual permitió definir la arquitectura objetivo a alcanzar, al igual que la gramática correspondiente para poder realizar dicha declaración. 
+La segunda fase consistió en la definición del cómo se realiza la declaración de la arquitectura. Partiendo de los criterios de selección establecidos en la fase 1, se determinó un lenguaje de notación el cual permitió definir la arquitectura objetivo a alcanzar, al igual que la gramática correspondiente para poder realizar dicha declaración.
+
+La segunda fase consistió de la creación de ambientes controlados donde se ejecutarán los algoritmos, manteniendo las mismas condiciones de cómputo para los algoritmos, y se recopilarán las métricas establecidas para la comparación. Donde se usó Docker y la misma imágen base de Ubuntu para instalar las dependencias de cada uno de los estándares a evaluar. Para esto se hizo usó del clúster de SC3 para ejecutar las imágenes.
 
 \subsubsection*{Actividades}
 
 \begin{enumerate}
-    \itemsep-2mm
-    \item Selección del lenguaje de marcado a usar a partir de los criterios establecidos.
-    \item Definición de la gramática a usar para la definición de la arquitectura.
-    \item Determinación de como se realizará la representación de los componentes y partes de la arquitectura.
-    \item Implementación de una validador de la notación propuesta.
-\end{enumerate}    
+	\itemsep-2mm
+	\item Determinación de métricas a evaluar.
+	\item Implementación en Docker del ambiente de pruebas.
+	\item Ejecución síncrona de pruebas para ambas implementaciones.
+\end{enumerate}
 
 \subsubsection*{Productos}
 
 \begin{enumerate}
-    \itemsep-2mm
-    \item Notación a usar para la declaración de los requerimientos de las aplicaciones.
-    \item Validador de los archivos de configuración de la notación definida
+	\itemsep-2mm
+	\item Listado de métricas que se recopilarán y almacenarán durante la ejecución de las imágenes de Docker
+	\item Dockerfiles correspondientes a cada uno de los 4 estándares a evaluar
+	\item Archivos csv con los datos recopilados de las pruebas
 \end{enumerate}
 
-\subsection{Mecanismos De Comparación}
+\subsection{Recopilación de resultados}
 
 Durante la tercera fase del proyecto, se buscó determinar e implementar cómo se realiza la comparación entre el estado de la arquitectura obtenido durante la auto-descripción de la misma y el objetivo establecido. Así mismo, y con el fin de reportar a los administradores de los sistemas, también fue necesario definir los \textit{niveles} de similitud entre las 2 arquitecturas.
 
-\subsubsection*{Actividades}
+Durante la tercera fase y última fase, se compilarán los resultados en un formato adecuado para su análisis, y se retroalimentarán los resultados obtendidos para concluir el trabajo de grado.
 
-\begin{enumerate}
-    \itemsep-2mm
-    \item Selección del mecanismo de comparación a usar para evaluación de estado de la arquitectura.
-    \item Implementación del mecanismo de comparación seleccionado.
-    \item Determinación de los diferentes niveles de similitud entre arquitecturas.
-\end{enumerate}    
-
-\subsubsection*{Productos}
-
-\begin{enumerate}
-    \itemsep-2mm
-    \item Implementación de un mecanismos que permita establecer el estado del sistema.
-    \item Implementación de una comparación entre el estado de referencia y el estado actual.
-\end{enumerate}
-
-\subsection{Mecanismos De Adaptación}
-
-La cuarta fase del proyecto fue orientada a la selección, al igual que la implementación en Smart Campus UIS, del conjunto de mecanismos de adaptación de la arquitectura. 
+Durante la tercera y última fase, se compilaron y organizaron los resultados en formatos csv usando Python,se realizaron gráficas que muestran las diferencias entre los 4 estándares en las métricas obtenidas. De la misma forma, se incluyó el aspecto cualitativo de la dificultad de su uso, dadas las condiciones del hardware y software durante el desarrollo de la investigación como punto de comparación entre los estándares.
 
 \subsubsection*{Actividades}
 
 \begin{enumerate}
-    \itemsep-2mm
-    \item Definición el conjunto de mecanismos de adaptación.
-    \item Implementación el conjunto de mecanismos de adaptación seleccionados.
-\end{enumerate}  
+	\itemsep-2mm
+	\item Organización de los resultados obtenidos en gráficos y tablas.
+	\item Retroalimentación y conclusiones de los resultados obtenidos.
+\end{enumerate}
 
 \subsubsection*{Productos}
 
 \begin{enumerate}
-    \itemsep-2mm
-    \item Implementación de un servicio encargado de la planeación para la ejecución de los mecanismos de adaptación definidos
-    \item Implementación de un servicio encargado de la ejecución de las acciones planeadas.
+	\itemsep-2mm
+	\item Tablas y gráficas correspondientes a las métricas obtenidas y su comparación para cada estándar.
+	\item Evaluación de los estándares de acuerdo a los datos cuantitativos y cualitativos obtenidos.
 \end{enumerate}
 
-\subsection{Validación De Resultados}
-
-La fase final del proyecto se centró principalmente en la realización de pruebas de los mecanismos implementados, los resultados obtenidos al igual que la documentación de todo lo que se desarrolló durante el proyecto.
-
-\subsubsection*{Actividades}
-
-\begin{enumerate}
-    \itemsep-2mm
-    \item Realización de las pruebas del funcionamiento de la implementación realizada con diversas arquitecturas objetivo.
-    \item Recopilación la documentación generada durante el desarrollo de cada una de las fases del proyecto.
-    \item Compilación de la documentación para generar el documento final.
-    \item Correcciones y adiciones para la presentación final del proyecto de grado.
-\end{enumerate}  
-
-\subsubsection*{Productos}
-
-\begin{enumerate}
-    \itemsep-2mm
-    \item Validación del funcionamiento de los mecanismos implementados.
-    \item Código fuente de los diferentes servicios y librerías implementadas durante el transcurso del proyecto
-    \item Documento final detallando el desarrollo del proyecto
-    \item Presentación para la sustentación del proyecto
-\end{enumerate}

@@ -1,4 +1,4 @@
-#include "nrrd_field.h"
+#include "hdf5_field_sycl.h"
 #include <dpct/dpct.hpp>
 #include <dpct/dpl_utils.hpp>
 #include <oneapi/dpl/algorithm>
@@ -11,6 +11,7 @@
 #include <math.h>
 #include <type_traits>
 #include <vector>
+#include <chrono>
 
 // Replacement for old thrust experimental pinned_allocator, compatibility for
 // newer CUDA versions
@@ -54,8 +55,7 @@ struct integrator_rk4 {
   float t;        // time
 
   template <typename Field>
-  void step(const Field &field, const float dt, const sycl::stream &stream_ct1,
-            dpct::image_accessor_ext<sycl::float4, 3> m_texture) {
+  void step(const Field &field, const float dt) {
     if (sycl::isnan(t))
       return;
 
@@ -63,16 +63,16 @@ struct integrator_rk4 {
 
     sycl::float3 k1, k2, k3, k4;
 
-    if (!field.get(p, k1, m_texture))
+    if (!field.get(p, k1))
       goto outside;
 
-    if (!field.get(p + dt_half * k1, k2, m_texture))
+    if (!field.get(p + dt_half * k1, k2))
       goto outside;
 
-    if (!field.get(p + dt_half * k2, k3, m_texture))
+    if (!field.get(p + dt_half * k2, k3))
       goto outside;
 
-    if (!field.get(p + dt * k3, k4, m_texture))
+    if (!field.get(p + dt * k3, k4))
       goto outside;
 
     p += dt / 6.0f * (k1 + k2 + k3 + k4);
@@ -263,7 +263,7 @@ int main(int argc, char *argv[]) {
   float dt = std::stof(str_dt);
 
   // load input field
-  nrrd_field field("../data/jet_v4.h5");
+  hdf5_field field("../data/jet_v4.h5");
 
   std::vector<integrator_rk4> houtput(num_steps * num_seeds);
 
@@ -285,9 +285,11 @@ int main(int argc, char *argv[]) {
     i.step(field, dt); 
   }; 
 
-  for (int s = 0; s < num_steps - 1; ++s)   {
+  using clock = std::chrono::steady_clock;
 
-    std::cerr << "." << std::flush; 
+  auto start_timer = clock::now();
+
+  for (int s = 0; s < num_steps - 1; ++s)   {
 
     std::for_each(oneapi::dpl::execution::make_device_policy(q_ct1),
                   dintg.begin(), dintg.end(),
@@ -296,11 +298,13 @@ int main(int argc, char *argv[]) {
     houti = std::copy(oneapi::dpl::execution::make_device_policy(q_ct1),
                       dintg.begin(), dintg.end(),
                       houti); 
-
-    size_t elements_written = houti - houtput.begin();
   }
 
-  std::cerr << '\n';
+  auto end_timer = clock::now();
+
+  std::chrono::duration<double, std::milli> ms = end_timer - start_timer;
+
+  std::cout << "rk4, " << num_steps*num_seeds << ", " << ms.count() << std::endl;
 
   // copy back and output
   if (str_vtp == "1")

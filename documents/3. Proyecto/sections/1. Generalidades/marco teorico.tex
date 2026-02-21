@@ -1,64 +1,88 @@
 \section{Marco Teórico}
 
-\subsection{Internet of Things}
+\subsection{COMPUTACIÓN DE ALTO RENDIMIENTO (HPC)}
 
-% Aquí es para contextualizar una de las aplicaciones de la computación embebida más que otra cosa
-
-El Internet de las cosas, o IoT (Internet of Things); es una de las áreas de las ciencias de la computación en la cual  se embeben diferentes dispositivos en objetos del día a día. Esto les da la capacidad de enviar y recibir información con el fin de realizar monitoreo o facilitar el control de ciertas acciones \cite{Berte_2018}.
-
-Esta tecnología, debido a su flexibilidad al igual que el alcance que puede tener, presenta una gran cantidad de aplicaciones que van desde electrónica de consumo hasta la industria. Encuestas realizadas en el 2020 reportan su uso en smart homes, smart cities, transporte, agricultura, medicina, etc. \cite{Dawood_2020}.
-
-\subsubsection{Sistemas Embebidos}
-
-% Tengo que contextualizar qué es lo que es la computación embebida y cual es el principio o justificación de este
-
-Los sistemas de cómputo embebidos hacen referencia a un sistema compuesto de microcontroladores los cuales están orientados a llevar a cabo una función o un rango de funciones específicas \cite{heath2002embedded}. Este tipo de sistemas, debido a la posibilidad de combinar hardware y software en una manera compacta, se ha visto en multiples campos de la industria como lo son el sector automotor, de maquinaria industrial o electrónica de consumo \cite{deichmann_2022}.
-
-% Extender la aplicación de la computación autonómica en los sistemas embebidos.
-
-\subsubsection{Location-based Services}
-
-Location-Based Services, o servicios basados en ubicación, hace referencia a aquellos servicios que integran la ubicación geográfica de un dispositivo como una parte fundamental la cual da un valor agregado al usuario \cite{Schiller2004}. Este tipo de servicios han sido principalmente usados en aplicaciones relacionas con entornos inteligentes, modelado espacial, personalización, conciencia de contexto, comunicación cartográfica, redes sociales, análisis de datos masivos, entre otros \cite{Gartner2015,alliedmarketresearch2023}. 
-
-\subsubsection{Smart Campus}
-
-% Y aquí es para explicar el concepto de un smart campus. Para qué se usa y de donde surge.
-
-Un Smart Campus, equiparable con el concepto de Smart City, es una plataforma en la que se emplean tecnologías, sumado a una infraestructura física, con la cual se busca la recolección de información y monitoreo en tiempo real \cite{MinAllah2020}. Los datos recolectados tienen el objetivo de apoyar la toma de decisiones, mejora de servicios, entre otros \cite{Anagnostopoulos_2023}.
-
-Estas plataformas, debido a su escala y alcance en cuanto a la cantidad de servicios que pueden ofrecer, requieren de 
-infraestructuras tecnológicas las cuales den soporte a los objetivos del sistema. Es posible ver implementaciones orientadas a microservicios en trabajos de \citeauthor{henry_2020} \citeyear{henry_2020} donde se desarrolla una plataforma de software escalable con la cual se pueda lograr interoperatividad y alta usabilidad para todos.
-
-% \subsection{Notación, Sintaxis y Lenguajes}
-
-\subsection{Notación}
-
-De manera general, notación se refiere a una serie de caracteres, símbolos, figuras o expresiones usadas con el fin de expresar un sistema, método o proceso \cite{MerriamWebsterNotation}. Más específicamente en el contexto de las ciencias de la computación, las notaciones han sido usadas para la representación de estructuras y arquitecturas en el software, como lo son lenguajes de modelado tales como UML \cite{WhatIsUML}; lenguajes de programación, como C/C++, Ruby \cite{Bansal2013}; algoritmia de manera visual \cite{RutanenKalle2018McoO}; entre otros.
+La computación de alto rendimiento, conocida como HPC, forma parte indisoluble del ámbito de la computación y está dedicada fundamentalmente a la resolución de problemas, que requieren para su resolución un gran poder computacional. El objetivo de HPC es el de aprovechar arquitecturas avanzadas y paralelas que puedan ser utilizadas para resolver tareas que de ser necesarias en sistemas convencionales no se podrían realizar precisamente debido, entre otras consideraciones, a la complejidad de los cálculos a realizar y a la gran cantidad de datos a procesar. \cite{eijkhout_art_2022}
 
 
-\subsubsection{Gramática}
+De un modo general, HPC ha pasado a ser parte fundamental de la computación en diversas disciplinas científicas y de la ingeniería, permitiendo realizar simulaciones numéricas, el procesamiento de grandes cantidades de datos o el modelado detallado de fenómenos físicos. Este enfoque ha permitido la expansión de áreas como la predicción del tiempo (clima), la exploración espacial, la biología computacional, el diseño de nuevos materiales, etc.
 
-% Esto es más que nada para contextualizar la necesidad de una forma en la notación
 
-La gramática, en el caso de los lenguajes, es un conjunto de reglas la cual es usada para describir tanto la sintaxis como la semántica de una lenguaje de programación \cite{Sebesta2012}. Siendo así, estas cumplen la función de describir una frase considerada válida dentro del contexto de un lenguaje dado \cite[p. 101]{Sipser2012-wl}. Existen varios tipos de gramática, tales como gramáticas de atributos, gramáticas libres de contexto, etc. \cite{Sebesta2012}.
+A lo largo de la historia (de los sistemas HPC) las supercomputadoras se transforman en infraestructuras distribuidas y clústeres HPC y estos cambios han conducido también a la aparición de paradigmas de programación que permiten explotar el paralelismo como por ejemplo MPI (Message Passing Interface) y OpenMP (Open Multi-Processing) y más recientemente la aparición de las GPUs han permitido incrementar todavía más la capacidad computacional por medio de un paralelismo masivo orientado hacia cálculos científicos y simulaciones.\cite{eijkhout_art_2022}
 
-\subsubsection{Sintaxis}
 
-La sintaxis se refiere a la forma en la cual elementos, pertenecientes a un lenguaje, se estructuran de forma ordenada con el fin de formar estructuras más grandes \cite{MerriamWebsterSyntax}. En el contexto de las ciencias de la computación, esta definición se puede expresar como un conjunto de reglas con las cuales regimos la forma en que escribimos en diferentes lenguajes de programación, marcado, entre otros \cite[p. 51]{Friedman2008}.
+Un aspecto clave de los sistemas HPC en la actualidad es la migración hacia arquitecturas heterogéneas que integran diferentes tipos de procesadores (CPU, GPU, FPGA y aceleradores específicos) con vista a una mayor eficiencia. El éxito que han ido logrando estas arquitecturas no responde solamente a la necesidad de un mayor poder computacional, sino que tiene que ver también en el avance del conocimiento de la factibilidad y del consumo energético, así como de la escalabilidad. En este marco, la programación y la portabilidad del código, se convierte en uno de los pilares que conduce a los avances que presentan nuevos modelos como SYCL, que intenta crear un acceso unificado a las diferentes plataformas, conservando al mismo tiempo el rendimiento \cite{reinders_data_2021} .
 
-\subsubsection{Domain-Specific Languages} % Fase 2
 
-Los \textit{Domain-Specific Languages} (DSL), o Lenguaje de dominio específico, son lenguajes de programación empleados para un fin específico. Estos están orientados principalmente al uso de abstracciones de un mayor nivel debido al enfoque que estos tienen para la solución de un problema en específico \cite{Kelly2008}. Ejemplos de este tipo de acercamiento, en el caso del modelado (\textit{Domain-specific modeling}), pueden observarse en los diagramas de entidad relación usados en el desarrollo de modelos de base de datos \cite{Celikovic2014ADF}. 
+Por consiguiente, HPC no debe ser entendida solo como la existencia y uso de supercomputadoras, sino que forma parte de un conjunto de tipos de tecnología que siempre están evolucionando y que tienen mucha repercusión en la aceleración del conocimiento científico y la posibilidad de poder tratar la solución de problemas que tienen mucho significado a nivel mundial.
 
-\subsection{Serialización de Datos}
 
-La serialización de datos se refiere a la traducción de una estructura de datos a una manera en la que pueda ser almacenada o transmitida de manera eficiente \cite{mozillaSerialization}. Este proceso ha sido, principalmente, adoptado por lenguajes de programación orientada a objetos, en donde existe un soporte nativo, tales como Go, JavaScript, o PHP; o existe algún tipo de framework o librería que permite hacerlo, como lo es en el caso de C/C++, Rust o Perl.
+\subsection{COMPUTACIÓN HETEROGÉNEA}
 
-\subsubsection{Métodos de Serialización de Datos}
+La computación heterogénea tiene su fundamento en el uso conjunto de varios tipos de procesadores existentes en un mismo sistema y tiene como objetivo el aumento del rendimiento y de la eficiencia. En este modelo de computación no solo se hace funcionar la CPU, sino que se hacen funcionar otros dispositivos adicionales a esta como las GPU, FPGA u otros tipos de aceleradores, de forma que se distribuyen las tareas en función de las capacidades de cada una de las unidades de procesamiento.
 
-Dentro del ámbito de la programación, se encuentran diversas opciones en cuanto a formatos y técnicas empleadas para la serialización de datos. Cada uno de estos enfoques presenta sus particularidades, lo que resulta en ventajas y desventajas específicas, las cuales deben ser consideradas según las necesidades del proyecto. Las dos opciones principales, en cuanto a la serialización de datos, son:
+El interés por este modelo ha crecido en los últimos años debido a que los problemas actuales no tienen únicamente que ver con la capacidad de cómputo, sino también con la eficiencia energética y la escalabilidad. Si bien las CPU ofrecen flexibilidad y son apropiadas para las tareas secuenciales, las GPU llegan a aportar niveles de paralelismo muy elevados, de tal forma que se pueden utilizar en simulaciones, cálculos numéricos masivos o grandes volúmenes de datos. \cite{mittal_survey_2015}.
 
-\begin{itemize}
-    \item \textbf{Serialización en Formato de Texto}: Esta forma de serialización emplea un formato legible por humanos, generalmente utilizando caracteres y símbolos. Este enfoque es especialmente útil cuando se necesita que los datos sean legibles, y editables, directamente por humanos, lo que los hace adecuados para la configuración de aplicaciones y la comunicación entre sistemas heterogéneos; o cuando se requiere tener compatibilidad entre diferentes sistemas y lenguajes de programación \cite{Grochowski2019}.
-    \item \textbf{Serialización Binaria}: Esta implica la representación de datos en un formato binario. Este enfoque es altamente eficiente en cuanto a espacio y velocidad, pero no es legible por humanos. Los formatos de serialización binaria, están diseñados para minimizar el tamaño de los datos serializados y optimizar el rendimiento en aplicaciones donde la velocidad y la eficiencia son críticas, sacrificando la estandarización e interoperatividad con otras implementaciones de este tipo de serialización \cite{Grochowski2019}.
-\end{itemize}
+La adopción de arquitecturas heterogéneas se ha visto favorecida por la aparición de entornos de programación como CUDA, OpenCL y SYCL, que facilitan su programación y proporcionan diferentes niveles de portabilidad. \cite{keryell_sycl_2019}. Aun así, la computación heterogénea tiene también sus inconvenientes, como la necesidad de encontrar algoritmos a partir de los cuales las computaciones puedan adaptarse a hardware heterogéneo y la gestión de la carga de trabajo en los distintos dispositivos.
+
+Este paradigma se ha instalado como una de las principales tendencias en la computación de alto rendimiento, debido a que permanece en la línea que se busca entre velocidad de ejecución, eficiencia energética y uso de recursos.
+
+\subsection{VISUALIZACIÓN DE CAMPOS DE FLUJO}
+
+La visualización de los campos de flujo es una metodología para realizar una representación gráfica del comportamiento de los sistemas dinámicos que se desarrollan con respecto al tiempo y al espacio. Un campo de flujo es la descripción de cómo varía una magnitud vectorial, como puede ser, por ejemplo, la velocidad o la fuerza, en los distintos puntos de un dominio, siendo su análisis importante en la dinámica de fluidos, la meteorología o bien en la física computacional.
+%---------------------------------------------
+En este sentido, un campo vectorial puede considerarse como una función que asigna un vector, como podría ser un vector de velocidad, a cada punto del espacio, indicando la dirección y la intensidad del movimiento en un cierto punto; partiendo de esta idea, es posible definir las distintas maneras de representar de una forma u otra el flujo:
+
+1. Streamlines (Líneas de corriente): curvas que son tangentes al campo de velocidad en un instante dado, indicando la dirección del flujo de forma puntual.
+
+2. Pathlines (Trayectorias): caminos seguidos por las partículas en el tiempo, mostrando su verdadero movimiento.
+
+3. Streaklines (Líneas de emisión): conjunto de puntos ocupados por las partículas que en un momento dado han atravesado el punto considerado.
+
+Estas tres definiciones son equivalentes en flujos estacionarios, pero pueden ser diferentes si se lo aplica a los flujos no estacionarios o turbulentos \cite{hansen_visualization_2005}. Un flujo estacionario es aquel en el que el estado del campo de velocidad (dirección y magnitud) no cambia con el tiempo, por lo cual el recorrido de las partículas permanece constante y las tres representaciones -streamlines, pathlines y streaklines- son equivalentes; mientras que un flujo no estacionario implica que el campo de velocidad presenta variaciones en el tiempo y cada tipo de línea hace referencia a una faceta del movimiento: las streamlines hacen referencia a la dirección en un instante, las pathlines representan el recorrido real de las partículas y las streaklines proporcionan la posición de las partículas que han pasado por un punto de referencia.
+
+%----------------------------------------
+La importancia de este concepto reside en que es capaz de entender fenómenos complejos mediante representaciones visuales que ayudan en la interpretación de los datos numéricos. En problemas como la simulación de fluidos, la dispersión de contaminantes o el modelado atmosférico, las soluciones numéricas en sí mismas son difíciles de interpretar; por ello, se requiere de la visualización para que se puedan ver patrones, trayectorias y estructuras internas. \cite{laramee_state_2004}.
+
+Hay muchas aplicaciones de la visualización de campos de flujo. Por ejemplo, se emplea en el diseño aerodinámico de la industria del automóvil y la aeronáutica para pronosticar el clima; también se utiliza para simular la turbulencia o estudiar el movimiento de partículas en medios físicos. Igualmente, se utiliza para el análisis de modelos en biomedicina. A partir de todas estas aplicaciones, se requiere de métodos computacionales intensivos para poder resolver numéricamente el problema, como para convertir gráfica y visualmente los resultados. \cite{laramee_state_2004} \cite{post_state_2003}.
+
+Sin embargo, la visualización de campos de flujo presenta limitaciones debido principalmente al alto coste computacional que se deriva de ciertos aspectos; por ejemplo, el cálculo de trayectorias, la interpolación de datos en malla tridimensional y el renderizado de grandes cantidades de datos requieren de sistemas que puedan ejecutar tareas en paralelo, y de arquitecturas de computación avanzada. \cite{post_state_2003}.
+
+Es en este sentido que desde el proyecto se ha considerado este tipo de problemas, ya que el algoritmo para la integración numérica RK4, optimizado y adaptado a arquitecturas heterogéneas, sirve para calcular trayectorias para partículas dentro de campos de flujo. Por lo que para la visualización no solo se quedaría como una aplicación representativa, sino que también serviría como un caso de estudio para poder validar la eficiencia y portabilidad de las implementaciones en SYCL frente a otras soluciones de forma tradicional.
+
+\subsection{ALGORITMOS DE INTEGRACION NUMERICA (RK4)}
+
+Los algoritmos de integración numérica constituyen un conjunto de métodos que se idearon para aproximar la solución de Ecuaciones Diferenciales Ordinarias (EDO), sobre todo, cuando no se puede obtener una solución analítica, exacta. Entre todos estos métodos, el método de Runge-Kutta de cuarto orden (RK4) es uno de los más utilizados a causa de su equilibrio entre sencillez, precisión y coste computacional. \cite{butcher_numerical_2008}.
+
+La razón por la que este método es importante, radica en su capacidad para proporcionar resultados con un error relativamente pequeño sin tener que aumentar excesivamente el coste de cálculo. Por eso, el RK4 ha pasado a ser considerado un estándar en lo que se refiere a simulaciones físicas, ingeniería, biología computacional y en general cualquier disciplina que busque modelar fenómenos dinámicos mediante EDO. \cite{suli_introduction_2003}.
+
+Entre sus aplicaciones se encuentran la simulación de trayectorias de partículas en campos vectoriales, la dinámica de fluidos, la modelación de circuitos eléctricos, el análisis orbital en astrofísica y la biomecánica. En estas aplicaciones, el RK4 ofrece aproximaciones estables y confiables incluso en sistemas fuertemente no lineales.
+
+Sin embargo, el método tiene una serie de limitaciones ligadas al coste en recursos computacionales, sobre todo cuando la dimensión de las datasets aumenta o cuando se busca una alta resolución tanto temporal como espacial. En estos casos, llevar a cabo el algoritmo de forma secuencial puede acabar convirtiéndose en un cuello de botella, lo que requiere recurrir a utilizar técnicas de paralelización y arquitecturas de computación más avanzadas. \cite{camp_streamline_2011}\cite{pugmire_scalable_2009}.
+
+En el caso del proyecto, RK4 se convierte en el núcleo matemático que se desea optimizar. Su implementación en un entorno heterogéneo gracias a SYCL permite trabajar en conseguir mejoras en cuanto a el rendimiento y la portabilidad al comparar sus resultados a implementaciones tradicionales en CPU y GPU, como las que basan en CUDA.
+
+
+\subsection{MODELOS DE PROGRAMACION EN PARALELO}
+
+La programación paralela es un paradigma que intenta ejecutar muchas operaciones a la vez, dividiendo un problema en subproblemas más pequeños que pueden resolverse de manera simultánea en diferentes unidades de procesamiento. Este modelo, a diferencia de la programación secuencial, trata de maximizar el uso de los recursos de hardware y es fundamental para hacer frente a nuevos problemas de gran escala en ciencia e ingeniería. \cite{grama_introduction_2011}.
+
+Una vez más, su importancia reside en que esas capacidades del hardware moderno están conformadas por procesadores multinúcleo, tarjetas gráficas (GPU) y aceleradores. Es con la ejecución paralela que se puede mejorar los tiempos de cómputo y mejorar la eficiencia energética para las aplicaciones que requieren grandes volúmenes de cálculo, como es el caso de la simulación científica, el aprendizaje automático o la visualización de datos.
+
+Existen diferentes modelos y herramientas de este paradigma. CUDA, desarrollado por NVIDIA, se ha convertido en un estándar de programación para GPU propietarias. OpenCL es un marco de programación abierto que permite usar arquitecturas heterogéneas. OpenMP permite la programación paralela en entornos de memoria compartida para CPU multinúcleo, y por último SYCL, promovido por Khronos Group, extiende el modelo de C++ para múltiples arquitecturas, pero en un marco portable y estándar. \cite{the_khronos_group_inc_sycl_2025}\cite{reinders_data_2021}.
+
+No obstante, este método también conlleva ciertas limitaciones. Entre ellas están la dependencia del hardware (hay modelos que se ejecutan solamente en arquitecturas específicas), la complejidad en el control del paralelismo y dependencias como la dificultad de portar aplicaciones entre plataformas heterogéneas. Este tipo de restricciones ha sido el impulso para el desarrollo de otros métodos que consideren una buena relación entre el rendimiento y la portabilidad.
+
+En la parte asociada a este proyecto, la paralelización de las aplicaciones se relaciona estrictamente con la elección de SYCL como modelo de referencia. Esta estrategia permite escribir código portable en C++ y ejecutarlo en CPU, GPU y FPGA, lo que resulta un aspecto fundamental a considerar para evaluar eficiencia y escalabilidad frente a otros modelos convencionales.
+
+\subsection{SYCL (Y ESTANDARES DE PORTABILIDAD)}
+
+SYCL (del inglés Standard C++ for Heterogeneous Computing) es un estándar abierto de Khronos Group destinado a la extensión del lenguaje C++ con el fin de facilitar la programación en arquitecturas heterogéneas. A diferencia de los modelos basados en implementaciones propietarias, SYCL desarrolla una interfaz de programación de alto nivel que permite a los desarrolladores escribir código portable de forma única para ejecutarse posteriormente en CPU, GPU, FPGA u otros aceleradores \cite{the_khronos_group_inc_sycl_2025}.
+
+La importancia del estándar SYCL se encuentra en su desarrollada portabilidad y además por su productividad. Por enlazarse de manera nativa con C++, permite a los programadores aplicar las características modernas de C++ sin tener que aprender un nuevo paradigma. Este mismo hecho ayuda a promover la interoperabilidad entre familias de plataformas que es especialmente importante en un contexto donde el hardware en la arquitectura puede variar entre diferentes generaciones y fabricantes \cite{reinders_data_2021}.
+
+Entre sus aplicaciones más destacadas nos encontramos con proyectos de cómputo de alto rendimiento (HPC), simulaciones científicas, inteligencia artificial y para análisis de datos. Frameworks como oneAPI de Intel, DPC++, o hipSYCL, hacen de SYCL una buena base para ofrecer entornos de desarrollo con rendimiento y a la vez portabilidad, corroborando así su importancia en el marco de estándares modernos de programación paralela \cite{intel_technologies_intel_2025}\cite{alpay_hipsycl_2021}.
+
+No obstante, SYCL también posee algunas limitaciones. La principal limitación radica en su madurez relativa comparada con los modelos ya consolidados, como CUDA, que deriva en un ecosistema de herramientas y bibliotecas todavía no desarrollado. El soporte de hardware tampoco es homogéneo, depende del compromiso que asuman cada uno de los fabricantes, lo que puede hacer que existan diferencias de rendimiento entre dispositivos.
+
+Durante el transcurso de este proyecto, SYCL se establece como la herramienta relevante para comprobar la portabilidad y el rendimiento de la implementación del algoritmo RK4 aplicado a la visualización de campos de flujo. Su uso permite no solo explorar las ventajas de trabajar con un estándar abierto también permite establecer comparativas respecto a otros modelos de tipo propietario en casos de heterogeneidad.
