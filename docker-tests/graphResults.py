@@ -5,6 +5,24 @@ hip = pd.read_csv("hip/results/results.csv")
 sycl = pd.read_csv("sycl/results/results.csv")
 cuda = pd.read_csv("cuda/results/results.csv")
 
+hip_valgrind = pd.read_csv("hip/results/valgrind.csv")
+sycl_valgrind = pd.read_csv("sycl/results/valgrind.csv")
+cuda_valgrind = pd.read_csv("cuda/results/valgrind.csv")
+
+hip_valgrind = hip_valgrind[
+    hip_valgrind["stat"]
+    in ["total_heap_usage", "definitely_lost", "indirectly_lost", "possibly_lost"]
+]
+
+sycl_valgrind = sycl_valgrind[
+    sycl_valgrind["stat"]
+    in ["total_heap_usage", "definitely_lost", "indirectly_lost", "possibly_lost"]
+]
+
+cuda_valgrind = cuda_valgrind[
+    cuda_valgrind["stat"]
+    in ["total_heap_usage", "definitely_lost", "indirectly_lost", "possibly_lost"]
+]
 
 # for row in pd.read_csv("resultsHIP.csv"):
 

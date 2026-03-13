@@ -1,0 +1,33 @@
+\subsection{Centralizando los Datos} \label{sec:Centering}
+
+
+\begin{table}[H]
+	% \small
+	\centering
+	\vspace{-4mm}
+	\caption{\\Parámetros de entrada del ejecutable} \label{tab:parametros}
+	% \vspace{4mm}
+	\begin{tabular}{lm{4.7cm}m{0.60\linewidth}c}
+		\hline
+		\multicolumn{1}{l}{}                  &
+		\multicolumn{1}{c}{\textbf{Métricas}} &
+		\multicolumn{1}{c}{\textbf{Explicación}}                                                                                                                                                               \\ \hline
+		                                      & \centering Tiempo de ejecución de la primera etapa &
+		Durante la etapa de procesamiento de datos de entrada, queremos observar el comportamiento de la lectura de archivos y la modificación y escritura de los datos procesados en la memoria de la máquina \\
+
+		                                      & \centering Tiempo de ejecución del kernel          &
+		Con esto se mide el rendimiento de los cálculos matemáticos exclusivamente y nos indica qué tanto tiempo toma ejecutar las \textit{num-steps*num-seeds} llamadas de la función step                    \\
+
+		                                      & \centering  num-steps                              &
+		El número de veces o iteraciones de cálculos de pasos de RK4 por los que pasará cada semilla. Haciendo que el número total que se calcula RK4 es \textbf{num-seeds*num-steps}                          \\
+
+		                                      & \centering Uso total del heap: bytes asignados     & un valor numérico para que se guarde el archivo de visualización                                          \\
+		                                      & \centering Uso total del heap: asignaciones        & un valor numérico para que se guarde el archivo de visualización                                          \\
+		                                      & \centering Uso total del heap: liberaciones        & un valor numérico para que se guarde el archivo de visualización                                          \\
+		                                      & \centering bytes/bloques definitivamente perdidos  & un valor numérico para que se guarde el archivo de visualización                                          \\
+		                                      & \centering bytes/bloques indirectamente perdidos   & un valor numérico para que se guarde el archivo de visualización                                          \\
+		\\ \hline
+	\end{tabular}
+	\vspace{-4mm}
+\end{table}
+
